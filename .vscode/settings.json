@@ -1,0 +1,14 @@
+{
+	"sqltools.connections": [
+		{
+			"previewLimit": 50,
+			"server": "localhost",
+			"port": 5432,
+			"driver": "PostgreSQL",
+			"database": "Time2Gether",
+			"username": "labber",
+			"password": "labber",
+			"name": "Final_Project"
+		}
+	]
+}
