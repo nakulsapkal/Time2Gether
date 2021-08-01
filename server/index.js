@@ -7,11 +7,13 @@ const PORT = 8001;
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+
+//create routes
 const userRouter = require("./routes/users");
 const activityRouter = require("./routes/activities");
 
-
-app.use("/api", userRouter(db)); // passing the db instnace for quering the database
+//passing the db instnace for quering the database
+app.use("/api", userRouter(db)); 
 app.use("/api",activityRouter(db));
 
 app.use(bodyParser.urlencoded({ extended: true }));

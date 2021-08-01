@@ -3,7 +3,7 @@ import "../App.css";
 import useApplicationData from "hooks/useApplicationData";
 import Activity from "component/Activity";
 import Login from "component/Login";
-import Homepage from "./Homepage";
+// import Homepage from "./Homepage";
 import Signup from "./Signup";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -12,7 +12,8 @@ import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function App() {
   const state = useApplicationData();
-  //console.log("Usestate.users: Line 7: ", state.users);
+  const { users, activities } = state;
+  console.log("Usestate.users: Line 7: ", users);
 
   return (
     <Router>
@@ -20,19 +21,21 @@ function App() {
         <section>
           <Navbar />
         </section>
+
         <section>
           <Switch>
             <Route path="/" exact>
-              <Homepage />
+              <Activity activities={activities}/>
             </Route>
             <Route path="/login">
-              <Login user={state.user} />
+              <Login users={users} />
             </Route>
             <Route path="/Signup">
               <Signup />
             </Route>
           </Switch>
         </section>
+
         <section>
           <Footer />
         </section>
