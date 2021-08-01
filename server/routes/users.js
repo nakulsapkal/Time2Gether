@@ -6,7 +6,7 @@ module.exports = (db) => {
     console.log("Index Router File:", db);
     db.query(`SELECT * from users;`)
       .then((result) => {
-        console.log("DB seeds : ", result.rows);
+        console.log("DB Users seeds : ", result.rows);
         res.json({ users: result.rows });
       })
       .catch((err) => {

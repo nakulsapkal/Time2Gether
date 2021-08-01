@@ -14,7 +14,7 @@ const activityRouter = require("./routes/activities");
 
 //passing the db instnace for quering the database
 app.use("/api", userRouter(db)); 
-app.use("/api",activityRouter(db));
+app.use("/api", activityRouter(db));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
