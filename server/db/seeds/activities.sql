@@ -20,7 +20,7 @@ VALUES (
   'Let us play with balls! Waiting for us!',
   '2',
   '2',
-  '2'
+  '1'
 ),
 (
   '10/01/2021',
@@ -31,7 +31,7 @@ VALUES (
   'Cakes! Cakes! Cakes! Bake them and eat them all!',
   '3',
   '3',
-  '3'
+  '2'
 ),
 (
   '10/15/2021',
@@ -42,7 +42,7 @@ VALUES (
   'Indoor Sports World! We are open the whole day! Come to try!',
   '4',
   '4',
-  '4'
+  '3'
 ),
 (
   '11/01/2021',
@@ -53,5 +53,5 @@ VALUES (
   'Different delicious dairy products on table! We learn, we cook, we know! Come and join us!',
   '5',
   '5',
-  '5'
+  '4'
 );
