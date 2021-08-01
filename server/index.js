@@ -1,22 +1,18 @@
 "use strict";
-var indexRouter = require("./routes/index");
+
 require("dotenv").config();
 
+const db = require("./lib/db")
 const PORT = 8001;
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const userRouter = require("./routes/users");
+const activityRouter = require("./routes/activities");
 
-// PG database client/connection setup
-const { Pool } = require("pg");
-const dbParams = require("./lib/db.js");
-const db = new Pool(dbParams);
 
-db.connect(() => {
-  console.log("connected to database");
-});
-
-app.use("/api", indexRouter(db)); // passing the db instnace for quering the database
+app.use("/api", userRouter(db)); // passing the db instnace for quering the database
+app.use("/api",activityRouter(db));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));

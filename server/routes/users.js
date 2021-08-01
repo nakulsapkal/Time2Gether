@@ -1,9 +1,18 @@
-var express = require('express');
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
-module.exports = router;
+module.exports = (db) => {
+  router.get("/users", function (req, res, next) {
+    console.log("Index Router File:", db);
+    db.query(`SELECT * from users;`)
+      .then((result) => {
+        console.log("DB seeds : ", result.rows);
+        res.json({ users: result.rows });
+      })
+      .catch((err) => {
+        console.log("Error:", err);
+        res.json({ users: err });
+      });
+  });
+  return router;
+};
