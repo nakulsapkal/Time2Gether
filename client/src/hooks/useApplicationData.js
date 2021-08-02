@@ -6,7 +6,9 @@ export default function useApplicationData(params) {
   //State Declaration and initialize it as an object
   const [state, setState] = useState({
     users: {},
-    activities: {}
+    activities: {},
+    categories: {},
+    address:{}
   });
 
 
@@ -15,16 +17,20 @@ export default function useApplicationData(params) {
    
     const p1 = axios.get("/api/users");
     const p2 = axios.get("/api/activities");
+    const p3 = axios.get("/api/categories");
+    const p4 = axios.get("/api/address");
 
-    Promise.all([p1, p2]).then((all) => {
-      const [first,second] = all;
+    Promise.all([p1, p2, p3, p4]).then((all) => {
+      const [first, second, third, forth] = all;
       console.log("Users:", first.data.users);
       console.log("Activities:", second.data.activities);
       //For purpose of immutability copying the prev state first
       setState((prev) => ({
         ...prev,
         users: first.data.users,
-        activities: second.data.activities
+        activities: second.data.activities,
+        categories: third.data.categories,
+        address: forth.data.address
       }));
     });
   }, []);
