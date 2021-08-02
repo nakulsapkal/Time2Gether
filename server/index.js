@@ -8,6 +8,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 //create routes
 const userRouter = require("./routes/users");
 const activityRouter = require("./routes/activities");
@@ -16,7 +18,6 @@ const activityRouter = require("./routes/activities");
 app.use("/api", userRouter(db)); 
 app.use("/api", activityRouter(db));
 
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.listen(PORT, () => {

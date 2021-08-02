@@ -3,10 +3,11 @@ const router = express.Router();
 
 module.exports = (db) => {
   router.get("/users", function (req, res, next) {
-    console.log("Index Router File:", db);
+    //console.log("Index Router File:", db);
     db.query(`SELECT * from users;`)
       .then((result) => {
-        console.log("DB Users seeds : ", result.rows);
+        //console.log("DB Users: ", result.rows);
+        console.log("This is from router.get in users.js. Server================ ")
         res.json({ users: result.rows });
       })
       .catch((err) => {
@@ -15,18 +16,21 @@ module.exports = (db) => {
       });
   });
 
-  router.put("/users/signup", function (req, res, next) {
-    const getData = () => {
-      localStorage.getItem(req);
-    }
-  
-    console.log("Data from signup route at backend:", getData());
-    // db.query(`INSERT INTO users VALUES(
-      
-    // ))
-    //   .then((result) => {
-    //     console.log("DB Users seeds : ", result.rows);
-    //     res.json({ users: result.rows });
+  router.post("/users/signup", function (req, res) {
+    const customData = req.body;
+    console.log("This is customData from users.js", customData);
+    //const [firstName, lastName, email] = req.body;
+    
+    
+    // db.query(
+    //   `
+    //   INSERT INTO users (first_name, last_name, email) 
+    //   VALUES ($1, $2, $3)`, [firstName, lastName, email]
+    // )
+    
+    //   .then((response) => {
+       
+    //     res.json({ users: response.rows });
     //   })
     //   .catch((err) => {
     //     console.log("Error:", err);

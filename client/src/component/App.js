@@ -7,10 +7,11 @@ import Signup from "./Signup";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function App() {
-  const state = useApplicationData();
+  const {state, addUser} = useApplicationData();
   const { users, activities } = state;
   // console.log("activities from app.js line 15: ",state,activities)
   return (
@@ -30,7 +31,7 @@ function App() {
               <Login users={users} />
             </Route>
             <Route path="/Signup">
-              <Signup />
+              <Signup addUser={addUser} />
             </Route>
           </Switch>
         </section>

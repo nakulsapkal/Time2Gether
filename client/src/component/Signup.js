@@ -5,18 +5,12 @@
       const [firstName, setFirstName] = useState(props.first_name || '');
       const [lastName, setLastName] = useState(props.last_name || '');
       const [email, setEmail] = useState(props.email || ''); 
-      const apiUrl = "/api/users/signup";  
-      const Registration = (e) => {  
-        e.preventDefault();  
-        const data1 = {first_name: firstName, last_name: lastName, email: email};
-        console.log("This is data1 in line 12 of signup",data1)
-        //props.onSave(firstName,lastName,email)
-        localStorage.setItem("data1",data1)
-        //console.log();
-        axios.put(apiUrl, data1)  
-           .then((result) => {  
-            console.log(result.data);  
-           })  
+      //const apiUrl = "/api/users/signup";  
+      const Registration = (event) => {  
+        event.preventDefault();  
+        const customData = {first_name: firstName, last_name: lastName, email: email};
+        console.log("This is customData in line 12 of signup",customData)
+        props.addUser(customData);
       }  
       
       return (  
@@ -30,10 +24,10 @@
                       </div> 
                       
                       <div class="form-group">  
-                          <input type="text" name="First name" onChange={(event) => setLastName(event.target.value)} placeholder="Last name" />  
+                          <input type="text" name="Last name" onChange={(event) => setLastName(event.target.value)} placeholder="Last name" />  
                       </div>  
                       <div class="form-group">  
-                          <input type="text" name="First name" onChange={(event) => setEmail(event.target.value)} placeholder="Email" />  
+                          <input type="email" name="Email" onChange={(event) => setEmail(event.target.value)} placeholder="Email" />  
                       </div> 
                     
                       <button type="submit" class="btn btn-primary  btn-block">  
