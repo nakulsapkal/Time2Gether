@@ -1,18 +1,18 @@
 import React from 'react'
 import  './ActivityItem.css';
-import { getActivityById } from "../helpers/selectors";
+import { getActivityById, getAddressByActId } from "../helpers/selectors";
 import { useHistory } from 'react-router-dom';
 
 export default function ActivityItem (props) {
-  const { id, start_date, end_date, start_time, end_time, details, img, activity, setActivity,activities} = props;
+  const { 
+    id, start_date, end_date, start_time, end_time, details, img, setActivity, activities} = props;
 
   const history = useHistory();
-  console.log("key: ", id)
-  console.log("activities: ", activities)
+  // console.log("key: ", id)
+  // console.log("activities: ", activities)
   return (
     <div className="card" onClick={() => {
-      setActivity(getActivityById(id,activities));
-      
+      setActivity(getActivityById(id, activities));
       history.push("/activities/detail");
     }}>
 

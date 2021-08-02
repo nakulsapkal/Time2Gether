@@ -11,12 +11,11 @@ import Footer from "./Footer";
 
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
-// import { getActivityById } from "../helpers/selectors";
-
 function App() {
   const state = useApplicationData();
-  const { users, activities } = state;
+  const { users, activities, address, categories } = state;
   const [ activity, setActivity ] = useState([]);
+  
   // const activity = getActivityById(activities,id);
   
   // console.log("activities from app.js line 15: ",state,activities)
@@ -31,10 +30,15 @@ function App() {
         <section>
           <Switch>
             <Route path="/" exact>
-              <Activity activities={activities} setActivity={setActivity}/> 
+              <Activity 
+              activities={activities} setActivity={setActivity} 
+              address={address}
+              /> 
             </Route>
             <Route path="/activities/detail" >
-              <ActivityDetail activity={activity} /> 
+              <ActivityDetail 
+              activity={activity} address={address}
+              /> 
             </Route>
             <Route path="/login">
               <Login users={users} />

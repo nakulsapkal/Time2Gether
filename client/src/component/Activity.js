@@ -2,7 +2,7 @@ import React from 'react';
 import ActivityItem from './ActivityItem';
 
 export default function Activity(props) {
-  const {activities, activity, setActivity} = props;
+  const { activities, activity, setActivity} = props;
 
   return (
     <div className="App">
@@ -18,8 +18,10 @@ export default function Activity(props) {
             end_time = {item.end_time}
             details = {item.details}
             img = {item.img}
+            activity = {activity}
             setActivity = {setActivity}
             activities = {activities}
+
             />
         })
       }
