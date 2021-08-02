@@ -11,7 +11,7 @@ import Footer from "./Footer";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function App() {
-  const { state, validateUser } = useApplicationData();
+  const { state, validateUser, addUser } = useApplicationData();
   const { user, users, activities } = state;
   const [activity, setActivity] = useState([]);
 
@@ -34,7 +34,7 @@ function App() {
               <Login validateUser={validateUser} />
             </Route>
             <Route path="/Signup">
-              <Signup />
+              <Signup addUser={addUser} />
             </Route>
           </Switch>
         </section>

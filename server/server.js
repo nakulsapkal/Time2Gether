@@ -9,11 +9,11 @@ const bodyParser = require("body-parser");
 const app = express();
 const morgan = require("morgan");
 
-app.use(morgan("dev"));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-//user routes
+//create routes
 const userRouter = require("./routes/users");
 app.use("/api", userRouter(db));
 
