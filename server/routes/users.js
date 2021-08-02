@@ -20,15 +20,15 @@ module.exports = (db) => {
     //const customData = req.body;
     //console.log("This is customData from users.js", customData.first_name);
     console.log(req.body);
-    const {firstName, lastName, email} = req.body;
-    console.log("This is first name, last name and email", firstName, lastName, email);
+    const {firstName, lastName, email, password} = req.body;
+    console.log("This is first name, last name and email", firstName, lastName, email, password);
     db.query(
       `
-      INSERT INTO users (first_name, last_name, email) 
-      VALUES ($1, $2, $3)`, [firstName, lastName, email]
+      INSERT INTO users (first_name, last_name, email, password) 
+      VALUES ($1, $2, $3, $4)`, [firstName, lastName, email, password]
     )
       .then((response) => {
-        response.status(204).json({});
+        res.json(data.rows[0]);
       })
       .catch((err) => {
         console.log("Error:", err);

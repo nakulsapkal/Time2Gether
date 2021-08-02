@@ -33,8 +33,8 @@ export default function useApplicationData(params) {
     const apiUrl = "/api/users/signup";
     console.log("user", user);
     return axios.post(apiUrl, user,{headers:{'Content-Type':'application/json'}})
-          .then((response) => {  
-          console.log(response);  
+          .then(res => {  
+          window.location.replace("/"); 
     })  
   }
 
