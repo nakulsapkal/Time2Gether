@@ -4,14 +4,28 @@
     function Signup(props) {  
       const [firstName, setFirstName] = useState(props.firstName || '');
       const [lastName, setLastName] = useState(props.lastName || '');
-      const [email, setEmail] = useState(props.email || ''); 
+      const [email, setEmail] = useState(props.email || '');
+      const [error, setError] = useState("");
       //const apiUrl = "/api/users/signup";  
-      const Registration = (event) => {  
-        event.preventDefault();  
+      const Registration = (event) => {
+          if (firstName === "") {
+            setError("First name cannot be blank");
+            return;
+          } else if (lastName === "") {
+             setError("Last name cannot be blank");
+             console.log("Error")
+             return;
+          } else if (email === "") {
+            setError("Email cannot be blank")
+          } else {
+          setError("");
+          event.preventDefault();
         const customData = {firstName: firstName, lastName: lastName, email: email};
-        console.log("This is customData in line 12 of signup",customData)
-        props.addUser(customData);
-      }  
+        //console.log("This is customData in line 12 of signup",customData)
+        props.addUser(customData);}
+        }
+        
+        
       
       return (  
         <div class="container">  
