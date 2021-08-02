@@ -7,12 +7,11 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
-import { useState } from "react";
 
 function App() {
   const state = useApplicationData();
   const { users, activities } = state;
-  const [user, setUser] = useState("");
+  //const [user, setUser] = useState("");
   // console.log("activities from app.js line 15: ",state,activities)
   return (
     <Router>
@@ -20,14 +19,13 @@ function App() {
         <section>
           <Navbar />
         </section>
-
         <section>
           <Switch>
             <Route path="/" exact>
-              <Activity activities={activities} user={user} />
+              <Activity activities={activities} />
             </Route>
             <Route path="/login">
-              <Login users={users} setUser={setUser} />
+              <Login users={users} />
             </Route>
             <Route path="/Signup">
               <Signup />
