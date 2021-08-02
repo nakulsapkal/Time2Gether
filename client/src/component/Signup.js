@@ -29,8 +29,6 @@
         props.addUser(customData);}
         }
         
-        
-      
       return (  
         <div class="container">  
                     <div class="text-center">  

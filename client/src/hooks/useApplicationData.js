@@ -33,8 +33,12 @@ export default function useApplicationData(params) {
     const apiUrl = "/api/users/signup";
     console.log("user", user);
     return axios.post(apiUrl, user,{headers:{'Content-Type':'application/json'}})
-          .then(res => {  
-          window.location.replace("/"); 
+      .then(res => {  
+        if (res.data === -1) {
+          alert("email is already in use");
+        } else {
+          window.location.replace("/");
+        }
     })  
   }
 
