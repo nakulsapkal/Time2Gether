@@ -27,5 +27,19 @@ export default function useApplicationData(params) {
     });
   }, []);
 
-  return state;
+  function validateUser(userEmail, userPassword) {
+    let userData;
+
+    for (let obj in state.users) {
+      userData = state.users[obj];
+      if (userData.email === userEmail && userData.password === userPassword) {
+        console.log("UserData:", userData);
+        //setUser(userData);
+      }
+    }
+
+    return false;
+  }
+
+  return { state, validateUser };
 }

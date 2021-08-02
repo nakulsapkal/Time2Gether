@@ -2,42 +2,18 @@ import React, { useState } from "react";
 import { BrowserRouter as Redirect, Link } from "react-router-dom";
 export default function Login(props) {
   const [email, setEmail] = useState("");
-  // const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
+  //const [error, setError] = useState("");
 
-  // let validUser = false;
-
-  //const { users } = props;
-
-  // function validate() {
-  //   if (email === "") {
-  //     setError("Name is required!");
-  //     return;
+  // function validate(email, password) {
+  //   if (props.validateUser(email, password)) {
+  //     return true;
   //   } else {
-  //     for (let obj in users) {
-  //       validUser = Object.values(users[obj]).includes(email);
-  //     }
-  //     if (!validUser) {
-  //       setError("User does not exist!");
-  //     } else {
-  //       localStorage.setItem("email", email);
-  //       console.log("email", localStorage.getItem("email"));
-  //     }
+  //     setEmail("");
+  //     setPassword("");
+  //     setError("User does not exist!");
   //   }
   // }
-
-  // const getdata = () => {
-  //   for (let obj in users) {
-  //     if (Object.values(users[obj]).includes(email)) {
-  //       let userData = {
-  //         userName: users[obj].first_name,
-  //         email: users[obj].email,
-  //       };
-
-  //       localStorage.setItem("userData", userData);
-  //       console.log(userData)
-  //     }
-  //   }
-  // };
 
   return (
     <main>
@@ -63,6 +39,10 @@ export default function Login(props) {
             type="password"
             id="password"
             placeholder="Password"
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+            value={password}
           />
         </div>
         <div>
@@ -71,7 +51,8 @@ export default function Login(props) {
           </button>
           <button
             onClick={() => {
-              localStorage.setItem("email", email);
+              props.validateUser(email, password);
+              //localStorage.setItem("email", email);
             }}
           >
             <Link to="/">Login</Link>

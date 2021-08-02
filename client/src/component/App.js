@@ -9,15 +9,15 @@ import Footer from "./Footer";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function App() {
-  const state = useApplicationData();
-  const { users, activities } = state;
+  const { state, validateUser } = useApplicationData();
+  const { user, users, activities } = state;
   //const [user, setUser] = useState("");
   // console.log("activities from app.js line 15: ",state,activities)
   return (
     <Router>
       <div className="App">
         <section>
-          <Navbar />
+          <Navbar user={user} />
         </section>
         <section>
           <Switch>
@@ -25,7 +25,7 @@ function App() {
               <Activity activities={activities} />
             </Route>
             <Route path="/login">
-              <Login users={users} />
+              <Login validateUser={validateUser} />
             </Route>
             <Route path="/Signup">
               <Signup />
