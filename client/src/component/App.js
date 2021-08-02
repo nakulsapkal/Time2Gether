@@ -33,12 +33,11 @@ function App() {
             <Route path="/" exact>
               <Activity 
               activities={activities} setActivity={setActivity} 
-              address={address}
               /> 
             </Route>
             <Route path="/activities/detail" >
               <ActivityDetail 
-              activity={activity} address={address}
+              activity={activity}
               /> 
             </Route>
             <Route path="/login">
