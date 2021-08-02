@@ -62,7 +62,7 @@ export default function Login(props) {
               validate(email, password);
             }}
           >
-            Login
+            <Link to="/">Login</Link>
           </button>
         </div>
         <section>{error}</section>
