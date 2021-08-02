@@ -22,20 +22,20 @@ module.exports = (db) => {
     console.log(req.body);
     const {firstName, lastName, email} = req.body;
     console.log("This is first name, last name and email", firstName, lastName, email);
-    // db.query(
-    //   `
-    //   INSERT INTO users (first_name, last_name, email) 
-    //   VALUES ($1, $2, $3)`, [firstName, lastName, email]
-    // )
+    db.query(
+      `
+      INSERT INTO users (first_name, last_name, email) 
+      VALUES ($1, $2, $3)`, [firstName, lastName, email]
+    )
     
-    //   .then((response) => {
+      .then((response) => {
        
-    //     res.json({ users: response.rows });
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error:", err);
-    //     res.json({ users: err });
-    //   });
+        res.json({ users: response.rows });
+      })
+      .catch((err) => {
+        console.log("Error:", err);
+        res.json({ users: err });
+      });
   });
 
   return router;
