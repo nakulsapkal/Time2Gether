@@ -7,7 +7,7 @@ module.exports = (db) => {
     db.query(`SELECT * from users;`)
       .then((result) => {
         //console.log("DB Users: ", result.rows);
-        console.log("This is from router.get in users.js. Server================ ")
+        //console.log("This is from router.get in users.js. Server================ ")
         res.json({ users: result.rows });
       })
       .catch((err) => {
@@ -17,9 +17,12 @@ module.exports = (db) => {
   });
 
   router.post("/users/signup", function (req, res) {
-    const customData = req.body;
-    console.log("This is customData from users.js", customData);
-    //const [firstName, lastName, email] = req.body;
+    //const customData = req.body;
+    //console.log("This is customData from users.js", customData.first_name);
+    console.log(req.body);
+    const {firstName, lastName, email} = req.body;
+    console.log("This is first name, last name and email", firstName, lastName, email);
+    
     
     
     // db.query(

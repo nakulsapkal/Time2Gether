@@ -2,13 +2,13 @@
     import React, { useState } from 'react'  
     import axios from 'axios';  
     function Signup(props) {  
-      const [firstName, setFirstName] = useState(props.first_name || '');
-      const [lastName, setLastName] = useState(props.last_name || '');
+      const [firstName, setFirstName] = useState(props.firstName || '');
+      const [lastName, setLastName] = useState(props.lastName || '');
       const [email, setEmail] = useState(props.email || ''); 
       //const apiUrl = "/api/users/signup";  
       const Registration = (event) => {  
         event.preventDefault();  
-        const customData = {first_name: firstName, last_name: lastName, email: email};
+        const customData = {firstName: firstName, lastName: lastName, email: email};
         console.log("This is customData in line 12 of signup",customData)
         props.addUser(customData);
       }  
