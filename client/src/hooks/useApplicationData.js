@@ -34,7 +34,7 @@ export default function useApplicationData(params) {
       userData = state.users[obj];
       if (userData.email === userEmail && userData.password === userPassword) {
         console.log("UserData:", userData);
-        //setUser(userData);
+        localStorage.setItem("user", userData);
       }
     }
 

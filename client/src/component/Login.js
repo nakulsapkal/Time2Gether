@@ -3,17 +3,20 @@ import { BrowserRouter as Redirect, Link } from "react-router-dom";
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //const [error, setError] = useState("");
+  const [error, setError] = useState("");
 
-  // function validate(email, password) {
-  //   if (props.validateUser(email, password)) {
-  //     return true;
-  //   } else {
-  //     setEmail("");
-  //     setPassword("");
-  //     setError("User does not exist!");
-  //   }
-  // }
+  function validate(email, password) {
+    if (props.validateUser(email, password)) {
+      return true;
+    } else {
+      setError("User does not exist!");
+    }
+  }
+
+  function reset() {
+    setEmail("");
+    setPassword("");
+  }
 
   return (
     <main>
@@ -46,19 +49,23 @@ export default function Login(props) {
           />
         </div>
         <div>
-          <button>
-            <Link to="/login">Cancel</Link>
-          </button>
           <button
             onClick={() => {
-              props.validateUser(email, password);
-              //localStorage.setItem("email", email);
+              reset();
             }}
           >
-            <Link to="/">Login</Link>
+            <Link to="/login">Cancel</Link>
+          </button>
+
+          <button
+            onClick={() => {
+              validate(email, password);
+            }}
+          >
+            Login
           </button>
         </div>
-        {/* <section>{error}</section> */}
+        <section>{error}</section>
       </form>
     </main>
   );
