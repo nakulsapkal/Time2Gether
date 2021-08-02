@@ -27,10 +27,8 @@ module.exports = (db) => {
       INSERT INTO users (first_name, last_name, email) 
       VALUES ($1, $2, $3)`, [firstName, lastName, email]
     )
-    
       .then((response) => {
-       
-        res.json({ users: response.rows });
+        response.status(204).json({});
       })
       .catch((err) => {
         console.log("Error:", err);
@@ -39,6 +37,4 @@ module.exports = (db) => {
   });
 
   return router;
-
-
 };
