@@ -2,19 +2,24 @@
 
 require("dotenv").config();
 
-const db = require("./lib/db")
+const db = require("./lib/db");
 const PORT = 8001;
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const app = express();
+const morgan = require("morgan");
 
 //create routes
 const userRouter = require("./routes/users");
-const activityRouter = require("./routes/activities");
+app.use("/api", userRouter(db));
 
 //passing the db instnace for quering the database
-app.use("/api", userRouter(db)); 
+const activityRouter = require("./routes/activities");
 app.use("/api", activityRouter(db));
+
+app.use(morgan("dev"));
+app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
