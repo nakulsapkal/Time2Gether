@@ -15,9 +15,10 @@ export default function useApplicationData(params) {
    
     const p1 = axios.get("/api/users");
     const p2 = axios.get("/api/activities");
+ 
 
     Promise.all([p1, p2]).then((all) => {
-      const [first,second] = all;
+      const [first, second] = all;
       console.log("Users:", first.data.users);
       console.log("Activities:", second.data.activities);
       //For purpose of immutability copying the prev state first

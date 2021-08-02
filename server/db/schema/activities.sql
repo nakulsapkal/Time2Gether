@@ -11,3 +11,6 @@ CREATE TABLE activities (
 	address_id INTEGER REFERENCES address(id) ON DELETE CASCADE,
 	category_id INTEGER REFERENCES categories(id) ON DELETE CASCADE
 );
+
+SELECT activities.*,address.* from address
+join activities ON address_id = id;

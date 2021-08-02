@@ -1,7 +1,9 @@
 
 import "../App.css";
+import { useState } from "react";
 import useApplicationData from "hooks/useApplicationData";
 import Activity from "component/Activity";
+import ActivityDetail from "component/ActivityDetail";
 import Login from "component/Login";
 import Signup from "./Signup";
 import Navbar from "./Navbar";
@@ -13,6 +15,10 @@ import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 function App() {
   const {state, addUser} = useApplicationData();
   const { users, activities } = state;
+  const [ activity, setActivity ] = useState([]);
+  
+  // const activity = getActivityById(activities,id);
+  
   // console.log("activities from app.js line 15: ",state,activities)
   return (
 
@@ -25,7 +31,15 @@ function App() {
         <section>
           <Switch>
             <Route path="/" exact>
-              <Activity activities={activities} /> 
+              <Activity 
+              activities={activities} setActivity={setActivity} 
+              address={address}
+              /> 
+            </Route>
+            <Route path="/activities/detail" >
+              <ActivityDetail 
+              activity={activity} address={address}
+              /> 
             </Route>
             <Route path="/login">
               <Login users={users} />
