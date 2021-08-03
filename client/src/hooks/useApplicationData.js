@@ -30,7 +30,6 @@ export default function useApplicationData(params) {
 
   function validateUser(userEmail, userPassword) {
     let userData;
-
     for (let obj in state.users) {
       userData = state.users[obj];
       if (userData.email === userEmail && userData.password === userPassword) {
@@ -46,22 +45,35 @@ export default function useApplicationData(params) {
         }));
       }
     }
-
     return false;
   }
 
+  // Validate email before submiting a new user
+  function validateEmail(userEmail) {
+    let userData;
+    for (let obj in state.users) {
+      userData = state.users[obj];
+      if (userData.email === userEmail) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Add a new user to the database
   function addUser(user) {
     const apiUrl = "/api/users/signup";
-    console.log("user", user);
-    return axios
-      .post(apiUrl, user, { headers: { "Content-Type": "application/json" } })
-      .then((res) => {
-        if (res.data === -1) {
-          alert("email is already in use");
-        } else {
+    const email = user.email;
+    if (validateEmail(email) === true) {
+      alert("email is already in use");
+    } else {
+      console.log("user", user);
+      return axios.post(apiUrl, user, { headers: { "Content-Type": "application/json" } })
+        .then((res) => {
           window.location.replace("/");
-        }
-      });
+        })
+        .catch(error => console.log(error));
+    }
   }
 
   return { state, addUser, validateUser };
