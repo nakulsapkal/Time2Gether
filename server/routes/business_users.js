@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  // Route to get all business users
   router.get("/business/users", function (req, res, next) {
-    //console.log("Business database:", db);
     db.query(`SELECT * from business_users;`)
       .then((result) => {
         console.log("One Business users record from business_users: ", result.rows[0]);
@@ -17,7 +17,6 @@ module.exports = (db) => {
 
   // Route to add a new Business user into the database
   router.post("/business/signup", function (req, res) {
-    //console.log("This is business user data from business_users.js", customData.first_name);
     const { businessName, ownerName, registrationNumber, email, phoneNumber, password } = req.body;
     db.query(
       `

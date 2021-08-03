@@ -5,9 +5,9 @@ import axios from "axios";
 export default function useApplicationData(params) {
   //State Declaration and initialize it as an object
   const [state, setState] = useState({
-    users: {},
-    activities: {},
-    businessUser: {},
+    users: [],
+    activities: [],
+    businessUser: [],
   });
 
   //This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
@@ -20,7 +20,7 @@ export default function useApplicationData(params) {
       const [first, second, third] = all;
       console.log("Users:", first.data.users);
       console.log("Activities:", second.data.activities);
-      console.log("Business users:",third.data.businessUsers)
+      console.log("Business users:", third.data.businessUsers)
       //For purpose of immutability copying the prev state first
       setState((prev) => ({
         ...prev,
@@ -43,7 +43,7 @@ export default function useApplicationData(params) {
     return false;
   }
 
-  // Validate email before submiting a new user
+  // Validate email before adding a new user
   function validateEmail(userEmail) {
     let userData;
     for (let obj in state.users) {
@@ -55,6 +55,7 @@ export default function useApplicationData(params) {
     return false;
   }
 
+  // Validate Registration number before adding a new business user
   function validateRegNum(regNum) {
     let userData;
     for (let obj in state.businessUsers) {
@@ -82,6 +83,7 @@ export default function useApplicationData(params) {
     }
   }
 
+  // Add a new business user to the database
   function addBusinessUser(businessUser) {
     const apiUrl = "/api/business/signup";
     const regNum = businessUser.registrationNumber;
