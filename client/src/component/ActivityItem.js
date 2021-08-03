@@ -1,6 +1,6 @@
 import React from 'react'
 import  './ActivityItem.css';
-import { getActivityById, getAddressByActId } from "../helpers/selectors";
+import { getActivityById } from "../helpers/selectors";
 import { useHistory } from 'react-router-dom';
 
 export default function ActivityItem (props) {

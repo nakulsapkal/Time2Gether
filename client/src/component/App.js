@@ -3,6 +3,7 @@ import { useState } from "react";
 import useApplicationData from "hooks/useApplicationData";
 import Activity from "component/Activity";
 import ActivityDetail from "component/ActivityDetail";
+import ActivityCreate from "component/ActivityCreate";
 import Login from "component/Login";
 import Signup from "./Signup";
 import Navbar from "./Navbar";
@@ -15,6 +16,9 @@ function App() {
   const { user, users, activities } = state;
   const [activity, setActivity] = useState([]);
 
+  //get logged-in user (an object) from local storage
+  const loginUser = JSON.parse(localStorage.getItem('User'))
+  
   // console.log("activities from app.js line 15: ",state,activities)
   return (
     <Router>
@@ -29,6 +33,9 @@ function App() {
             </Route>
             <Route path="/activities/detail">
               <ActivityDetail activity={activity} />
+            </Route>
+            <Route path="/activities/create">
+              <ActivityCreate  />
             </Route>
             <Route path="/login">
               <Login validateUser={validateUser} />
