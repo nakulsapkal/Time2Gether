@@ -67,5 +67,19 @@ export default function useApplicationData(params) {
     }
   }
 
-  return { state, addUser, validateUser };
+  function addBusinessUser(businessUser) {
+    const apiUrl = "/api/business/signup";
+    const email = businessUser.email;
+    if (validateEmail(email) === true) {
+      alert("email is already in use");
+    } else {
+      console.log("Business user", businessUser);
+      return axios.post(apiUrl, businessUser, { headers: { "Content-Type": "application/json" } })
+        .then((res) => {
+          window.location.replace("/");
+        })
+        .catch(error => console.log(error));
+    }
+  }
+  return { state, addUser, validateUser, addBusinessUser };
 }

@@ -7,11 +7,12 @@ import Login from "component/Login";
 import Signup from "./Signup";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import BusinessSignup from "./BusinessSignup";
 
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function App() {
-  const { state, validateUser, addUser } = useApplicationData();
+  const { state, validateUser, addUser, addBisnessUser } = useApplicationData();
   const { user, users, activities } = state;
   const [activity, setActivity] = useState([]);
 
@@ -33,8 +34,11 @@ function App() {
             <Route path="/login">
               <Login validateUser={validateUser} />
             </Route>
-            <Route path="/Signup">
+            <Route path="/signup">
               <Signup addUser={addUser} />
+            </Route>
+            <Route path="/business/signup">
+              <BusinessSignup addBusinessUser={addBisnessUser} />
             </Route>
           </Switch>
         </section>
