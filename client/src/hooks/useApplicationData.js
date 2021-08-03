@@ -59,7 +59,8 @@ export default function useApplicationData(params) {
     let userData;
     for (let obj in state.businessUsers) {
       userData = state.businessUsers[obj];
-      if (userData.registrationNumber === regNum) {
+      console.log("===========", userData);
+      if (userData.registration_number === regNum) {
         return true;
       }
     }
@@ -84,6 +85,7 @@ export default function useApplicationData(params) {
   function addBusinessUser(businessUser) {
     const apiUrl = "/api/business/signup";
     const regNum = businessUser.registrationNumber;
+    console.log("Registration number +++++++++++", regNum);
     if (validateRegNum(regNum) === true) {
       alert("Registration number is already in use");
     } else {
