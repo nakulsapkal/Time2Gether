@@ -6,7 +6,6 @@ INSERT INTO activities(
     end_time,
     img,
     details,
-    user_id,
     address_id,
     category_id
   )
@@ -19,7 +18,6 @@ VALUES (
     'http://www.density-calcium.com/_Uploads/dbsArticles/Sport(2).jpg',
     'The summer holidays are a time of the year that most families look forward to with excitement, the time to relax, recuperate and switch off. However, that downtime period can also lead to an increase in inactivity.',
     '1',
-    '1',
     '1'
   ),
   (
@@ -30,7 +28,6 @@ VALUES (
     '15:30:00',
     'https://antoinesoto.com/photolux/wp-content/uploads/2012/07/balls.jpg',
     'Let us play with balls! Waiting for us!',
-    '2',
     '2',
     '1'
   ),
@@ -43,7 +40,6 @@ VALUES (
     'https://thumbs.dreamstime.com/b/assortment-different-cakes-assortment-different-cakes-chocolate-berry-fruit-cream-present-pink-cake-box-copy-109360125.jpg',
     'Cakes! Cakes! Cakes! Bake them and eat them all!',
     '3',
-    '3',
     '2'
   ),
   (
@@ -54,7 +50,6 @@ VALUES (
     '21:00:00',
     'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.pushsquare.com%2Fscreenshots%2F54667%2Flarge.jpg&f=1&nofb=1',
     'Indoor Sports World! We are open the whole day! Come to try!',
-    '4',
     '4',
     '3'
   ),
@@ -67,6 +62,16 @@ VALUES (
     'https://thumbs.dreamstime.com/b/different-delicious-dairy-products-table-closeup-160387473.jpg',
     'Different delicious dairy products on table! We learn, we cook, we know! Come and join us!',
     '5',
+    '3'
+  ),
+  (
+    CURRENT_TIMESTAMP,
+    '12/01/2021',
+    '12/01/2021',
+    '12:30:00',
+    '19:30:00',
+    'https://thumbs.dreamstime.com/b/different-delicious-dairy-products-table-closeup-160387473.jpg',
+    'Screening Soccer Match',
     '5',
-    '4'
+    '2'
   );
