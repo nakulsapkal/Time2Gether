@@ -38,7 +38,7 @@ function BusinessSignup(props) {
       event.preventDefault();
       const businessData = { businessName: businessName, ownerName: ownerName, registrationNumber: registrationNumber, email: email, phoneNumber: phoneNumber, password: password };
       //console.log("This is businessData in line 39 of signup",businessData)
-      props.addUser(businessData);
+      props.addBusinessUser(businessData);
     }
   }
 

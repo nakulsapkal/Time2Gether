@@ -12,7 +12,7 @@ import BusinessSignup from "./BusinessSignup";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function App() {
-  const { state, validateUser, addUser, addBisnessUser } = useApplicationData();
+  const { state, validateUser, addUser, addBusinessUser } = useApplicationData();
   const { user, users, activities } = state;
   const [activity, setActivity] = useState([]);
 
@@ -38,7 +38,7 @@ function App() {
               <Signup addUser={addUser} />
             </Route>
             <Route path="/business/signup">
-              <BusinessSignup addBusinessUser={addBisnessUser} />
+              <BusinessSignup addBusinessUser={addBusinessUser} />
             </Route>
           </Switch>
         </section>
