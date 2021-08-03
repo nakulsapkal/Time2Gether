@@ -3,7 +3,7 @@ INSERT INTO business_users (business_name,
 	email,
 	password,
 	registration_number,
-	phone_number
+	phone_number)
   VALUES(
     'Okuneva-Barrows. Embrace End-To-End Initiatives',
     'Dr. Isaias Upton',
