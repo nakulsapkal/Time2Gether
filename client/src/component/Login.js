@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import { BrowserRouter as Redirect, Link } from "react-router-dom";
+import { BrowserRouter as Redirect, Link, useHistory } from "react-router-dom";
+// import { useHistory } from "react-router";
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  //const history = useHistory();
+  //issues: after error is set page should not render but its rendering
+  //issue 2: once we navigate to main page then main page or home page should render with the user data.
   function validate(email, password) {
     if (props.validateUser(email, password)) {
       return true;
+      //history.push("/");
     } else {
-      setError("User does not exist!");
+      setError("Username or Password is incorrect!");
     }
   }
 
@@ -64,6 +69,8 @@ export default function Login(props) {
           >
             <Link to="/">Login</Link>
           </button>
+          {/* <button onClick={() => reset()}>Cancel</button>
+            <button onClick={() => validate(email, password)}>Login</button> */}
         </div>
         <section>{error}</section>
       </form>
