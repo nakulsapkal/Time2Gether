@@ -13,7 +13,7 @@ import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function App() {
   const state = useApplicationData();
-  const { users, activities, address, categories } = state;
+  const { users, activities } = state;
   const [ activity, setActivity ] = useState([]);
   
   // const activity = getActivityById(activities,id);
@@ -32,12 +32,11 @@ function App() {
             <Route path="/" exact>
               <Activity 
               activities={activities} setActivity={setActivity} 
-              address={address}
               /> 
             </Route>
             <Route path="/activities/detail" >
               <ActivityDetail 
-              activity={activity} address={address}
+              activity={activity} 
               /> 
             </Route>
             <Route path="/login">
