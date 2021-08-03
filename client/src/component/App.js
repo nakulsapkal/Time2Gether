@@ -14,12 +14,10 @@ import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function App() {
   const { state, validateUser, addUser } = useApplicationData();
-  const { userActivities, users, activities } = state;
+  const { users, activities, userActivities } = state;
   const [activity, setActivity] = useState([]);
 
   //console.log("activities from app.js line 15: ", user);
-  //let userActivities = getActivityByUser(activities);
-  console.log("userActivities:", userActivities);
   return (
     <Router>
       <div className="App">

@@ -4,9 +4,11 @@ const router = express.Router();
 module.exports = (db) => {
   router.get("/users", function (req, res, next) {
     //console.log("Index Router File:", db);
-    db.query(`SELECT users.*,activities.* from users
+    db.query(
+      `SELECT users.*,activities.*, joined_at from users
     FULL OUTER JOIN user_activity ON user_activity.user_id = users.id 
-    LEFT JOIN activities ON user_activity.activity_id = activities.id;`)
+    LEFT JOIN activities ON user_activity.activity_id = activities.id;`
+    )
       .then((result) => {
         console.log("DB Users: ", result.rows);
         res.json({ users: result.rows });
@@ -24,13 +26,14 @@ module.exports = (db) => {
     db.query(
       `
       INSERT INTO users (first_name, last_name, email, password) 
-      VALUES ($1, $2, $3, $4)`, [firstName, lastName, email, password]
+      VALUES ($1, $2, $3, $4)`,
+      [firstName, lastName, email, password]
     )
-      .then(data => {
+      .then((data) => {
         res.json(data.rows[0]);
       })
-      .catch(error => console.log(error));
-  })
+      .catch((error) => console.log(error));
+  });
 
   return router;
 };

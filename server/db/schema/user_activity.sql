@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS user_activity CASCADE;
 CREATE TABLE user_activity (
 	id SERIAL PRIMARY KEY NOT NULL,
+	joined_at TIMESTAMP,
 	user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
 	activity_id INTEGER REFERENCES activities(id) ON DELETE CASCADE
 );
