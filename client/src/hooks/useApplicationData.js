@@ -5,8 +5,9 @@ import axios from "axios";
 export default function useApplicationData(params) {
   //State Declaration and initialize it as an object
   const [state, setState] = useState({
-    users: {},
-    activities: {},
+    users: [],
+    activities: [],
+    userActivities: [],
   });
 
   //This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
@@ -16,8 +17,8 @@ export default function useApplicationData(params) {
 
     Promise.all([p1, p2]).then((all) => {
       const [first, second] = all;
-      console.log("Users:", first.data.users);
-      console.log("Activities:", second.data.activities);
+      //console.log("Users:", first.data.users);
+      //console.log("Activities:", second.data.activities);
       //For purpose of immutability copying the prev state first
       setState((prev) => ({
         ...prev,
@@ -34,7 +35,15 @@ export default function useApplicationData(params) {
       userData = state.users[obj];
       if (userData.email === userEmail && userData.password === userPassword) {
         console.log("UserData:", userData);
-        localStorage.setItem("user", userData);
+        localStorage.setItem("userData", JSON.stringify(userData));
+        console.log(JSON.parse(localStorage.getItem("userData")));
+        let userActivities = state.activities.find(
+          (actObj) => actObj.user_id === userData.id
+        );
+        setState((prev) => ({
+          ...prev,
+          userActivities: userActivities,
+        }));
       }
     }
 

@@ -3,7 +3,7 @@ import ActivityItem from "./ActivityItem";
 
 export default function Activity(props) {
   const { activities, activity, setActivity } = props;
-  console.log("props in activity component ", props);
+
   return (
     <div className="App">
       {/* the state has been initialized as an object so setState somehow change it to obj.
