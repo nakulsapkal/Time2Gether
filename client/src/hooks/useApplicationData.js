@@ -55,6 +55,16 @@ export default function useApplicationData(params) {
     return false;
   }
 
+  function validateRegNum(regNum) {
+    let userData;
+    for (let obj in state.businessUsers) {
+      userData = state.businessUsers[obj];
+      if (userData.registrationNumber === regNum) {
+        return true;
+      }
+    }
+    return false;
+  }
   // Add a new user to the database
   function addUser(user) {
     const apiUrl = "/api/users/signup";
@@ -73,9 +83,9 @@ export default function useApplicationData(params) {
 
   function addBusinessUser(businessUser) {
     const apiUrl = "/api/business/signup";
-    const email = businessUser.email;
-    if (validateEmail(email) === true) {
-      alert("email is already in use");
+    const regNum = businessUser.registrationNumber;
+    if (validateRegNum(regNum) === true) {
+      alert("Registration number is already in use");
     } else {
       console.log("Business user", businessUser);
       return axios.post(apiUrl, businessUser, { headers: { "Content-Type": "application/json" } })
