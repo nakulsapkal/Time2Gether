@@ -17,6 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const userRouter = require("./routes/users");
 app.use("/api", userRouter(db));
 
+const businessUserRouter = require("./routes/business_users");
+app.use("/api", businessUserRouter(db));
+
 //passing the db instnace for quering the database
 const activityRouter = require("./routes/activities");
 app.use("/api", activityRouter(db));

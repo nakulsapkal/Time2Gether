@@ -7,22 +7,26 @@ export default function useApplicationData(params) {
   const [state, setState] = useState({
     users: {},
     activities: {},
+    businessUser: {},
   });
 
   //This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
   useEffect(() => {
     const p1 = axios.get("/api/users");
     const p2 = axios.get("/api/activities");
+    const p3 = axios.get("/api/business/users")
 
-    Promise.all([p1, p2]).then((all) => {
-      const [first, second] = all;
+    Promise.all([p1, p2, p3]).then((all) => {
+      const [first, second, third] = all;
       console.log("Users:", first.data.users);
       console.log("Activities:", second.data.activities);
+      console.log("Business users:",third.data.businessUsers)
       //For purpose of immutability copying the prev state first
       setState((prev) => ({
         ...prev,
         users: first.data.users,
         activities: second.data.activities,
+        businessUsers: third.data.businessUsers,
       }));
     });
   }, []);

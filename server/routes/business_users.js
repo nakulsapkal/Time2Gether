@@ -6,7 +6,7 @@ module.exports = (db) => {
     //console.log("Business database:", db);
     db.query(`SELECT * from business_users;`)
       .then((result) => {
-        res.json({ businessUusers: result.rows });
+        res.json({ businessUsers: result.rows });
       })
       .catch((err) => {
         console.log("Error:", err);
