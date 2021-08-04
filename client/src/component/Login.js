@@ -1,24 +1,25 @@
 import React, { useState } from "react";
 import { BrowserRouter as Redirect, Link, useHistory } from "react-router-dom";
-// import { useHistory } from "react-router";
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { validateUser, setUser } = props;
 
-  //const history = useHistory();
-  //issues: after error is set page should not render but its rendering
-  //issue 2: once we navigate to main page then main page or home page should render with the user data.
-  function validate(email, password) {
-    if (props.validateUser(email, password)) {
-      return true;
-      //history.push("/");
+  const history = useHistory();
+  const validate = (event) => {
+    event.preventDefault();
+    let user = validateUser(email, password);
+    if (user) {
+      setUser(user);
+      history.push("/");
     } else {
       setError("Username or Password is incorrect!");
     }
-  }
+  };
 
   function reset() {
+    setError("");
     setEmail("");
     setPassword("");
   }
@@ -28,7 +29,7 @@ export default function Login(props) {
       <header>
         <h1>Login</h1>
       </header>
-      <form>
+      <form onSubmit={validate}>
         <div>
           <input
             name="email"
@@ -54,25 +55,10 @@ export default function Login(props) {
           />
         </div>
         <div>
-          <button
-            onClick={() => {
-              reset();
-            }}
-          >
-            <Link to="/login">Cancel</Link>
-          </button>
-
-          <button
-            onClick={() => {
-              validate(email, password);
-            }}
-          >
-            <Link to="/">Login</Link>
-          </button>
-          {/* <button onClick={() => reset()}>Cancel</button>
-            <button onClick={() => validate(email, password)}>Login</button> */}
+          <input type="button" onClick={() => reset()} value="Cancel" />
+          <button type="submit">Login</button>
         </div>
-        <section>{error}</section>
+        <div>{error}</div>
       </form>
     </main>
   );
