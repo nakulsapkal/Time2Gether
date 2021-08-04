@@ -8,8 +8,10 @@ export default function Login(props) {
   const [checked, setChecked] = useState(false);
   const handleChange = () => {
     setChecked(!checked);
-  }
+    const checkData = {checked: !checked};
+    console.log(" Checkdata from Login", checkData);
 
+  }
   const history = useHistory();
   const validate = (event) => {
     event.preventDefault();
@@ -61,13 +63,9 @@ export default function Login(props) {
         
         <div>
           <label>
-            <input type="checkbox"
-            checked={checked}
-            onChange={handleChange}
-            />
+            <input type="checkbox" checked={checked} onChange={handleChange} />
             Business user
           </label>
-          <p>Is "Business user" checked? {checked.toString()}</p>
         </div>
 
         <div>

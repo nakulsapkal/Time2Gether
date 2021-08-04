@@ -43,7 +43,7 @@ function App() {
   
   // console.log("activities from app.js line 15: ",state,activities)
   console.log("user from app.js line 45: ", user);
-  // console.log("state from app.js line 22: ", state);
+   // console.log("state from app.js line 22: ", state);
   return (
     <Router>
       <div className="App">
