@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 //This hook is to manage data for application
 export default function useApplicationData(params) {
   //State Declaration and initialize it as an object
@@ -8,7 +7,7 @@ export default function useApplicationData(params) {
     users: [],
     activities: [],
     businessUser: [],
-    userActivities: []
+    userActivities: [],
   });
 
   const [user, setUser] = useState([]);
@@ -32,7 +31,7 @@ export default function useApplicationData(params) {
         users: first.data.users,
         activities: second.data.activities,
         businessUsers: third.data.businessUsers,
-        userActivities: fourth.data.userActivities
+        userActivities: fourth.data.userActivities,
       }));
     });
 
@@ -75,6 +74,7 @@ export default function useApplicationData(params) {
     }
     return false;
   }
+
   // Add a new user to the database
   function addUser(user) {
     const apiUrl = "/api/users/signup";
@@ -111,5 +111,58 @@ export default function useApplicationData(params) {
         .catch((error) => console.log(error));
     }
   }
-  return { user, setUser, state, addUser, validateUser, addBusinessUser };
+
+  //Delete an activity for a user
+  function deleteActivity(activityObj) {
+    let index = state.userActivities.findIndex(
+      (actObj) => actObj.id === activityObj.id
+    );
+
+    // console.log("state.userActivities:", state.userActivities);
+    // console.log("activityObj:", activityObj);
+    // console.log("Index:", index);
+
+    const userActivities = [...state.userActivities];
+
+    const url = `/api/user/activity/${activityObj.activity_id}`;
+
+    return axios
+      .delete(url, activityObj, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((result) => {
+        if (result.status === "error") {
+          // Oops, something went wrong. Let's get that deleted Id back.
+          setState((prev) => ({
+            ...prev,
+            userActivities: userActivities,
+          }));
+
+          if (result.status !== 200) {
+            throw new Error(`Request failed: ${result.status}`);
+          }
+        } else {
+          alert("Successfully Deleted Activity!");
+          userActivities.splice(index, 1);
+          setState((prev) => ({
+            ...prev,
+            userActivities: userActivities,
+          }));
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        console.error("Delete Activity Error: ", err);
+      });
+  }
+
+  return {
+    user,
+    setUser,
+    state,
+    addUser,
+    validateUser,
+    addBusinessUser,
+    deleteActivity,
+  };
 }
