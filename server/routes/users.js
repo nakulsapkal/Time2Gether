@@ -6,8 +6,7 @@ module.exports = (db) => {
     //console.log("Index Router File:", db);
     db.query(`SELECT * from users;`)
       .then((result) => {
-        //console.log("DB Users: ", result.rows);
-        //console.log("This is from router.get in users.js. Server================ ")
+        console.log("DB Users: ", result.rows);
         res.json({ users: result.rows });
       })
       .catch((err) => {
@@ -23,13 +22,14 @@ module.exports = (db) => {
     db.query(
       `
       INSERT INTO users (first_name, last_name, email, password) 
-      VALUES ($1, $2, $3, $4)`, [firstName, lastName, email, password]
+      VALUES ($1, $2, $3, $4)`,
+      [firstName, lastName, email, password]
     )
-      .then(data => {
+      .then((data) => {
         res.json(data.rows[0]);
       })
-      .catch(error => console.log(error));
-  })
+      .catch((error) => console.log(error));
+  });
 
   return router;
 };

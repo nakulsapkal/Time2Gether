@@ -1,19 +1,25 @@
 import React, { useState } from "react";
-import { BrowserRouter as Redirect, Link } from "react-router-dom";
+import { BrowserRouter as Redirect, Link, useHistory } from "react-router-dom";
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { validateUser, setUser } = props;
 
-  function validate(email, password) {
-    if (props.validateUser(email, password)) {
-      return true;
+  const history = useHistory();
+  const validate = (event) => {
+    event.preventDefault();
+    let user = validateUser(email, password);
+    if (user) {
+      setUser(user);
+      history.push("/");
     } else {
-      setError("User does not exist!");
+      setError("Username or Password is incorrect!");
     }
-  }
+  };
 
   function reset() {
+    setError("");
     setEmail("");
     setPassword("");
   }
@@ -23,7 +29,7 @@ export default function Login(props) {
       <header>
         <h1>Login</h1>
       </header>
-      <form>
+      <form onSubmit={validate}>
         <div>
           <input
             name="email"
@@ -49,23 +55,10 @@ export default function Login(props) {
           />
         </div>
         <div>
-          <button
-            onClick={() => {
-              reset();
-            }}
-          >
-            <Link to="/login">Cancel</Link>
-          </button>
-
-          <button
-            onClick={() => {
-              validate(email, password);
-            }}
-          >
-            <Link to="/">Login</Link>
-          </button>
+          <input type="button" onClick={() => reset()} value="Cancel" />
+          <button type="submit">Login</button>
         </div>
-        <section>{error}</section>
+        <div>{error}</div>
       </form>
     </main>
   );
