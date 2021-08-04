@@ -4,8 +4,7 @@ import { getActivityById } from "../helpers/selectors";
 import { useHistory } from 'react-router-dom';
 
 export default function ActivityItem (props) {
-  const { 
-    id, start_date, end_date, start_time, end_time, details, img, setActivity, activities} = props;
+  const { id, details, img, setActivity, activities } = props;
 
   const history = useHistory();
   // console.log("key: ", id)
