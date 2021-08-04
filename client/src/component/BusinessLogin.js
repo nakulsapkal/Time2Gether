@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Redirect, Link, useHistory } from "react-router-dom";
+import { BrowserRouter as useHistory } from "react-router-dom";
 export default function Login(props) {
   const [password, setPassword] = useState("");
   const [registrationNumber, setRestrationNumber] = useState("");

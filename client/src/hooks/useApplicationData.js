@@ -51,6 +51,18 @@ export default function useApplicationData(params) {
     return false;
   }
 
+  // Validate registration number and password before logining
+  function validateBusinessUser(registrationNumber, userPassword) {
+    let userData = state.users.find(
+      (obj) => obj.registration_number === registrationNumber && obj.password === userPassword
+    );
+
+    if (userData) {
+      localStorage.setItem("userData", JSON.stringify(userData));
+      return userData;
+    }
+    return false;
+  }
   // Validate email before adding a new user
   function validateEmail(userEmail) {
     let userData;
@@ -68,7 +80,7 @@ export default function useApplicationData(params) {
     let userData;
     for (let obj in state.businessUsers) {
       userData = state.businessUsers[obj];
-      console.log("===========", userData);
+      //console.log("===========", userData);
       if (userData.registration_number === regNum) {
         return true;
       }
@@ -111,5 +123,5 @@ export default function useApplicationData(params) {
         .catch((error) => console.log(error));
     }
   }
-  return { user, setUser, state, addUser, validateUser, addBusinessUser };
+  return { user, setUser, state, addUser, validateUser, addBusinessUser, validateBusinessUser };
 }
