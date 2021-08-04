@@ -5,6 +5,10 @@ export default function Login(props) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { validateUser, setUser } = props;
+  const [checked, setChecked] = useState(false);
+  const handleChange = () => {
+    setChecked(!checked);
+  }
 
   const history = useHistory();
   const validate = (event) => {
@@ -54,6 +58,18 @@ export default function Login(props) {
             value={password}
           />
         </div>
+        
+        <div>
+          <label>
+            <input type="checkbox"
+            checked={checked}
+            onChange={handleChange}
+            />
+            Business user
+          </label>
+          <p>Is "Business user" checked? {checked.toString()}</p>
+        </div>
+
         <div>
           <input type="button" onClick={() => reset()} value="Cancel" />
           <button type="submit">Login</button>
