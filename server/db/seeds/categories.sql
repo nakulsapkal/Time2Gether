@@ -10,5 +10,5 @@ VALUES(
 ),
 (
   'Cooking'
-);
+) returning *;
 

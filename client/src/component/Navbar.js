@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 
 export default function Navbar(props) {
-    const loginUser = JSON.parse(localStorage.getItem('User'));
+    // const props.user = JSON.parse(localStorage.getItem('userData'));
     const history = useHistory();
 
     return( 
@@ -24,28 +24,28 @@ export default function Navbar(props) {
     <div className="header__nav">
       
       <div className="header__option">
-        <Link to="/activities/create" />
         <span className="header__optionLineTwo header__space"> 
-        {loginUser ? <span onClick={() => history.push('/activities/create')}  className="header__optionLineTwo header__space">Create</span> : "" } 
+        {props.user ? <span onClick={() => history.push('/activities/create')}  className="header__optionLineTwo header__space">Create</span> : "" } 
         </span>
       </div>
 
       <div className="header__option">
-      <span className="header__optionLineTwo header__space"> 
-        {loginUser ? "My Activity" : "" } </span> 
+        <span className="header__optionLineTwo header__space"> 
+        {props.user ? <span onClick={() => history.push('/user/activities')}  className="header__optionLineTwo header__space">My Activity</span> : "" }
+        </span>
       </div>
 
       
       <div className="header__option">
-        {loginUser ? <span className="header__optionLineTwo header__space"> 
-                    Hi, {loginUser && loginUser.first_name}!</span> 
+        {props.user ? <span className="header__optionLineTwo header__space"> 
+                    Hi, {props.user && props.user.first_name}!</span> 
         : <span className="header__optionLineTwo header__space" 
                 onClick={() => history.push('/signup')}> SignUp</span> 
         }
       </div>
 
       <div className="header__option header__space">
-        {loginUser ? <span className="header__optionLineTwo header__space">LogOut </span> 
+        {props.user ? <span className="header__optionLineTwo header__space">LogOut </span> 
         : <span className="header__optionLineTwo header__space" 
                 onClick={() => history.push('/login')}>LogIn</span> }
       </div>

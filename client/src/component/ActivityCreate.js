@@ -11,11 +11,11 @@ import axios from 'axios';
 // } from '@material-ui/pickers';
 
 export default function ActivityCreate (props) {
-  const loginUser = JSON.parse(localStorage.getItem('User'))
+  const loginUser = JSON.parse(localStorage.getItem('userData'))
   const loginUserId = loginUser.id
 
   const [values, setValues] = useState({
-    name: "", img: "", details: "", category: "",
+    img: "", details: "", category: "",
     start_date: "", end_date: "", start_time: "", end_time: "",  
     street_number: "", street_name: "", city: "", province: "", postal_code: "", loginUserId: loginUserId
   });
@@ -27,11 +27,13 @@ export default function ActivityCreate (props) {
     };
   };
 
-  
+
   const saveFormData = async () => {
+    console.log("values from line 30: ", values);
     const response = await axios.post('/api/activities/create', {
       body: values
     });
+    
     if (response.status !== 200) {
       throw new Error(`Request failed: ${response.status}`); 
     }
@@ -43,7 +45,7 @@ export default function ActivityCreate (props) {
       await saveFormData();
       alert('Your activity was successfully created!');
       setValues({
-        name: "", img: "", details: "", category: "",start_date: "", end_date: "", start_time: "", end_time: "",  
+        img: "", details: "", category: "",start_date: "", end_date: "", start_time: "", end_time: "",  
         street_number: "", street_name: "", city: "", province: "", postal_code: ""
       });
     } catch (e) {
@@ -67,6 +69,7 @@ export default function ActivityCreate (props) {
         <div>
           <label>Category*:</label>
             <select value={values.category} onChange={set("category")}>
+            <option>Select Category</option>
               <option value="Outdoor sports">Outdoor sports</option>
               <option value="Baking">Baking</option>
               <option value="Indoor Sports">Indoor sports</option>

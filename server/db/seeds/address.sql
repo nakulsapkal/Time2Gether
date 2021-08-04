@@ -33,4 +33,4 @@ VALUES(
     'Hanley',
     'Saskatchewan',
     'S4P 3Y2'
-  );
+  ) returning *;

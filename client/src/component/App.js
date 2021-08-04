@@ -8,23 +8,45 @@ import Login from "component/Login";
 import Signup from "./Signup";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-
+import MyActivities from "./MyActivities";
+import BusinessSignup from "./BusinessSignup";
+import {
+  getUpcomingActivityForUser,
+  getActivityCreatedByUser,
+  getActivitiesFavouriteByUser,
+  getActivityHistoryForUser,
+} from "helpers/selectors";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function App() {
-  const { state, validateUser, addUser } = useApplicationData();
-  const { user, users, activities } = state;
+  const { user, setUser, state, validateUser, addUser, addBusinessUser } =
+    useApplicationData();
+  const { users, activities, userActivities } = state;
+  console.log("userActivities from line 25 app.js: ", userActivities)
   const [activity, setActivity] = useState([]);
+  //const userData = JSON.parse(localStorage.getItem("userData"));
+  let createdActivities,
+    upcomingActivities,
+    activitiesHistory,
+    favouriteActivities;
+  if (user) {
+    createdActivities = getActivityCreatedByUser(user.id, userActivities);
+    upcomingActivities = getUpcomingActivityForUser(user.id, userActivities);
+    activitiesHistory = getActivityHistoryForUser(user.id, userActivities);
+    favouriteActivities = getActivitiesFavouriteByUser(user.id, userActivities);
+  }
 
   //get logged-in user (an object) from local storage
-  // const loginUser = JSON.parse(localStorage.getItem('User'))
+  // const loginUser = JSON.parse(localStorage.getItem('userData'))
   
   // console.log("activities from app.js line 15: ",state,activities)
+  console.log("user from app.js line 21: ", user);
+  // console.log("state from app.js line 22: ", state);
   return (
     <Router>
       <div className="App">
         <section>
-          <Navbar user={user} />
+          <Navbar user={user}/>
         </section>
         <section>
           <Switch>
@@ -38,10 +60,28 @@ function App() {
               <ActivityCreate  />
             </Route>
             <Route path="/login">
-              <Login validateUser={validateUser} />
+              <Login validateUser={validateUser} setUser={setUser} />
             </Route>
-            <Route path="/Signup">
+            <Route path="/signup">
               <Signup addUser={addUser} />
+            </Route>
+            <Route path="/user/activities">
+              {user && (
+                <MyActivities
+                  key={user.id}
+                  id={user.id}
+                  user={user}
+                  activities={userActivities}
+                  setActivity={setActivity}
+                  createdActivities={createdActivities}
+                  upcomingActivities={upcomingActivities}
+                  activitiesHistory={activitiesHistory}
+                  favouriteActivities={favouriteActivities}
+                />
+              )}
+            </Route>
+            <Route path="/business/signup">
+              <BusinessSignup addBusinessUser={addBusinessUser} />
             </Route>
           </Switch>
         </section>
