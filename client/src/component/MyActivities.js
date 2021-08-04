@@ -2,7 +2,7 @@ import React from "react";
 import ActivityItem from "./ActivityItem";
 import { useState } from "react";
 import { UserProfile } from "./UserProfile";
-
+import { ListItemAvatar } from "@material-ui/core";
 export default function MyActivities(props) {
   const CREATED = "Created";
   const UPCOMING = "Upcoming";
@@ -18,25 +18,14 @@ export default function MyActivities(props) {
     activities,
     activity,
     setActivity,
+    deleteActivity,
   } = props;
   const [option, setOption] = useState("");
-  // const userData = JSON.parse(localStorage.getItem("userData"));
-
-  console.log("user from MyActivities.js line 13: ", user);
-  console.log(
-    "MyActivity File:",
-    user,
-    activitiesHistory,
-    createdActivities,
-    upcomingActivities,
-    favouriteActivities
-  );
 
   const handleChange = (event) => {
     setOption(event.target.value);
   };
 
-  console.log("MyActivity File line 27:", option);
   return (
     <div>
       <div>
@@ -49,29 +38,25 @@ export default function MyActivities(props) {
         </select>
 
         {user && <UserProfile user={user} />}
-        {user &&
-          console.log(
-            "MyActivity File line 40:",
-            option,
-            activities,
-            createdActivities
-          )}
         {option === CREATED &&
           Object.entries(createdActivities).map(([key, item]) => {
             return (
-              <ActivityItem
-                key={item.id}
-                id={item.id}
-                start_date={item.start_date}
-                end_date={item.end_date}
-                start_time={item.start_time}
-                end_time={item.end_time}
-                details={item.details}
-                img={item.img}
-                activity={activity}
-                setActivity={setActivity}
-                activities={createdActivities}
-              />
+              <div>
+                <ActivityItem
+                  key={item.id}
+                  id={item.id}
+                  start_date={item.start_date}
+                  end_date={item.end_date}
+                  start_time={item.start_time}
+                  end_time={item.end_time}
+                  details={item.details}
+                  img={item.img}
+                  activity={activity}
+                  setActivity={setActivity}
+                  activities={createdActivities}
+                />
+                <button onClick={() => deleteActivity(item)}>DELETE</button>
+              </div>
             );
           })}
         {option === UPCOMING &&
