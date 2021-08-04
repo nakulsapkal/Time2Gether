@@ -17,7 +17,7 @@ function App() {
   const [activity, setActivity] = useState([]);
 
   //get logged-in user (an object) from local storage
-  const loginUser = JSON.parse(localStorage.getItem('User'))
+  // const loginUser = JSON.parse(localStorage.getItem('User'))
   
   // console.log("activities from app.js line 15: ",state,activities)
   return (
