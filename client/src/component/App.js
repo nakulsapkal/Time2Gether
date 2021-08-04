@@ -8,6 +8,7 @@ import Signup from "./Signup";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import MyActivities from "./MyActivities";
+import BusinessSignup from "./BusinessSignup";
 import {
   getUpcomingActivityForUser,
   getActivityCreatedByUser,
@@ -17,8 +18,9 @@ import {
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function App() {
-  const { user, setUser, state, validateUser, addUser } = useApplicationData();
-  const { users, activities, userActivities } = state;
+  const { user, setUser, state, validateUser, addUser, addBusinessUser } =
+    useApplicationData();
+  const { users, activities } = state;
   const [activity, setActivity] = useState([]);
   //const userData = JSON.parse(localStorage.getItem("userData"));
   let createdActivities,
@@ -51,7 +53,7 @@ function App() {
             <Route path="/login">
               <Login validateUser={validateUser} setUser={setUser} />
             </Route>
-            <Route path="/Signup">
+            <Route path="/signup">
               <Signup addUser={addUser} />
             </Route>
             <Route path="/user/activities">
@@ -67,6 +69,9 @@ function App() {
                   favouriteActivities={favouriteActivities}
                 />
               )}
+            </Route>
+            <Route path="/business/signup">
+              <BusinessSignup addBusinessUser={addBusinessUser} />
             </Route>
           </Switch>
         </section>

@@ -12,7 +12,7 @@ module.exports = (db) => {
       JOIN categories ON activities.category_id = categories.id;`
     )
       .then((result) => {
-        console.log("Activities records : ", result.rows);
+        console.log("One Activity record from activities:", result.rows[0]);
         res.json({ activities: result.rows });
       })
       .catch((err) => {

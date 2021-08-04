@@ -7,6 +7,7 @@ export default function useApplicationData(params) {
   const [state, setState] = useState({
     users: [],
     activities: [],
+    businessUser: [],
   });
 
   const [user, setUser] = useState([]);
@@ -15,16 +16,19 @@ export default function useApplicationData(params) {
   useEffect(() => {
     const p1 = axios.get("/api/users");
     const p2 = axios.get("/api/activities");
+    const p3 = axios.get("/api/business/users");
 
-    Promise.all([p1, p2]).then((all) => {
-      const [first, second] = all;
+    Promise.all([p1, p2, p3]).then((all) => {
+      const [first, second, third] = all;
       console.log("Users:", first.data.users);
       console.log("Activities:", second.data.activities);
+      console.log("Business users:", third.data.businessUsers);
       //For purpose of immutability copying the prev state first
       setState((prev) => ({
         ...prev,
         users: first.data.users,
         activities: second.data.activities,
+        businessUsers: third.data.businessUsers,
       }));
     });
 
@@ -43,7 +47,7 @@ export default function useApplicationData(params) {
     return false;
   }
 
-  // Validate email before submiting a new user
+  // Validate email before adding a new user
   function validateEmail(userEmail) {
     let userData;
     for (let obj in state.users) {
@@ -55,6 +59,18 @@ export default function useApplicationData(params) {
     return false;
   }
 
+  // Validate Registration number before adding a new business user
+  function validateRegNum(regNum) {
+    let userData;
+    for (let obj in state.businessUsers) {
+      userData = state.businessUsers[obj];
+      console.log("===========", userData);
+      if (userData.registration_number === regNum) {
+        return true;
+      }
+    }
+    return false;
+  }
   // Add a new user to the database
   function addUser(user) {
     const apiUrl = "/api/users/signup";
@@ -72,5 +88,24 @@ export default function useApplicationData(params) {
     }
   }
 
-  return { user, setUser, state, addUser, validateUser };
+  // Add a new business user to the database
+  function addBusinessUser(businessUser) {
+    const apiUrl = "/api/business/signup";
+    const regNum = businessUser.registrationNumber;
+    console.log("Registration number +++++++++++", regNum);
+    if (validateRegNum(regNum) === true) {
+      alert("Registration number is already in use");
+    } else {
+      console.log("Business user", businessUser);
+      return axios
+        .post(apiUrl, businessUser, {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((res) => {
+          window.location.replace("/");
+        })
+        .catch((error) => console.log(error));
+    }
+  }
+  return { user, setUser, state, addUser, validateUser, addBusinessUser };
 }
