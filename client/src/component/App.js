@@ -10,6 +10,8 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import MyActivities from "./MyActivities";
 import BusinessSignup from "./BusinessSignup";
+import BusinessLogin from "./BusinessLogin";
+
 import {
   getUpcomingActivityForUser,
   getActivityCreatedByUser,

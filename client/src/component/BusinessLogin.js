@@ -37,7 +37,7 @@ export default function Login(props) {
             id="registrationNumber"
             placeholder="Username"
             onChange={(event) => {
-              setEmail(event.target.value);
+              setRestrationNumber(event.target.value);
             }}
             value={registrationNumber}
           />
