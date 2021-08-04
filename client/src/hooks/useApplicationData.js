@@ -53,7 +53,7 @@ export default function useApplicationData(params) {
 
   // Validate registration number and password before logining
   function validateBusinessUser(registrationNumber, userPassword) {
-    let userData = state.users.find(
+    let userData = state.businessUsers.find(
       (obj) => obj.registration_number === registrationNumber && obj.password === userPassword
     );
 

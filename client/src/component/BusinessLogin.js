@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import { BrowserRouter as useHistory } from "react-router-dom";
-export default function Login(props) {
+import { BrowserRouter as Redirect, Link, useHistory } from "react-router-dom";
+
+export default function BusinessLogin(props) {
   const [password, setPassword] = useState("");
-  const [registrationNumber, setRestrationNumber] = useState("");
+  const [registrationNumber, setRegistrationNumber] = useState("");
   const [error, setError] = useState("");
   const { validateBusinessUser, setUser } = props;
 
   const history = useHistory();
   const validate = (event) => {
     event.preventDefault();
-    let user = validateBusinessUser(password, registrationNumber);
-    if (user) {
-      setUser(user);
-      history.push("/");
+    let businessUser = validateBusinessUser(registrationNumber, password);
+    if (businessUser) {
+      setUser(businessUser);
+      history.push("/business");
     } else {
       setError("Password or Registration number is incorrect!");
     }
@@ -20,7 +21,7 @@ export default function Login(props) {
 
   function reset() {
     setError("");
-    setRestrationNumber("");
+    setRegistrationNumber("");
     setPassword("");
   }
 
@@ -34,10 +35,9 @@ export default function Login(props) {
           <input
             name="registrationNumber"
             type="text"
-            id="registrationNumber"
-            placeholder="Username"
+            placeholder="Business Registration Number"
             onChange={(event) => {
-              setRestrationNumber(event.target.value);
+              setRegistrationNumber(event.target.value);
             }}
             value={registrationNumber}
           />
@@ -46,7 +46,6 @@ export default function Login(props) {
           <input
             name="password"
             type="password"
-            id="password"
             placeholder="Password"
             onChange={(event) => {
               setPassword(event.target.value);
