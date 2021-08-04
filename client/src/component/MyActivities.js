@@ -15,7 +15,6 @@ export default function MyActivities(props) {
     upcomingActivities,
     favouriteActivities,
     user,
-    activities,
     activity,
     setActivity,
     deleteActivity,

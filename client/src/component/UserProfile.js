@@ -1,5 +1,5 @@
 import React from "react";
-import "./UserProfile.css";
+import "../UserProfile.css";
 
 export function UserProfile(props) {
   const { first_name, last_name, avatar } = props.user;
