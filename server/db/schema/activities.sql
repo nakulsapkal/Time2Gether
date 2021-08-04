@@ -8,7 +8,6 @@ CREATE TABLE activities (
 	end_time TIME NOT NULL,
 	img VARCHAR(255),
 	details TEXT,
-	user_id INTEGER,
 	address_id INTEGER REFERENCES address(id) ON DELETE CASCADE,
 	category_id INTEGER REFERENCES categories(id) ON DELETE CASCADE
 );
