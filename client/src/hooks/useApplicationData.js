@@ -114,15 +114,9 @@ export default function useApplicationData(params) {
 
   //Delete an activity for a user
   function deleteActivity(activityObj) {
-    let index = state.userActivities.findIndex(
-      (actObj) => actObj.id === activityObj.id
+    const userActivities = state.userActivities.filter(
+      (activity) => activity.activity_id !== activityObj.activity_id
     );
-
-    // console.log("state.userActivities:", state.userActivities);
-    // console.log("activityObj:", activityObj);
-    // console.log("Index:", index);
-
-    const userActivities = [...state.userActivities];
 
     const url = `/api/user/activity/${activityObj.activity_id}`;
 
@@ -132,23 +126,14 @@ export default function useApplicationData(params) {
       })
       .then((result) => {
         if (result.status === "error") {
-          // Oops, something went wrong. Let's get that deleted Id back.
-          setState((prev) => ({
-            ...prev,
-            userActivities: userActivities,
-          }));
-
           if (result.status !== 200) {
             throw new Error(`Request failed: ${result.status}`);
           }
         } else {
           alert("Successfully Deleted Activity!");
-          userActivities.splice(index, 1);
-          setState((prev) => ({
-            ...prev,
-            userActivities: userActivities,
-          }));
-          window.location.reload();
+          const newState = state;
+          newState.userActivities = [...userActivities];
+          setState({ ...newState });
         }
       })
       .catch((err) => {

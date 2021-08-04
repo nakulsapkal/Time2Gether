@@ -28,6 +28,7 @@ function App() {
     addBusinessUser,
     deleteActivity,
   } = useApplicationData();
+
   const { users, activities, userActivities } = state;
 
   const [activity, setActivity] = useState([]);
