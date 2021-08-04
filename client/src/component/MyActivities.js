@@ -2,7 +2,7 @@ import React from "react";
 import ActivityItem from "./ActivityItem";
 import { useState } from "react";
 import { UserProfile } from "./UserProfile";
-import { ListItemAvatar } from "@material-ui/core";
+
 export default function MyActivities(props) {
   const CREATED = "Created";
   const UPCOMING = "Upcoming";

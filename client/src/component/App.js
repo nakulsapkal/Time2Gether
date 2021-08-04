@@ -44,12 +44,6 @@ function App() {
     favouriteActivities = getActivitiesFavouriteByUser(user.id, userActivities);
   }
 
-  //get logged-in user (an object) from local storage
-  // const loginUser = JSON.parse(localStorage.getItem('userData'))
-
-  // console.log("activities from app.js line 15: ",state,activities)
-  console.log("user from app.js line 21: ", user);
-  // console.log("state from app.js line 22: ", state);
   return (
     <Router>
       <div className="App">

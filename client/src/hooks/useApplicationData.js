@@ -121,7 +121,7 @@ export default function useApplicationData(params) {
     const url = `/api/user/activity/${activityObj.activity_id}`;
 
     return axios
-      .delete(url, activityObj, {
+      .delete(url, {
         headers: { "Content-Type": "application/json" },
       })
       .then((result) => {
@@ -130,14 +130,14 @@ export default function useApplicationData(params) {
             throw new Error(`Request failed: ${result.status}`);
           }
         } else {
-          alert("Successfully Deleted Activity!");
           const newState = state;
           newState.userActivities = [...userActivities];
           setState({ ...newState });
+          alert("Successfully Deleted Activity!");
         }
       })
       .catch((err) => {
-        console.error("Delete Activity Error: ", err);
+        console.error("Error While Deleting Activity: ", err);
       });
   }
 
