@@ -12,8 +12,9 @@ export default function BusinessLogin(props) {
     event.preventDefault();
     let businessUser = validateBusinessUser(registrationNumber, password);
     if (businessUser) {
+      console.log("This is a business user", businessUser);
       setUser(businessUser);
-      history.push("/business");
+      history.push("/");
     } else {
       setError("Password or Registration number is incorrect!");
     }
