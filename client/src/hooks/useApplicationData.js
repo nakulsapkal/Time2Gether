@@ -5,10 +5,11 @@ import axios from "axios";
 export default function useApplicationData(params) {
   //State Declaration and initialize it as an object
   const [state, setState] = useState({
-    users: {},
-    activities: {},
-    userActivities: {},
+    users: [],
+    activities: [],
   });
+
+  const [user, setUser] = useState([]);
 
   //This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
   useEffect(() => {
@@ -26,6 +27,8 @@ export default function useApplicationData(params) {
         activities: second.data.activities,
       }));
     });
+
+    setUser(JSON.parse(localStorage.getItem("userData")));
   }, []);
 
   function validateUser(userEmail, userPassword) {
@@ -35,22 +38,8 @@ export default function useApplicationData(params) {
 
     if (userData) {
       localStorage.setItem("userData", JSON.stringify(userData));
-      let userActivities = state.activities.filter(
-        (actObj) => actObj.user_id === userData.id
-      );
-      //console.log("userActivities", userActivities);
-      setState((prev) => ({
-        ...prev,
-        userActivities: userActivities,
-      }));
-      return true;
+      return userData;
     }
-    // for (let obj in state.users) {
-    //   userData = state.users[obj];
-    //   if (userData.email === userEmail && userData.password === userPassword) {
-    //     localStorage.setItem("userData", JSON.stringify(userData));
-    //   }
-    // }
     return false;
   }
 
@@ -83,5 +72,5 @@ export default function useApplicationData(params) {
     }
   }
 
-  return { state, addUser, validateUser };
+  return { user, setUser, state, addUser, validateUser };
 }
