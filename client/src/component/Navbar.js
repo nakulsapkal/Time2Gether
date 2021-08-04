@@ -1,11 +1,8 @@
 import React from "react";
 import "./Navbar.css";
 import SearchIcon from "@material-ui/icons/Search";
-// import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-// import { isLogin } from "../helpers/selectors";
-import Button from '@material-ui/core/Button';
 
 
 export default function Navbar(props) {
@@ -43,7 +40,7 @@ export default function Navbar(props) {
         {loginUser ? <span className="header__optionLineTwo header__space"> 
                     Hi, {loginUser && loginUser.first_name}!</span> 
         : <span className="header__optionLineTwo header__space" 
-                onClick={() => history.push('/signup')}> Signup</span> 
+                onClick={() => history.push('/signup')}> SignUp</span> 
         }
       </div>
 
