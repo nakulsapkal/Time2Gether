@@ -98,7 +98,10 @@ export default function useApplicationData(params) {
       return axios
         .post(apiUrl, user, { headers: { "Content-Type": "application/json" } })
         .then((res) => {
-          window.location.replace("/");
+          const newState = state;
+          newState.user = [...user];
+          setState({ ...newState });
+          alert("New user is successfully added!");
         })
         .catch((error) => console.log(error));
     }
@@ -108,7 +111,7 @@ export default function useApplicationData(params) {
   function addBusinessUser(businessUser) {
     const apiUrl = "/api/business/signup";
     const regNum = businessUser.registrationNumber;
-    console.log("Registration number +++++++++++", regNum);
+    //console.log("Registration number +++++++++++", regNum);
     if (validateRegNum(regNum) === true) {
       alert("Registration number is already in use");
     } else {
@@ -118,7 +121,10 @@ export default function useApplicationData(params) {
           headers: { "Content-Type": "application/json" },
         })
         .then((res) => {
-          window.location.replace("/");
+          const newState = state;
+          newState.businessUser = [...businessUser];
+          setState({ ...newState });
+          alert("New business user is successfully added!");
         })
         .catch((error) => console.log(error));
     }
