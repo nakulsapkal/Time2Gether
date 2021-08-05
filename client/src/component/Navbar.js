@@ -1,10 +1,11 @@
-import React from "react";
-import "../Navbar.css";
+import React, { useContext } from "react";
+import "./Navbar.css";
 import SearchIcon from "@material-ui/icons/Search";
 import { useHistory } from "react-router-dom";
+import { databaseContext } from "providers/DatabaseProvider";
 
-export default function Navbar(props) {
-	// const props.user = JSON.parse(localStorage.getItem('userData'));
+export default function Navbar() {
+	const { user } = useContext(databaseContext);
 	const history = useHistory();
 
 	return (
@@ -25,7 +26,7 @@ export default function Navbar(props) {
 			<div className="header__nav">
 				<div className="header__option">
 					<span className="header__optionLineTwo header__space">
-						{props.user ? (
+						{user ? (
 							<span
 								onClick={() => history.push("/activities/create")}
 								className="header__optionLineTwo header__space"
@@ -40,7 +41,7 @@ export default function Navbar(props) {
 
 				<div className="header__option">
 					<span className="header__optionLineTwo header__space">
-						{props.user ? (
+						{user ? (
 							<span
 								onClick={() => history.push("/user/activities")}
 								className="header__optionLineTwo header__space"
@@ -54,9 +55,9 @@ export default function Navbar(props) {
 				</div>
 
 				<div className="header__option">
-					{props.user ? (
+					{user ? (
 						<span className="header__optionLineTwo header__space">
-							Hi, {props.user && props.user.first_name}!
+							Hi, {user && user.first_name}!
 						</span>
 					) : (
 						<span
@@ -70,7 +71,7 @@ export default function Navbar(props) {
 				</div>
 
 				<div className="header__option header__space">
-					{props.user ? (
+					{user ? (
 						<span
 							onClick={() => {
 								history.push("/login");

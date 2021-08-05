@@ -1,7 +1,7 @@
-import "../App.css";
-import { useState, useContext } from "react";
+import "./App.css";
+import React from "react";
 // import useApplicationData from "hooks/useApplicationData";
-import {databaseContext} from 'providers/DatabaseProvider';
+import StateProvider from "providers/StateProvider";
 import Activity from "component/Activity";
 import ActivityDetail from "component/ActivityDetail";
 import ActivityCreate from "component/ActivityCreate";
@@ -13,96 +13,51 @@ import MyActivities from "./MyActivities";
 import BusinessSignup from "./BusinessSignup";
 import BusinessLogin from "./BusinessLogin";
 
-import {
-  getUpcomingActivityForUser,
-  getActivityCreatedByUser,
-  getActivitiesFavouriteByUser,
-  getActivityHistoryForUser,
-} from "helpers/selectors";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
-  const {
-    user,
-    setUser,
-    state,
-    validateUser,
-    addUser,
-    addBusinessUser,
-    deleteActivity,
-    validateBusinessUser
-  } = useContext(databaseContext);
-
-  const { users, activities, userActivities } = state;
-
-  const [activity, setActivity] = useState([]);
-
-  let createdActivities,
-    upcomingActivities,
-    activitiesHistory,
-    favouriteActivities;
-  if (user) {
-    createdActivities = getActivityCreatedByUser(user.id, userActivities);
-    upcomingActivities = getUpcomingActivityForUser(user.id, userActivities);
-    activitiesHistory = getActivityHistoryForUser(user.id, userActivities);
-    favouriteActivities = getActivitiesFavouriteByUser(user.id, userActivities);
-
-  }
-  
-  return (
-    <Router>
-      <div className="App">
-        <section>
-          <Navbar user={user} />
-        </section>
-        <section>
-          <Switch>
-            <Route path="/" exact>
-              <Activity activities={activities} setActivity={setActivity} />
-            </Route>
-            <Route path="/activities/detail">
-              <ActivityDetail user={user} activity={activity} userActivities={userActivities}/>
-            </Route>
-            <Route path="/activities/create">
-              <ActivityCreate />
-            </Route>
-            <Route path="/login">
-              <Login validateUser={validateUser} setUser={setUser} />
-            </Route>
-            <Route path="/signup">
-              <Signup addUser={addUser} />
-            </Route>
-            <Route path="/user/activities">
-              {user && (
-                <MyActivities
-                  key={user.id}
-                  id={user.id}
-                  user={user}
-                  activities={userActivities}
-                  setActivity={setActivity}
-                  createdActivities={createdActivities}
-                  upcomingActivities={upcomingActivities}
-                  activitiesHistory={activitiesHistory}
-                  favouriteActivities={favouriteActivities}
-                  deleteActivity={deleteActivity}
-                />
-              )}
-            </Route>
-            <Route path="/business/signup">
-              <BusinessSignup addBusinessUser={addBusinessUser} />
-            </Route>
-            <Route path="/business/login">
-              <BusinessLogin validateBusinessUser={validateBusinessUser} setUser={setUser}/>
-            </Route>
-          </Switch>
-        </section>
-
-        <section>
-          <Footer />
-        </section>
-      </div>
-    </Router>
-  );
+	return (
+		<StateProvider>
+			<Router>
+				<div className="App">
+					<section>
+						<Navbar />
+					</section>
+					<section>
+						<Switch>
+							<Route path="/" exact>
+								<Activity />
+							</Route>
+							<Route path="/activities/detail">
+								<ActivityDetail />
+							</Route>
+							<Route path="/activities/create">
+								<ActivityCreate />
+							</Route>
+							<Route path="/login">
+								<Login />
+							</Route>
+							<Route path="/signup">
+								<Signup />
+							</Route>
+							<Route path="/user/activities">
+								<MyActivities />
+							</Route>
+							<Route path="/business/signup">
+								<BusinessSignup />
+							</Route>
+							<Route path="/business/login">
+								<BusinessLogin />
+							</Route>
+						</Switch>
+					</section>
+					<section>
+						<Footer />
+					</section>
+				</div>
+			</Router>
+		</StateProvider>
+	);
 }
 
 export default App;

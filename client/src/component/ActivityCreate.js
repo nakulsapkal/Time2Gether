@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../ActivityCreate.css";
+import "./ActivityCreate.css";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { getLoggedUserId } from "../helpers/selectors";
@@ -62,7 +62,8 @@ export default function ActivityCreate(props) {
 		try {
 			// await saveFormData();
 			// alert("Your activity was successfully created!");
-			const result = await saveFormData();
+			await saveFormData();
+			history.push("/");
 			alert("Your activity was successfully created!");
 			setValues({
 				img: "",
@@ -78,8 +79,6 @@ export default function ActivityCreate(props) {
 				province: "",
 				postal_code: "",
 			});
-
-			if (result) history.push("/");
 		} catch (e) {
 			alert(`Failed! ${e.message}`);
 		}
