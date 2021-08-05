@@ -20,28 +20,24 @@ import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 function App() {
   const { user, setUser, state, validateUser, addUser, addBusinessUser } =
-    useApplicationData();
+  useApplicationData();
   const { users, activities, userActivities } = state;
   console.log("userActivities from line 25 app.js: ", userActivities)
   const [activity, setActivity] = useState([]);
+
   //const userData = JSON.parse(localStorage.getItem("userData"));
-  let createdActivities,
-    upcomingActivities,
-    activitiesHistory,
-    favouriteActivities;
+  let createdActivities, upcomingActivities, activitiesHistory,favouriteActivities;
+
   if (user) {
     createdActivities = getActivityCreatedByUser(user.id, userActivities);
     upcomingActivities = getUpcomingActivityForUser(user.id, userActivities);
     activitiesHistory = getActivityHistoryForUser(user.id, userActivities);
     favouriteActivities = getActivitiesFavouriteByUser(user.id, userActivities);
-  }
 
-  //get logged-in user (an object) from local storage
-  // const loginUser = JSON.parse(localStorage.getItem('userData'))
-  
-  // console.log("activities from app.js line 15: ",state,activities)
+  }
   console.log("user from app.js line 21: ", user);
   // console.log("state from app.js line 22: ", state);
+ 
   return (
     <Router>
       <div className="App">
@@ -54,7 +50,7 @@ function App() {
               <Activity activities={activities} setActivity={setActivity} />
             </Route>
             <Route path="/activities/detail">
-              <ActivityDetail activity={activity} />
+              <ActivityDetail user={user} activity={activity} userActivities={userActivities}/>
             </Route>
             <Route path="/activities/create">
               <ActivityCreate  />
