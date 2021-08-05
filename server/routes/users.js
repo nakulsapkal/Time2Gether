@@ -22,33 +22,24 @@ module.exports = (db) => {
     db.query(
       `
       INSERT INTO users (first_name, last_name, email, password) 
-      VALUES ($1, $2, $3, $4)`,
+      VALUES ($1, $2, $3, $4) RETURNING *`,
       [firstName, lastName, email, password]
     )
       .then((data) => {
+        console.log("Users from backend====", data.rows);
         res.json(data.rows[0]);
       })
       .catch((error) => console.log(error));
   });
 
-  // router.get("/user/joineded", (req, res) => {
-  //   db.query( `SELECT * FROM user_activity;`
-  //     ).then(data => {
-  //       res.json(data.rows[0]);
-  //     }).catch(error => console.log(error));
-  // })
-
   // add a new "join" event to user-activity table
   router.post("/users/joined", (req, res) => {
     const { joined_at, user_id, activity_id } = req.body.body;
-    console.log("joined data ******************", req.body.body) 
-    // console.log("user_id******************",values.user_id) 
-    // console.log("activity_id******************",values.activity_id) 
 
     db.query( `
-      INSERT INTO user_activity (joined_at, user_id, activity_id) VALUES ($1, $2, $3)
-      RETURNING *`, [new Date(), user_id, activity_id]
-      // .toISOString().slice(0, 10)
+      INSERT INTO user_activity (joined_at, user_id, activity_id) 
+      VALUES ($1, $2, $3)
+      RETURNING *`, [new Date().toISOString().slice(0, 10), user_id, activity_id]
     ).then(data => {
           res.json(data.rows);
         }).catch(error => console.log(error));
@@ -68,6 +59,21 @@ module.exports = (db) => {
   })
 
 
+  //Delete an activity for user
+  router.delete("/user/activity/:id", (request, response) => {
+    if (process.env.TEST_ERROR) {
+      setTimeout(() => response.status(500).json({}), 1000);
+      return;
+    }
+
+    db.query(`DELETE FROM activities WHERE activities.id =$1::integer`, [
+      request.params.id,
+    ])
+      .then((data) => {
+        response.status(200).json({});
+      })
+      .catch((err) => console.error("Error deleting data at backend: ", err));
+  });
 
   return router;
 };

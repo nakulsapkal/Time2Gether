@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { createContext, useState, useEffect } from 'react';
 import axios from "axios";
-//This hook is to manage data for application
-export default function useApplicationData(params) {
-  //State Declaration and initialize it as an object
+
+export default function StateProvider(props) {
+
+  // Here is our Shared State Object
   const [state, setState] = useState({
     users: [],
     activities: [],
     businessUser: [],
-    userActivities: [],
+    userActivities: []
   });
 
   const [user, setUser] = useState([]);
@@ -34,7 +35,6 @@ export default function useApplicationData(params) {
         userActivities: fourth.data.userActivities,
       }));
     });
-
     setUser(JSON.parse(localStorage.getItem("userData")));
   }, []);
 
@@ -166,15 +166,34 @@ export default function useApplicationData(params) {
         console.error("Error While Deleting Activity: ", err);
       });
   }
+  // Functions to change  the counter state item
+  // const increment = function () {
+  //   setState({ ...state, counter: state.counter + 1 });
+  // };
+  // const decrement = function () {
+  //   setState({ ...state, counter: state.counter - 1 });
+  // };
+  // const clear = function () {
+  //   setState({ ...state, counter: 0 });
+  // };
 
-  return {
-    user,
-    setUser,
+  // This list can get long with a lot of functions.  Reducer may be a better choice
+  const providerData = { user,
     state,
+    setUser,
     addUser,
     validateUser,
     addBusinessUser,
     deleteActivity,
-    validateBusinessUser
-  };
-}
+    validateBusinessUser };
+
+  // We can now use this as a component to wrap anything 
+  // that needs our state
+  return (
+    <databaseContext.Provider value={providerData}>
+      {props.children}
+    </databaseContext.Provider>
+  );
+};
+
+export const databaseContext = createContext();

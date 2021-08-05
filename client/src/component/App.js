@@ -1,6 +1,7 @@
 import "../App.css";
-import { useState } from "react";
-import useApplicationData from "hooks/useApplicationData";
+import { useState, useContext } from "react";
+// import useApplicationData from "hooks/useApplicationData";
+import {databaseContext} from 'providers/DatabaseProvider';
 import Activity from "component/Activity";
 import ActivityDetail from "component/ActivityDetail";
 import ActivityCreate from "component/ActivityCreate";
@@ -10,24 +11,36 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import MyActivities from "./MyActivities";
 import BusinessSignup from "./BusinessSignup";
+import BusinessLogin from "./BusinessLogin";
+
 import {
   getUpcomingActivityForUser,
   getActivityCreatedByUser,
   getActivitiesFavouriteByUser,
   getActivityHistoryForUser,
 } from "helpers/selectors";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
-  const { user, setUser, state, validateUser, addUser, addBusinessUser } =
-  useApplicationData();
+  const {
+    user,
+    setUser,
+    state,
+    validateUser,
+    addUser,
+    addBusinessUser,
+    deleteActivity,
+    validateBusinessUser
+  } = useContext(databaseContext);
+
   const { users, activities, userActivities } = state;
-  console.log("userActivities from line 25 app.js: ", userActivities)
+
   const [activity, setActivity] = useState([]);
 
-  //const userData = JSON.parse(localStorage.getItem("userData"));
-  let createdActivities, upcomingActivities, activitiesHistory,favouriteActivities;
-
+  let createdActivities,
+    upcomingActivities,
+    activitiesHistory,
+    favouriteActivities;
   if (user) {
     createdActivities = getActivityCreatedByUser(user.id, userActivities);
     upcomingActivities = getUpcomingActivityForUser(user.id, userActivities);
@@ -35,14 +48,12 @@ function App() {
     favouriteActivities = getActivitiesFavouriteByUser(user.id, userActivities);
 
   }
-  console.log("user from app.js line 21: ", user);
-  // console.log("state from app.js line 22: ", state);
- 
+  
   return (
     <Router>
       <div className="App">
         <section>
-          <Navbar user={user}/>
+          <Navbar user={user} />
         </section>
         <section>
           <Switch>
@@ -53,7 +64,7 @@ function App() {
               <ActivityDetail user={user} activity={activity} userActivities={userActivities}/>
             </Route>
             <Route path="/activities/create">
-              <ActivityCreate  />
+              <ActivityCreate />
             </Route>
             <Route path="/login">
               <Login validateUser={validateUser} setUser={setUser} />
@@ -73,11 +84,15 @@ function App() {
                   upcomingActivities={upcomingActivities}
                   activitiesHistory={activitiesHistory}
                   favouriteActivities={favouriteActivities}
+                  deleteActivity={deleteActivity}
                 />
               )}
             </Route>
             <Route path="/business/signup">
               <BusinessSignup addBusinessUser={addBusinessUser} />
+            </Route>
+            <Route path="/business/login">
+              <BusinessLogin validateBusinessUser={validateBusinessUser} setUser={setUser}/>
             </Route>
           </Switch>
         </section>

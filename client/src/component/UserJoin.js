@@ -8,9 +8,9 @@ export default function UserJoin(props) {
     activity_id: props.activity_id
   });
 
-    // console.log("joined_at******************", values.joined_at) 
-    // console.log("user_id******************",values.user_id) 
-    // console.log("activity_id******************",values.activity_id) 
+    console.log("joined_at******************", values.joined_at) 
+    console.log("user_id******************",values.user_id) 
+    console.log("activity_id******************",values.activity_id) 
 
 
   const addJoin = async () => {

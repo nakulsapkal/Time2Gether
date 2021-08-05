@@ -1,7 +1,6 @@
 import React from "react";
 import "./Navbar.css";
 import SearchIcon from "@material-ui/icons/Search";
-import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 
 
@@ -45,9 +44,11 @@ export default function Navbar(props) {
       </div>
 
       <div className="header__option header__space">
-        {props.user ? <span className="header__optionLineTwo header__space">LogOut </span> 
-        : <span className="header__optionLineTwo header__space" 
-                onClick={() => history.push('/login')}>LogIn</span> }
+        {props.user ? <span onClick={() => {
+                  history.push("/login");
+                  localStorage.removeItem('userData');
+        }}className="header__optionLineTwo header__space">LogOut</span> 
+        : <span className="header__optionLineTwo header__space" onClick={() => history.push("/login")}>LogIn</span> }
       </div>
       
     </div>
