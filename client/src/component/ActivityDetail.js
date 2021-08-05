@@ -1,7 +1,10 @@
 import React from "react";
+import {getLoggedUserId, getJoinedTime} from '../helpers/selectors'
+import UserJoin from "./UserJoin";
 
 export default function ActivityDetail(props) {
   const {
+    id,
     start_date,
     end_date,
     start_time,
@@ -14,8 +17,10 @@ export default function ActivityDetail(props) {
     province,
     postal_code,
   } = props.activity[0];
+  const loginUserId = getLoggedUserId();
 
-  // const { street_number, street_name, city, province, postal_code} = props.actAddress[0];
+  let joined_at = getJoinedTime(props.user.id, id, props.userActivities);
+  console.log("joined_at******************",joined_at) 
 
   return (
     <div className="card">
@@ -39,6 +44,10 @@ export default function ActivityDetail(props) {
         <p>City: {city}</p>
         <p>Province: {province}</p>
         <p>Postal Code: {postal_code}</p>
+      </section>
+
+      <section>
+        { loginUserId && <UserJoin activity_id={id} user_id ={loginUserId} joined_at={joined_at} /> }
       </section>
     </div>
   );

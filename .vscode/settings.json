@@ -10,5 +10,6 @@
 			"password": "labber",
 			"name": "Final_Project"
 		}
-	]
+	],
+	"prettier.useTabs": true
 }

@@ -32,6 +32,33 @@ module.exports = (db) => {
       .catch((error) => console.log(error));
   });
 
+  // add a new "join" event to user-activity table
+  router.post("/users/joined", (req, res) => {
+    const { joined_at, user_id, activity_id } = req.body.body;
+
+    db.query( `
+      INSERT INTO user_activity (joined_at, user_id, activity_id) 
+      VALUES ($1, $2, $3)
+      RETURNING *`, [new Date().toISOString().slice(0, 10), user_id, activity_id]
+    ).then(data => {
+          res.json(data.rows);
+        }).catch(error => console.log(error));
+  })
+
+  // cancel a "join" event to user-activity table
+  router.put("/users/joined", (req, res) => {
+    const { user_id, activity_id } = req.body.body;
+
+    db.query( `DELETE FROM user_activity 
+      WHERE user_id = $1
+      AND activity_id = $2
+      RETURNING *`, [user_id, activity_id]
+    ).then(data => {
+          res.json(data.rows[0]);
+        }).catch(error => console.log(error));
+  })
+
+
   //Delete an activity for user
   router.delete("/user/activity/:id", (request, response) => {
     if (process.env.TEST_ERROR) {

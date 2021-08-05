@@ -1,6 +1,7 @@
 import "../App.css";
-import { useState } from "react";
-import useApplicationData from "hooks/useApplicationData";
+import { useState, useContext } from "react";
+// import useApplicationData from "hooks/useApplicationData";
+import {databaseContext} from 'providers/DatabaseProvider';
 import Activity from "component/Activity";
 import ActivityDetail from "component/ActivityDetail";
 import ActivityCreate from "component/ActivityCreate";
@@ -30,7 +31,7 @@ function App() {
     addBusinessUser,
     deleteActivity,
     validateBusinessUser
-  } = useApplicationData();
+  } = useContext(databaseContext);
 
   const { users, activities, userActivities } = state;
 
@@ -45,8 +46,9 @@ function App() {
     upcomingActivities = getUpcomingActivityForUser(user.id, userActivities);
     activitiesHistory = getActivityHistoryForUser(user.id, userActivities);
     favouriteActivities = getActivitiesFavouriteByUser(user.id, userActivities);
-  }
 
+  }
+  
   return (
     <Router>
       <div className="App">
@@ -59,7 +61,7 @@ function App() {
               <Activity activities={activities} setActivity={setActivity} />
             </Route>
             <Route path="/activities/detail">
-              <ActivityDetail activity={activity} />
+              <ActivityDetail user={user} activity={activity} userActivities={userActivities}/>
             </Route>
             <Route path="/activities/create">
               <ActivityCreate />
