@@ -91,6 +91,7 @@ export default function useApplicationData(params) {
   function addUser(user) {
     const apiUrl = "/api/users/signup";
     const email = user.email;
+    //const users = state.users;
     if (validateEmail(email) === true) {
       alert("email is already in use");
     } else {
@@ -98,11 +99,17 @@ export default function useApplicationData(params) {
       return axios
         .post(apiUrl, user, { headers: { "Content-Type": "application/json" } })
         .then((res) => {
+
+          const newUser = res.data;
           const newState = state;
-          console.log("this is state from useApplicationData", state);
-          newState.user = {...user};
+          newState.users.push(newUser);
+          console.log("This is newState.users", newState.users);
           setState({ ...newState });
           alert("New user is successfully added!");
+          let userData = res.data;
+            if (userData) {
+          localStorage.setItem("userData", JSON.stringify(userData));
+          }
         })
         .catch((error) => console.log(error));
     }
