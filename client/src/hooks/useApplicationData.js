@@ -99,7 +99,8 @@ export default function useApplicationData(params) {
         .post(apiUrl, user, { headers: { "Content-Type": "application/json" } })
         .then((res) => {
           const newState = state;
-          newState.user = [...user];
+          console.log("this is state from useApplicationData", state);
+          newState.user = {...user};
           setState({ ...newState });
           alert("New user is successfully added!");
         })
