@@ -6,12 +6,13 @@ export default function Login(props) {
   const [error, setError] = useState("");
   const { validateUser, setUser } = props;
   const [checked, setChecked] = useState(false);
+  
   const handleChange = () => {
     setChecked(!checked);
     const checkData = {checked: !checked};
     console.log(" Checkdata from Login", checkData);
-
   }
+  
   const history = useHistory();
   const validate = (event) => {
     event.preventDefault();
