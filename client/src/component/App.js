@@ -21,8 +21,6 @@ import {
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
-  const { user, setUser, state, validateUser, addUser, addBusinessUser, validateBusinessUser } =
-    useApplicationData();
   const {
     user,
     setUser,
@@ -31,6 +29,7 @@ function App() {
     addUser,
     addBusinessUser,
     deleteActivity,
+    validateBusinessUser
   } = useApplicationData();
 
   const { users, activities, userActivities } = state;

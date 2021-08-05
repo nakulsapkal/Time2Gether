@@ -163,5 +163,4 @@ export default function useApplicationData(params) {
     deleteActivity,
     validateBusinessUser
   };
->>>>>>> 04a4ad5d48edd10c552d8c04b57864d62cf988b5
 }
