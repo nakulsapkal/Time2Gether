@@ -1,6 +1,8 @@
 import React, { useState }from 'react';
 import './ActivityCreate.css';
 import axios from 'axios';
+import {getLoggedUserId} from '../helpers/selectors'
+import { Redirect, Link, useHistory } from "react-router-dom";
 // import 'date-fns';
 // import DateFnsUtils from '@date-io/date-fns'; 
 // import {
@@ -9,10 +11,9 @@ import axios from 'axios';
 //   DateTimePicker,
 //   MuiPickersUtilsProvider,
 // } from '@material-ui/pickers';
-
 export default function ActivityCreate (props) {
-  const loginUser = JSON.parse(localStorage.getItem('userData'))
-  const loginUserId = loginUser.id
+  let history = useHistory();
+  const loginUserId = getLoggedUserId()
 
   const [values, setValues] = useState({
     img: "", details: "", category: "",
@@ -29,7 +30,7 @@ export default function ActivityCreate (props) {
 
 
   const saveFormData = async () => {
-    console.log("values from line 30: ", values);
+    // console.log("values from line 30: ", values);
     const response = await axios.post('/api/activities/create', {
       body: values
     });
@@ -42,14 +43,18 @@ export default function ActivityCreate (props) {
   const onSubmit = async (event) => {
     event.preventDefault(); 
     try {
-      await saveFormData();
+      const result = await saveFormData();
       alert('Your activity was successfully created!');
       setValues({
         img: "", details: "", category: "",start_date: "", end_date: "", start_time: "", end_time: "",  
         street_number: "", street_name: "", city: "", province: "", postal_code: ""
       });
+
+      if(result) 
+        history.push('/');
+      
     } catch (e) {
-      alert(` Failed! ${e.message}`);
+      alert(`Failed! ${e.message}`);
     }
   }
 
