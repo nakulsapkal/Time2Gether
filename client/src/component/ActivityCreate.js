@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../ActivityCreate.css";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+
 // import 'date-fns';
 // import DateFnsUtils from '@date-io/date-fns';
 // import {
@@ -11,6 +13,9 @@ import axios from "axios";
 // } from '@material-ui/pickers';
 
 export default function ActivityCreate(props) {
+  const location = useLocation();
+  console.log("History State:", location);
+  const activityObj = location.state;
   const loginUser = JSON.parse(localStorage.getItem("userData"));
   const loginUserId = loginUser.id;
 

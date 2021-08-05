@@ -2,12 +2,15 @@ import React from "react";
 import ActivityItem from "./ActivityItem";
 import { useState } from "react";
 import { UserProfile } from "./UserProfile";
+import { useHistory } from "react-router-dom";
 
 export default function MyActivities(props) {
   const CREATED = "Created";
   const UPCOMING = "Upcoming";
   const FAVOURITE = "Favourite";
   const HISTORY = "History";
+
+  const history = useHistory();
 
   const {
     createdActivities,
@@ -24,6 +27,12 @@ export default function MyActivities(props) {
   const handleChange = (event) => {
     setOption(event.target.value);
   };
+
+  function handleEditActivity(activityObj) {
+    history.push("/activities/create", activityObj);
+    // console.log("Option:", option);
+    // console.log("Activity Obj:", activityObj);
+  }
 
   return (
     <div>
@@ -54,6 +63,7 @@ export default function MyActivities(props) {
                   setActivity={setActivity}
                   activities={createdActivities}
                 />
+                <button onClick={() => handleEditActivity(item)}>EDIT</button>
                 <button onClick={() => deleteActivity(item)}>DELETE</button>
               </div>
             );
