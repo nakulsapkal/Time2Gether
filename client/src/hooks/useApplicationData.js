@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 //This hook is to manage data for application
 export default function useApplicationData(params) {
   //State Declaration and initialize it as an object
@@ -8,7 +7,7 @@ export default function useApplicationData(params) {
     users: [],
     activities: [],
     businessUser: [],
-    userActivities: []
+    userActivities: [],
   });
 
   const [user, setUser] = useState([]);
@@ -32,7 +31,7 @@ export default function useApplicationData(params) {
         users: first.data.users,
         activities: second.data.activities,
         businessUsers: third.data.businessUsers,
-        userActivities: fourth.data.userActivities
+        userActivities: fourth.data.userActivities,
       }));
     });
 
@@ -87,6 +86,7 @@ export default function useApplicationData(params) {
     }
     return false;
   }
+
   // Add a new user to the database
   function addUser(user) {
     const apiUrl = "/api/users/signup";
@@ -123,5 +123,45 @@ export default function useApplicationData(params) {
         .catch((error) => console.log(error));
     }
   }
-  return { user, setUser, state, addUser, validateUser, addBusinessUser, validateBusinessUser };
+
+  //Delete an activity for a user
+  function deleteActivity(activityObj) {
+    const userActivities = state.userActivities.filter(
+      (activity) => activity.activity_id !== activityObj.activity_id
+    );
+
+    const url = `/api/user/activity/${activityObj.activity_id}`;
+
+    return axios
+      .delete(url, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((result) => {
+        if (result.status === "error") {
+          if (result.status !== 200) {
+            throw new Error(`Request failed: ${result.status}`);
+          }
+        } else {
+          const newState = state;
+          newState.userActivities = [...userActivities];
+          setState({ ...newState });
+          alert("Successfully Deleted Activity!");
+        }
+      })
+      .catch((err) => {
+        console.error("Error While Deleting Activity: ", err);
+      });
+  }
+
+  return {
+    user,
+    setUser,
+    state,
+    addUser,
+    validateUser,
+    addBusinessUser,
+    deleteActivity,
+    validateBusinessUser
+  };
+>>>>>>> 04a4ad5d48edd10c552d8c04b57864d62cf988b5
 }

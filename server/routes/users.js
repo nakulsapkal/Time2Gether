@@ -31,5 +31,21 @@ module.exports = (db) => {
       .catch((error) => console.log(error));
   });
 
+  //Delete an activity for user
+  router.delete("/user/activity/:id", (request, response) => {
+    if (process.env.TEST_ERROR) {
+      setTimeout(() => response.status(500).json({}), 1000);
+      return;
+    }
+
+    db.query(`DELETE FROM activities WHERE activities.id =$1::integer`, [
+      request.params.id,
+    ])
+      .then((data) => {
+        response.status(200).json({});
+      })
+      .catch((err) => console.error("Error deleting data at backend: ", err));
+  });
+
   return router;
 };

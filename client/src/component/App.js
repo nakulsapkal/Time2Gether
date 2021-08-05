@@ -18,15 +18,25 @@ import {
   getActivitiesFavouriteByUser,
   getActivityHistoryForUser,
 } from "helpers/selectors";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
   const { user, setUser, state, validateUser, addUser, addBusinessUser, validateBusinessUser } =
     useApplicationData();
+  const {
+    user,
+    setUser,
+    state,
+    validateUser,
+    addUser,
+    addBusinessUser,
+    deleteActivity,
+  } = useApplicationData();
+
   const { users, activities, userActivities } = state;
-  console.log("userActivities from line 27 app.js: ", userActivities)
+
   const [activity, setActivity] = useState([]);
-  //const userData = JSON.parse(localStorage.getItem("userData"));
+
   let createdActivities,
     upcomingActivities,
     activitiesHistory,
@@ -38,17 +48,11 @@ function App() {
     favouriteActivities = getActivitiesFavouriteByUser(user.id, userActivities);
   }
 
-  //get logged-in user (an object) from local storage
-  // const loginUser = JSON.parse(localStorage.getItem('userData'))
-  
-  // console.log("activities from app.js line 15: ",state,activities)
-  console.log("user from app.js line 45: ", user);
-   // console.log("state from app.js line 22: ", state);
   return (
     <Router>
       <div className="App">
         <section>
-          <Navbar user={user}/>
+          <Navbar user={user} />
         </section>
         <section>
           <Switch>
@@ -59,7 +63,7 @@ function App() {
               <ActivityDetail activity={activity} />
             </Route>
             <Route path="/activities/create">
-              <ActivityCreate  />
+              <ActivityCreate />
             </Route>
             <Route path="/login">
               <Login validateUser={validateUser} setUser={setUser} />
@@ -79,6 +83,7 @@ function App() {
                   upcomingActivities={upcomingActivities}
                   activitiesHistory={activitiesHistory}
                   favouriteActivities={favouriteActivities}
+                  deleteActivity={deleteActivity}
                 />
               )}
             </Route>
