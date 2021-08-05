@@ -22,10 +22,11 @@ module.exports = (db) => {
     db.query(
       `
       INSERT INTO users (first_name, last_name, email, password) 
-      VALUES ($1, $2, $3, $4)`,
+      VALUES ($1, $2, $3, $4) RETURNING *`,
       [firstName, lastName, email, password]
     )
       .then((data) => {
+        console.log("Users from backend====", data.rows);
         res.json(data.rows[0]);
       })
       .catch((error) => console.log(error));

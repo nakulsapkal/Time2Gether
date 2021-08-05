@@ -50,6 +50,18 @@ export default function useApplicationData(params) {
     return false;
   }
 
+  // Validate registration number and password before logining
+  function validateBusinessUser(registrationNumber, userPassword) {
+    let userData = state.businessUsers.find(
+      (obj) => obj.registration_number === registrationNumber && obj.password === userPassword
+    );
+
+    if (userData) {
+      localStorage.setItem("userData", JSON.stringify(userData));
+      return userData;
+    }
+    return false;
+  }
   // Validate email before adding a new user
   function validateEmail(userEmail) {
     let userData;
@@ -67,7 +79,7 @@ export default function useApplicationData(params) {
     let userData;
     for (let obj in state.businessUsers) {
       userData = state.businessUsers[obj];
-      console.log("===========", userData);
+      //console.log("===========", userData);
       if (userData.registration_number === regNum) {
         return true;
       }
@@ -79,6 +91,7 @@ export default function useApplicationData(params) {
   function addUser(user) {
     const apiUrl = "/api/users/signup";
     const email = user.email;
+    //const users = state.users;
     if (validateEmail(email) === true) {
       alert("email is already in use");
     } else {
@@ -86,7 +99,17 @@ export default function useApplicationData(params) {
       return axios
         .post(apiUrl, user, { headers: { "Content-Type": "application/json" } })
         .then((res) => {
-          window.location.replace("/");
+
+          const newUser = res.data;
+          const newState = state;
+          newState.users.push(newUser);
+          console.log("This is newState.users", newState.users);
+          setState({ ...newState });
+          alert("New user is successfully added!");
+          let userData = res.data;
+            if (userData) {
+          localStorage.setItem("userData", JSON.stringify(userData));
+          }
         })
         .catch((error) => console.log(error));
     }
@@ -96,7 +119,7 @@ export default function useApplicationData(params) {
   function addBusinessUser(businessUser) {
     const apiUrl = "/api/business/signup";
     const regNum = businessUser.registrationNumber;
-    console.log("Registration number +++++++++++", regNum);
+    //console.log("Registration number +++++++++++", regNum);
     if (validateRegNum(regNum) === true) {
       alert("Registration number is already in use");
     } else {
@@ -106,7 +129,10 @@ export default function useApplicationData(params) {
           headers: { "Content-Type": "application/json" },
         })
         .then((res) => {
-          window.location.replace("/");
+          const newState = state;
+          newState.businessUser = [...businessUser];
+          setState({ ...newState });
+          alert("New business user is successfully added!");
         })
         .catch((error) => console.log(error));
     }
@@ -149,5 +175,6 @@ export default function useApplicationData(params) {
     validateUser,
     addBusinessUser,
     deleteActivity,
+    validateBusinessUser
   };
 }

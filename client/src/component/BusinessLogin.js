@@ -1,59 +1,52 @@
 import React, { useState } from "react";
-import { BrowserRouter as useHistory } from "react-router-dom";
-export default function Login(props) {
-  const [email, setEmail] = useState("");
+import { BrowserRouter as Redirect, Link, useHistory } from "react-router-dom";
+
+export default function BusinessLogin(props) {
   const [password, setPassword] = useState("");
+  const [registrationNumber, setRegistrationNumber] = useState("");
   const [error, setError] = useState("");
-  const { validateUser, setUser } = props;
-  const [checked, setChecked] = useState(false);
-  
-  const handleChange = () => {
-    setChecked(!checked);
-    const checkData = {checked: !checked};
-    console.log(" Checkdata from Login", checkData);
-  }
-  
+  const { validateBusinessUser, setUser } = props;
+
   const history = useHistory();
   const validate = (event) => {
     event.preventDefault();
-    let user = validateUser(email, password);
-    if (user) {
-      setUser(user);
+    let businessUser = validateBusinessUser(registrationNumber, password);
+    if (businessUser) {
+      console.log("This is a business user", businessUser);
+      setUser(businessUser);
       history.push("/");
     } else {
-      setError("Username or Password is incorrect!");
+      setError("Password or Registration number is incorrect!");
     }
   };
 
   function reset() {
     setError("");
-    setEmail("");
+    setRegistrationNumber("");
     setPassword("");
   }
 
   return (
     <main>
       <header>
-        <h1>Login</h1>
+        <h1>Busines Login</h1>
       </header>
       <form onSubmit={validate}>
         <div>
           <input
-            name="email"
-            type="email"
-            id="email"
-            placeholder="Username"
+            name="registrationNumber"
+            type="text"
+            placeholder="Business Registration Number"
             onChange={(event) => {
-              setEmail(event.target.value);
+              setRegistrationNumber(event.target.value);
             }}
-            value={email}
+            value={registrationNumber}
           />
         </div>
         <div>
           <input
             name="password"
             type="password"
-            id="password"
             placeholder="Password"
             onChange={(event) => {
               setPassword(event.target.value);
@@ -61,14 +54,6 @@ export default function Login(props) {
             value={password}
           />
         </div>
-        
-        <div>
-          <label>
-            <input type="checkbox" checked={checked} onChange={handleChange} />
-            Business user
-          </label>
-        </div>
-
         <div>
           <input type="button" onClick={() => reset()} value="Cancel" />
           <button type="submit">Login</button>

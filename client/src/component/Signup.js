@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom';
 
 function Signup(props) {
   const [firstName, setFirstName] = useState(props.firstName || '');
@@ -6,7 +7,7 @@ function Signup(props) {
   const [email, setEmail] = useState(props.email || '');
   const [password, setPassword] = useState(props.password || '');
   const [error, setError] = useState("");
-  //const apiUrl = "/api/users/signup";  
+  const history = useHistory();  
   const Registration = (event) => {
     if (firstName === "") {
       setError("First name cannot be blank");
@@ -28,7 +29,10 @@ function Signup(props) {
       event.preventDefault();
       const customData = { firstName: firstName, lastName: lastName, email: email, password: password };
       //console.log("This is customData in line 12 of signup",customData)
-      props.addUser(customData);
+      const result = props.addUser(customData);
+      if (result) {
+        history.push("/")
+      }
     }
   }
 

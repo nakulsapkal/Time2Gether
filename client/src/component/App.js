@@ -10,6 +10,8 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import MyActivities from "./MyActivities";
 import BusinessSignup from "./BusinessSignup";
+import BusinessLogin from "./BusinessLogin";
+
 import {
   getUpcomingActivityForUser,
   getActivityCreatedByUser,
@@ -27,6 +29,7 @@ function App() {
     addUser,
     addBusinessUser,
     deleteActivity,
+    validateBusinessUser
   } = useApplicationData();
 
   const { users, activities, userActivities } = state;
@@ -85,6 +88,9 @@ function App() {
             </Route>
             <Route path="/business/signup">
               <BusinessSignup addBusinessUser={addBusinessUser} />
+            </Route>
+            <Route path="/business/login">
+              <BusinessLogin validateBusinessUser={validateBusinessUser} setUser={setUser}/>
             </Route>
           </Switch>
         </section>
