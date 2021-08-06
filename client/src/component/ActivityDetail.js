@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { getLoggedUserId, getJoinedTime } from "../helpers/selectors";
-import UserJoin from "./UserJoin";
+import { getJoinedTime, getFavStatus } from "../helpers/selectors";
+import UserJoin from "component/UserJoin";
+import UserFav from "component/UserFav";
 import { databaseContext } from "providers/DatabaseProvider";
 import { stateContext } from "providers/StateProvider";
 
@@ -24,9 +25,13 @@ export default function ActivityDetail() {
 		postal_code,
 	} = activity[0];
 
-	const loginUserId = getLoggedUserId();
+	let	joined_at, favStatus;
 
-	let joined_at = getJoinedTime(user.id, id, userActivities);
+	if(user) {
+		joined_at	= getJoinedTime(user.id, id, userActivities);
+		favStatus = getFavStatus(user.id, id, userActivities);
+		console.log("joined_at************** : ",joined_at)
+	}
 
 	return (
 		<div className="card">
@@ -52,7 +57,10 @@ export default function ActivityDetail() {
 				<p>Postal Code: {postal_code}</p>
 			</section>
 
-			<section>{loginUserId && <UserJoin joined_at={joined_at} />}</section>
+			<section>
+				{ user ? <UserJoin joined_at={joined_at} /> : ""}
+				{ user ? <UserFav favStatus={favStatus} /> : ""}
+			</section>
 		</div>
 	);
 }
