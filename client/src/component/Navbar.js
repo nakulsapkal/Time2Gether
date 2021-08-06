@@ -58,6 +58,7 @@ export default function Navbar() {
 				</div>
 
 				<div className="header__option">
+					
 					{user ? (
 						<span className="header__optionLineTwo header__space">
 							Hi, {user && user.first_name}!
