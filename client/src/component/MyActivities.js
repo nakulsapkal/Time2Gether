@@ -58,16 +58,17 @@ export default function MyActivities() {
 						return (
 							<div>
 								<ActivityItem
-									key={item.id}
-									id={item.id}
+									key={item.activity_id}
+									id={item.activity_id}
 									start_date={item.start_date}
 									end_date={item.end_date}
 									start_time={item.start_time}
 									end_time={item.end_time}
 									details={item.details}
 									img={item.img}
-									activities={createdActivities}
+									myactivities={true}
 								/>
+								{console.log("Myact file: ", item)}
 								<button onClick={() => handleEditActivity(item)}>EDIT</button>
 								<button onClick={() => deleteActivity(item)}>DELETE</button>
 							</div>
@@ -77,15 +78,15 @@ export default function MyActivities() {
 					Object.entries(upcomingActivities).map(([key, item]) => {
 						return (
 							<ActivityItem
-								key={item.id}
-								id={item.id}
+								key={item.activity_id}
+								id={item.activity_id}
 								start_date={item.start_date}
 								end_date={item.end_date}
 								start_time={item.start_time}
 								end_time={item.end_time}
 								details={item.details}
 								img={item.img}
-								activities={upcomingActivities}
+								myactivities={true}
 							/>
 						);
 					})}
@@ -93,15 +94,15 @@ export default function MyActivities() {
 					Object.entries(favouriteActivities).map(([key, item]) => {
 						return (
 							<ActivityItem
-								key={item.id}
-								id={item.id}
+								key={item.activity_id}
+								id={item.activity_id}
 								start_date={item.start_date}
 								end_date={item.end_date}
 								start_time={item.start_time}
 								end_time={item.end_time}
 								details={item.details}
 								img={item.img}
-								activities={favouriteActivities}
+								myactivities={true}
 							/>
 						);
 					})}
@@ -109,15 +110,15 @@ export default function MyActivities() {
 					Object.entries(activitiesHistory).map(([key, item]) => {
 						return (
 							<ActivityItem
-								key={item.id}
-								id={item.id}
+								key={item.activity_id}
+								id={item.activity_id}
 								start_date={item.start_date}
 								end_date={item.end_date}
 								start_time={item.start_time}
 								end_time={item.end_time}
 								details={item.details}
 								img={item.img}
-								activities={activitiesHistory}
+								myactivities={true}
 							/>
 						);
 					})}

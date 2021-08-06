@@ -12,7 +12,6 @@ export default function DatabaseProvider(props) {
 
 	const [user, setUser] = useState([]);
 	const [activity, setActivity] = useState([]);
-
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
@@ -24,7 +23,7 @@ export default function DatabaseProvider(props) {
 	const [ownerName, setOwnerName] = useState("");
 	const [registrationNumber, setRegistrationNumber] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
-
+	//)
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
 		const p1 = axios.get("/api/users");
@@ -48,6 +47,12 @@ export default function DatabaseProvider(props) {
 			}));
 		});
 		setUser(JSON.parse(localStorage.getItem("userData")));
+
+		return () => {
+			setState({});
+			setActivity([]);
+			setUser([]);
+		};
 	}, []);
 
 	function validateUser(userEmail, userPassword) {

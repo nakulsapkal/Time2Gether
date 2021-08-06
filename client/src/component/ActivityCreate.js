@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./ActivityCreate.css";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 import { getLoggedUserId } from "../helpers/selectors";
-import { Redirect, Link, useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 // import 'date-fns';
 // import DateFnsUtils from '@date-io/date-fns';
@@ -14,28 +13,30 @@ import { Redirect, Link, useHistory } from "react-router-dom";
 //   MuiPickersUtilsProvider,
 // } from '@material-ui/pickers';
 
-export default function ActivityCreate(props) {
+export default function ActivityCreate() {
 	const location = useLocation();
 	console.log("History State:", location);
 	const activityObj = location.state;
 	const loginUser = JSON.parse(localStorage.getItem("userData"));
+
+	console.log("Create Activity Line No:", activityObj);
 	//const loginUserId = loginUser.id;
 	let history = useHistory();
 	const loginUserId = getLoggedUserId();
 
 	const [values, setValues] = useState({
-		img: "",
-		details: "",
-		category: "",
-		start_date: "",
-		end_date: "",
-		start_time: "",
-		end_time: "",
-		street_number: "",
-		street_name: "",
-		city: "",
-		province: "",
-		postal_code: "",
+		img: activityObj && (location.state.img || ""),
+		details: activityObj && (location.state.details || ""),
+		category: activityObj && (location.state.category || ""),
+		start_date: activityObj && (location.state.start_date.slice(0, 10) || ""),
+		end_date: activityObj && (location.state.end_date.slice(0, 10) || ""),
+		start_time: activityObj && (location.state.start_time || ""),
+		end_time: activityObj && (location.state.end_time || ""),
+		street_number: activityObj && (location.state.street_number || ""),
+		street_name: activityObj && (location.state.street_name || ""),
+		city: activityObj && (location.state.city || ""),
+		province: activityObj && (location.state.province || ""),
+		postal_code: activityObj && (location.state.postal_code || ""),
 		loginUserId: loginUserId,
 	});
 
@@ -48,12 +49,22 @@ export default function ActivityCreate(props) {
 
 	const saveFormData = async () => {
 		console.log("values from line 30: ", values);
-		const response = await axios.post("/api/activities/create", {
-			body: values,
-		});
+		if (activityObj !== undefined) {
+			const response = await axios.put("/api/activities/edit", {
+				values: values,
+				activityObj: activityObj,
+			});
+			if (response.status !== 200) {
+				throw new Error(`Request failed: ${response.status}`);
+			}
+		} else {
+			const response = await axios.post("/api/activities/create", {
+				body: values,
+			});
 
-		if (response.status !== 200) {
-			throw new Error(`Request failed: ${response.status}`);
+			if (response.status !== 200) {
+				throw new Error(`Request failed: ${response.status}`);
+			}
 		}
 	};
 
@@ -63,8 +74,10 @@ export default function ActivityCreate(props) {
 			// await saveFormData();
 			// alert("Your activity was successfully created!");
 			await saveFormData();
+
 			history.push("/");
 			alert("Your activity was successfully created!");
+
 			setValues({
 				img: "",
 				details: "",

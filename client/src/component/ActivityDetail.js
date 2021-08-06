@@ -8,6 +8,8 @@ export default function ActivityDetail(props) {
 	const { user, state, activity } = useContext(databaseContext);
 	const { userActivities } = state;
 	//const { activity, setActivity } = useContext(stateContext);
+
+	console.log("Activity Details:", activity);
 	const {
 		id,
 		start_date,
