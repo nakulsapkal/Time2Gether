@@ -7,7 +7,7 @@ import { databaseContext } from "providers/DatabaseProvider";
 export default function Navbar() {
 	const { user } = useContext(databaseContext);
 	const history = useHistory();
-
+	console.log("User", user);
 	return (
 		<div className="header">
 			<a href="/">
@@ -64,7 +64,6 @@ export default function Navbar() {
 							className="header__optionLineTwo header__space"
 							onClick={() => history.push("/signup")}
 						>
-							{" "}
 							SignUp
 						</span>
 					)}

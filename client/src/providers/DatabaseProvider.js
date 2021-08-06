@@ -1,29 +1,10 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
+import { stateContext } from "./StateProvider";
 import axios from "axios";
 
 export default function DatabaseProvider(props) {
-	// Here is our Shared State Object
-	const [state, setState] = useState({
-		users: [],
-		activities: [],
-		businessUser: [],
-		userActivities: [],
-	});
+	const { user, state, setState, setUser } = useContext(stateContext);
 
-	const [user, setUser] = useState([]);
-	const [activity, setActivity] = useState([]);
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [error, setError] = useState("");
-	const [checked, setChecked] = useState(false);
-	const [firstName, setFirstName] = useState("");
-	const [lastName, setLastName] = useState("");
-	const [option, setOption] = useState("");
-	const [businessName, setBusinessName] = useState("");
-	const [ownerName, setOwnerName] = useState("");
-	const [registrationNumber, setRegistrationNumber] = useState("");
-	const [phoneNumber, setPhoneNumber] = useState("");
-	//)
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
 		const p1 = axios.get("/api/users");
@@ -48,11 +29,12 @@ export default function DatabaseProvider(props) {
 		});
 		setUser(JSON.parse(localStorage.getItem("userData")));
 
-		return () => {
-			setState({});
-			setActivity([]);
-			setUser([]);
-		};
+		//Clean up function
+		// return () => {
+		// 	setState({});
+		// 	setActivity([]);
+		// 	setUser([]);
+		// };
 	}, []);
 
 	function validateUser(userEmail, userPassword) {
@@ -98,7 +80,6 @@ export default function DatabaseProvider(props) {
 		let userData;
 		for (let obj in state.businessUsers) {
 			userData = state.businessUsers[obj];
-			//console.log("===========", userData);
 			if (userData.registration_number === regNum) {
 				return true;
 			}
@@ -110,7 +91,6 @@ export default function DatabaseProvider(props) {
 	function addUser(user) {
 		const apiUrl = "/api/users/signup";
 		const email = user.email;
-		//const users = state.users;
 		if (validateEmail(email) === true) {
 			alert("email is already in use");
 		} else {
@@ -137,7 +117,6 @@ export default function DatabaseProvider(props) {
 	function addBusinessUser(businessUser) {
 		const apiUrl = "/api/business/signup";
 		const regNum = businessUser.registrationNumber;
-		//console.log("Registration number +++++++++++", regNum);
 		if (validateRegNum(regNum) === true) {
 			alert("Registration number is already in use");
 		} else {
@@ -184,54 +163,19 @@ export default function DatabaseProvider(props) {
 				console.error("Error While Deleting Activity: ", err);
 			});
 	}
-	// Functions to change  the counter state item
-	// const increment = function () {
-	//   setState({ ...state, counter: state.counter + 1 });
-	// };
-	// const decrement = function () {
-	//   setState({ ...state, counter: state.counter - 1 });
-	// };
-	// const clear = function () {
-	//   setState({ ...state, counter: 0 });
-	// };
 
-	// This list can get long with a lot of functions.  Reducer may be a better choice
 	const providerData = {
 		user,
 		state,
+		setState,
 		setUser,
 		addUser,
 		validateUser,
 		addBusinessUser,
 		deleteActivity,
 		validateBusinessUser,
-		activity,
-		setActivity,
-		email,
-		password,
-		error,
-		checked,
-		setEmail,
-		setPassword,
-		setChecked,
-		setError,
-		firstName,
-		setFirstName,
-		lastName,
-		setLastName,
-		option,
-		setOption,
-		businessName,
-		setBusinessName,
-		ownerName,
-		setOwnerName,
-		registrationNumber,
-		setRegistrationNumber,
-		phoneNumber,
-		setPhoneNumber,
 	};
 
-	// We can now use this as a component to wrap anything
 	// that needs our state
 	return (
 		<databaseContext.Provider value={providerData}>

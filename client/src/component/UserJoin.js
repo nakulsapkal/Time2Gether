@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { databaseContext } from "providers/DatabaseProvider";
+import { stateContext } from "providers/StateProvider";
 import { useHistory } from "react-router-dom";
 
 export default function UserJoin(props) {
-	const { user, state, activity, setActivity } = useContext(databaseContext);
+	const { user, activity } = useContext(stateContext);
 	// console.log("joined_at******************", props.joined_at);
 	// console.log("user_id******************", user.id);
 	// console.log("activity_id******************", activity[0].id);

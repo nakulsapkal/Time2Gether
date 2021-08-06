@@ -15,12 +15,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 export default function ActivityCreate() {
 	const location = useLocation();
-	console.log("History State:", location);
 	const activityObj = location.state;
-	const loginUser = JSON.parse(localStorage.getItem("userData"));
-
-	console.log("Create Activity Line No:", activityObj);
-	//const loginUserId = loginUser.id;
 	let history = useHistory();
 	const loginUserId = getLoggedUserId();
 
@@ -48,7 +43,6 @@ export default function ActivityCreate() {
 	};
 
 	const saveFormData = async () => {
-		console.log("values from line 30: ", values);
 		if (activityObj !== undefined) {
 			const response = await axios.put("/api/activities/edit", {
 				values: values,
@@ -71,12 +65,15 @@ export default function ActivityCreate() {
 	const onSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			// await saveFormData();
-			// alert("Your activity was successfully created!");
 			await saveFormData();
 
 			history.push("/");
-			alert("Your activity was successfully created!");
+
+			if (activityObj) {
+				alert("Your activity was successfully edited!");
+			} else {
+				alert("Your activity was successfully created!");
+			}
 
 			setValues({
 				img: "",
@@ -226,6 +223,7 @@ export default function ActivityCreate() {
 
 				<div>
 					<button type="submit">Submit</button>
+					{/*Need to convert it to input tag */}
 					<button>Cancel</button>
 				</div>
 			</form>

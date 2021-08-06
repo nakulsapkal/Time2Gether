@@ -3,15 +3,18 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./component/App";
 import reportWebVitals from "./reportWebVitals";
-import DatabaseProvider from 'providers/DatabaseProvider'
+import DatabaseProvider from "providers/DatabaseProvider";
+import StateProvider from "providers/StateProvider";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <DatabaseProvider>
-      <App />
-    </DatabaseProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+	<React.StrictMode>
+		<StateProvider>
+			<DatabaseProvider>
+				<App />
+			</DatabaseProvider>
+		</StateProvider>
+	</React.StrictMode>,
+	document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

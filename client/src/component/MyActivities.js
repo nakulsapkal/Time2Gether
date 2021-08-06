@@ -3,15 +3,18 @@ import ActivityItem from "./ActivityItem";
 import { UserProfile } from "./UserProfile";
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
+import { stateContext } from "providers/StateProvider";
+
 import {
 	getUpcomingActivityForUser,
 	getActivityCreatedByUser,
 	getActivitiesFavouriteByUser,
 	getActivityHistoryForUser,
 } from "helpers/selectors";
+
 export default function MyActivities() {
-	const { user, state, deleteActivity, option, setOption } =
-		useContext(databaseContext);
+	const { user, state, deleteActivity } = useContext(databaseContext);
+	const { option, setOption } = useContext(stateContext);
 
 	const { userActivities } = state;
 
@@ -56,9 +59,9 @@ export default function MyActivities() {
 				{option === CREATED &&
 					Object.entries(createdActivities).map(([key, item]) => {
 						return (
-							<div>
+							<div key={key}>
 								<ActivityItem
-									key={item.activity_id}
+									key={key}
 									id={item.activity_id}
 									start_date={item.start_date}
 									end_date={item.end_date}
@@ -68,7 +71,6 @@ export default function MyActivities() {
 									img={item.img}
 									myactivities={true}
 								/>
-								{console.log("Myact file: ", item)}
 								<button onClick={() => handleEditActivity(item)}>EDIT</button>
 								<button onClick={() => deleteActivity(item)}>DELETE</button>
 							</div>
@@ -78,7 +80,7 @@ export default function MyActivities() {
 					Object.entries(upcomingActivities).map(([key, item]) => {
 						return (
 							<ActivityItem
-								key={item.activity_id}
+								key={key}
 								id={item.activity_id}
 								start_date={item.start_date}
 								end_date={item.end_date}
@@ -94,7 +96,7 @@ export default function MyActivities() {
 					Object.entries(favouriteActivities).map(([key, item]) => {
 						return (
 							<ActivityItem
-								key={item.activity_id}
+								key={key}
 								id={item.activity_id}
 								start_date={item.start_date}
 								end_date={item.end_date}
@@ -110,7 +112,7 @@ export default function MyActivities() {
 					Object.entries(activitiesHistory).map(([key, item]) => {
 						return (
 							<ActivityItem
-								key={item.activity_id}
+								key={key}
 								id={item.activity_id}
 								start_date={item.start_date}
 								end_date={item.end_date}

@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
+import { stateContext } from "providers/StateProvider";
 
 function Signup() {
+	const { addUser } = useContext(databaseContext);
 	const {
-		addUser,
 		email,
 		password,
 		firstName,
@@ -14,7 +15,7 @@ function Signup() {
 		setFirstName,
 		setError,
 		setLastName,
-	} = useContext(databaseContext);
+	} = useContext(stateContext);
 
 	const history = useHistory();
 	const Registration = (event) => {
@@ -42,7 +43,6 @@ function Signup() {
 				email: email,
 				password: password,
 			};
-			//console.log("This is customData in line 12 of signup",customData)
 			const result = addUser(customData);
 			if (result) {
 				history.push("/");

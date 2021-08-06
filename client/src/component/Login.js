@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
-//import { stateContext } from "providers/StateProvider";
+import { stateContext } from "providers/StateProvider";
 
 export default function Login() {
+	const { setUser, validateUser } = useContext(databaseContext);
 	const {
-		setUser,
 		email,
 		password,
 		error,
@@ -14,15 +14,7 @@ export default function Login() {
 		setPassword,
 		setChecked,
 		setError,
-		validateUser,
-	} = useContext(databaseContext);
-	//const { activity, setActivity } = useContext(stateContext);
-
-	// const [email, setEmail] = useState("");
-	// const [password, setPassword] = useState("");
-	// const [error, setError] = useState("");
-	// //const { validateUser, setUser } = props;
-	// const [checked, setChecked] = useState(false);
+	} = useContext(stateContext);
 
 	const handleChange = () => {
 		setChecked(!checked);

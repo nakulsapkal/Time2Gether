@@ -2,14 +2,13 @@ import React, { useContext } from "react";
 import { getLoggedUserId, getJoinedTime } from "../helpers/selectors";
 import UserJoin from "./UserJoin";
 import { databaseContext } from "providers/DatabaseProvider";
-// import { stateContext } from "providers/StateProvider";
+import { stateContext } from "providers/StateProvider";
 
-export default function ActivityDetail(props) {
-	const { user, state, activity } = useContext(databaseContext);
+export default function ActivityDetail() {
+	const { state } = useContext(databaseContext);
+	const { user, activity } = useContext(stateContext);
 	const { userActivities } = state;
-	//const { activity, setActivity } = useContext(stateContext);
 
-	console.log("Activity Details:", activity);
 	const {
 		id,
 		start_date,

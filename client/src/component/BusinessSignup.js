@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { databaseContext } from "providers/DatabaseProvider";
+import { stateContext } from "providers/StateProvider";
 
-function BusinessSignup(props) {
+function BusinessSignup() {
+	const { addBusinessUser } = useContext(databaseContext);
 	const {
 		email,
 		password,
@@ -16,8 +18,7 @@ function BusinessSignup(props) {
 		setRegistrationNumber,
 		phoneNumber,
 		setPhoneNumber,
-		addBusinessUser,
-	} = useContext(databaseContext);
+	} = useContext(stateContext);
 
 	const Registration = (event) => {
 		if (businessName === "") {
@@ -54,7 +55,6 @@ function BusinessSignup(props) {
 				phoneNumber: phoneNumber,
 				password: password,
 			};
-			//console.log("This is businessData in line 39 of signup",businessData)
 			addBusinessUser(businessData);
 		}
 	};

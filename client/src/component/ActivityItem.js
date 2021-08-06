@@ -6,23 +6,18 @@ import { databaseContext } from "providers/DatabaseProvider";
 import { stateContext } from "providers/StateProvider";
 
 export default function ActivityItem(props) {
-	const { state, activity, setActivity, userActivities } =
-		useContext(databaseContext);
-	const { activities } = state;
-	//const { activity, setActivity } = useContext(stateContext);
-
+	const { state } = useContext(databaseContext);
+	const { setActivity } = useContext(stateContext);
+	const { activities, userActivities } = state;
 	const { id, details, img, myActivities } = props;
-
 	const history = useHistory();
-	// console.log("key: ", id)
-	// console.log("activities: ", activities)
+
 	return (
-		<>
+		<div>
 			{myActivities && (
 				<div
 					className="card"
 					onClick={() => {
-						console.log("Details: Line 24:", id, details, myActivities);
 						setActivity(getActivityById(id, userActivities));
 						history.push("/activities/detail");
 					}}
@@ -35,8 +30,6 @@ export default function ActivityItem(props) {
 				<div
 					className="card"
 					onClick={() => {
-						console.log("Details: Line 24:", id, details, myActivities);
-
 						setActivity(getActivityById(id, activities));
 						history.push("/activities/detail");
 					}}
@@ -45,6 +38,6 @@ export default function ActivityItem(props) {
 					<img className="card--img" src={img} alt="img" />
 				</div>
 			)}
-		</>
+		</div>
 	);
 }
