@@ -4,10 +4,10 @@ import { databaseContext } from "providers/DatabaseProvider";
 import { useHistory } from "react-router-dom";
 
 export default function UserJoin(props) {
-	const { user, state, activity } = useContext(databaseContext);
+	const { user, state, activity, setActivity } = useContext(databaseContext);
 	// console.log("joined_at******************", props.joined_at);
 	// console.log("user_id******************", user.id);
-	console.log("activity_id******************", activity[0].created_at);
+	// console.log("activity_id******************", activity[0].id);
 
 	const history = useHistory();
 	const [values, setValues] = useState({
@@ -16,8 +16,8 @@ export default function UserJoin(props) {
 		activity_id: activity[0].id,
 	});
 
-	const addJoin = async () => {
-		const response = await axios.post("/api/users/joined", {
+	const addFav = async () => {
+		const response = await axios.post("/api/users/faved", {
 			body: values,
 		});
 
@@ -26,8 +26,8 @@ export default function UserJoin(props) {
 		}
 	};
 
-	const cancelJoined = async () => {
-		const response = await axios.put("/api/users/joined", {
+	const cancelFaved = async () => {
+		const response = await axios.put("/api/users/faved", {
 			body: values,
 		});
 
@@ -42,7 +42,7 @@ export default function UserJoin(props) {
 		//joined before => cancel now
 		if (props.joined_at) {
 			try {
-				await cancelJoined();
+				await cancelFaved();
 				alert("You have cancelled successfully!");
 				history.push("/");
 			} catch (e) {
@@ -53,7 +53,7 @@ export default function UserJoin(props) {
 		// join now
 		if (!props.joined_at) {
 			try {
-				await addJoin();
+				await addFav();
 				alert("You have joined successfully!");
 				history.push("/user/activities");
 			} catch (e) {
@@ -63,13 +63,10 @@ export default function UserJoin(props) {
 	};
 
 	return (
-   
-      <div className="join-button">
-        { activity[0].email === user.email ? "" :
-        <button onClick={handleJoin}>
-          { values.joined_at ? "CANCEL" : "JOIN"}
-        </button>
-        }
-      </div> 
+		<div className="join-button">
+			<button onClick={handleJoin}>
+				{values.joined_at ? "CANCEL" : "JOIN"}
+			</button>
+		</div>
 	);
 }

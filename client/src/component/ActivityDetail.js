@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { getLoggedUserId, getJoinedTime } from "../helpers/selectors";
+import { getJoinedTime } from "../helpers/selectors";
 import UserJoin from "./UserJoin";
 import { databaseContext } from "providers/DatabaseProvider";
 // import { stateContext } from "providers/StateProvider";
@@ -23,9 +23,13 @@ export default function ActivityDetail(props) {
 		postal_code,
 	} = activity[0];
 
-	const loginUserId = getLoggedUserId();
+	let	joined_at = "";
 
-	let joined_at = getJoinedTime(user.id, id, userActivities);
+	if(user) {
+		joined_at	= getJoinedTime(user.id, id, userActivities);
+	}
+
+console.log(user)
 
 	return (
 		<div className="card">
@@ -51,7 +55,10 @@ export default function ActivityDetail(props) {
 				<p>Postal Code: {postal_code}</p>
 			</section>
 
-			<section>{loginUserId && <UserJoin joined_at={joined_at} />}</section>
+			<section>
+				{ user ? <UserJoin joined_at={joined_at} /> : ""}
+				
+			</section>
 		</div>
 	);
 }
