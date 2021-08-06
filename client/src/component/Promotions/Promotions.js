@@ -7,7 +7,6 @@ export default function Promotions() {
 	const { state } = useContext(databaseContext);
 	const { promotions } = state;
   
-
 	return (
 		<div className="App">
 			{Object.entries(promotions).map(([key, item]) => {

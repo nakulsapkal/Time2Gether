@@ -25,7 +25,7 @@ export default function DatabaseProvider(props) {
 	const [ownerName, setOwnerName] = useState("");
 	const [registrationNumber, setRegistrationNumber] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
-	const [promotion, setPromotion] = useState("");
+	const [promotion, setPromotion] = useState([]);
 
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
