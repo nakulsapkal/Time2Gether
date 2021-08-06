@@ -55,32 +55,37 @@ export default function DatabaseProvider(props) {
 		setUser(JSON.parse(localStorage.getItem("userData")));
 	}, []);
 
+
+
+	// Validate email and password befor loginig in for usual user
 	function validateUser(userEmail, userPassword) {
-		let userData = state.users.find(
-			(obj) => obj.email === userEmail && obj.password === userPassword
-		);
-
-		if (userData) {
-			localStorage.setItem("userData", JSON.stringify(userData));
-			return userData;
+		console.log("This is from user validation function in DatabaseProvider:", checked);
+		if (!checked) {
+			let userData = state.users.find(
+				(obj) => obj.email === userEmail && obj.password === userPassword
+			);
+				if (userData) {
+					localStorage.setItem("userData", JSON.stringify(userData));
+					console.log("User userData from DatabaseProv:", userData);
+					return userData;
+				}
+				return false;
+		} else {
+			let userData = state.businessUsers.find(
+				(obj) =>
+					obj.email === email && 	obj.password === userPassword
+			);
+				if (userData) {
+					localStorage.setItem("userData", JSON.stringify(userData));
+					console.log("Business userData from DatabaseProv:", userData);
+					return userData;
+				}
+			return false;
 		}
-		return false;
-	}
+	};
 
-	// Validate registration number and password before logining
-	function validateBusinessUser(registrationNumber, userPassword) {
-		let userData = state.businessUsers.find(
-			(obj) =>
-				obj.registration_number === registrationNumber &&
-				obj.password === userPassword
-		);
-
-		if (userData) {
-			localStorage.setItem("userData", JSON.stringify(userData));
-			return userData;
-		}
-		return false;
-	}
+	// Validate registration number and password before loginning in for business user
+	
 	// Validate email before adding a new user
 	function validateEmail(userEmail) {
 		let userData;
@@ -204,7 +209,6 @@ export default function DatabaseProvider(props) {
 		validateUser,
 		addBusinessUser,
 		deleteActivity,
-		validateBusinessUser,
 		activity,
 		setActivity,
 		email,

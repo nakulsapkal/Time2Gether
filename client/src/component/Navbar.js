@@ -3,7 +3,6 @@ import "./Navbar.css";
 import SearchIcon from "@material-ui/icons/Search";
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
-//import { stateContext } from "providers/StateProvider";
 
 export default function Navbar() {
 	const { user } = useContext(databaseContext);
