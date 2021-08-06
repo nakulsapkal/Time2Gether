@@ -15,6 +15,7 @@ import BusinessLogin from "./BusinessLogin";
 import Promotions from "./Promotions/Promotions";
 import PromotionDetails from "./Promotions/PromotionDetails";
 
+
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {

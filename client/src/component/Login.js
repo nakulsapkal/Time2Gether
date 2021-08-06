@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
-//import { stateContext } from "providers/StateProvider";
+import { stateContext } from "providers/StateProvider";
 
 export default function Login() {
 	const {
@@ -22,13 +22,13 @@ export default function Login() {
 	// const [password, setPassword] = useState("");
 	// const [error, setError] = useState("");
 	// //const { validateUser, setUser } = props;
-	// const [checked, setChecked] = useState(false);
-
+	
 	const handleChange = () => {
 		setChecked(!checked);
 		const checkData = { checked: !checked };
 		console.log(" Checkdata from Login", checkData);
 	};
+
 
 	const history = useHistory();
 	const validate = (event) => {

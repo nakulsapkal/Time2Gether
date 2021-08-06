@@ -23,7 +23,7 @@ export default function BusinessLogin() {
 		if (businessUser) {
 			console.log("This is a business user", businessUser);
 			setUser(businessUser);
-			history.push("/");
+			history.push("/promotions");
 		} else {
 			setError("Password or Registration number is incorrect!");
 		}
