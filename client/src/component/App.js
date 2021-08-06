@@ -12,6 +12,8 @@ import Footer from "./Footer";
 import MyActivities from "./MyActivities";
 import BusinessSignup from "./BusinessSignup";
 import BusinessLogin from "./BusinessLogin";
+import Promotions from "./Promotions/Promotions";
+import PromotionDetails from "./Promotions/PromotionDetails";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -42,6 +44,12 @@ function App() {
 							</Route>
 							<Route path="/user/activities">
 								<MyActivities />
+							</Route>
+							<Route path="/promotions">
+								<Promotions />
+							</Route>
+							<Route path="/promotion/details">
+								<PromotionDetails />
 							</Route>
 							<Route path="/business/signup">
 								<BusinessSignup />

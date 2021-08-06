@@ -8,11 +8,12 @@ export default function DatabaseProvider(props) {
 		activities: [],
 		businessUser: [],
 		userActivities: [],
+		promotions: [],
 	});
 
 	const [user, setUser] = useState([]);
 	const [activity, setActivity] = useState([]);
-
+	
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
@@ -24,6 +25,7 @@ export default function DatabaseProvider(props) {
 	const [ownerName, setOwnerName] = useState("");
 	const [registrationNumber, setRegistrationNumber] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
+	const [promotion, setPromotion] = useState("");
 
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
@@ -31,13 +33,15 @@ export default function DatabaseProvider(props) {
 		const p2 = axios.get("/api/activities");
 		const p3 = axios.get("/api/business/users");
 		const p4 = axios.get("/api/userActivities");
+		const p5 = axios.get("/api/promotions");
 
-		Promise.all([p1, p2, p3, p4]).then((all) => {
-			const [first, second, third, fourth] = all;
+		Promise.all([p1, p2, p3, p4, p5]).then((all) => {
+			const [first, second, third, fourth, fifth] = all;
 			console.log("Users:", first.data.users);
 			console.log("Activities:", second.data.activities);
 			console.log("Business users:", third.data.businessUsers);
 			console.log("userActivities:", fourth.data.userActivities);
+			console.log("Promotions:",fifth.data.promotions)
 			//For purpose of immutability copying the prev state first
 			setState((prev) => ({
 				...prev,
@@ -45,6 +49,7 @@ export default function DatabaseProvider(props) {
 				activities: second.data.activities,
 				businessUsers: third.data.businessUsers,
 				userActivities: fourth.data.userActivities,
+				promotions: fifth.data.promotions,
 			}));
 		});
 		setUser(JSON.parse(localStorage.getItem("userData")));
@@ -224,6 +229,8 @@ export default function DatabaseProvider(props) {
 		setRegistrationNumber,
 		phoneNumber,
 		setPhoneNumber,
+		promotion, 
+		setPromotion,
 	};
 
 	// We can now use this as a component to wrap anything
