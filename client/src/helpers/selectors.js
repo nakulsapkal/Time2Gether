@@ -42,12 +42,37 @@ function getActivitiesFavouriteByUser(id, activities) {
 }
 
 function getJoinedTime(id, act_id, activities) {
-	const act =
-		act_id &&
-		activities.find(
+	let status, act;
+
+	if (id && act_id) {
+		act =
+			act_id &&
+			activities.find(
+				(actObj) => actObj.user_id === id && actObj.activity_id === act_id
+			);
+	}
+	console.log("act.joined_at******************", act.joined_at);
+
+	if (act === undefined) status = 2; //no record, need insert new
+	if (act && act.joined_at) status = 1; //currently joined
+	if (act && act.joined_at === false) status = 0; //record exist but cancelled once
+	console.log("status******************", status);
+	return status;
+}
+
+function getFavStatus(id, act_id, activities) {
+	let status, act;
+
+	if (id && act_id) {
+		act = activities.find(
 			(actObj) => actObj.user_id === id && actObj.activity_id === act_id
 		);
-	return act ? act.joined_at : null;
+	}
+	if (act === undefined) status = 2; //no record, need insert new
+	if (act && act.favourite === true) status = 1; //fav: true
+	if (act && act.favourite === false) status = 0; //fav: false
+
+	return status;
 }
 
 export {
@@ -59,4 +84,5 @@ export {
 	getActivitiesFavouriteByUser,
 	getActivityHistoryForUser,
 	getJoinedTime,
+	getFavStatus,
 };
