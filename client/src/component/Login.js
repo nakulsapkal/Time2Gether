@@ -16,17 +16,10 @@ export default function Login() {
 		setError,
 		validateUser,
 	} = useContext(databaseContext);
-	//const { activity, setActivity } = useContext(stateContext);
 
-	// const [email, setEmail] = useState("");
-	// const [password, setPassword] = useState("");
-	// const [error, setError] = useState("");
-	// //const { validateUser, setUser } = props;
-	
 	const handleChange = () => {
 		setChecked(!checked);
-		const checkData = { checked: !checked };
-		//console.log(" Checkdata from Login", checkData);
+		//console.log(" Checkdata first time from Login", checked);
 	};
 
 	const history = useHistory();
