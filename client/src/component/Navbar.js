@@ -27,12 +27,13 @@ export default function Navbar() {
 			</div>
 
 			<div className="header__nav">
-				<div className="header__option"><span
-								onClick={() => history.push("/promotions")}
-								className="header__optionLineTwo header__space"
-							>
-								Promotions
-							</span>
+				<div className="header__option">
+					<span
+						onClick={() => history.push("/promotions")}
+						className="header__optionLineTwo header__space"
+					>
+						Promotions
+					</span>
 					<span className="header__optionLineTwo header__space">
 						{user ? (
 							<span
@@ -71,19 +72,23 @@ export default function Navbar() {
 					</span>
 				</div>
 				<div className="header__option">
-						<span
-							className="header__optionLineTwo header__space"
-							onClick={() => history.push("/promotions")}
-						>
-						</span>
+					<span
+						className="header__optionLineTwo header__space"
+						onClick={() => history.push("/promotions")}
+					></span>
 				</div>
-
 
 				<div className="header__option">
 					{user ? (
-						<span className="header__optionLineTwo header__space">
-							Hi, {user && user.first_name}!
-						</span>
+						!checked ? (
+							<span className="header__optionLineTwo header__space">
+								Hi, {user && user.first_name}!
+							</span>
+						) : (
+							<span className="header__optionLineTwo header__space">
+								Hi, {user && user.business_name}!
+							</span>
+						)
 					) : (
 						<span
 							className="header__optionLineTwo header__space"
