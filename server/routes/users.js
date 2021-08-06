@@ -39,25 +39,68 @@ module.exports = (db) => {
     db.query( `
       INSERT INTO user_activity (joined_at, user_id, activity_id) 
       VALUES ($1, $2, $3)
-      RETURNING *`, [new Date().toISOString().slice(0, 10), user_id, activity_id]
+      RETURNING *`, [joined_at, user_id, activity_id]
     ).then(data => {
           res.json(data.rows);
+          console.log(data.rows[0]);
         }).catch(error => console.log(error));
   })
 
   // cancel a "join" event to user-activity table
   router.put("/users/joined", (req, res) => {
-    const { user_id, activity_id } = req.body.body;
-
-    db.query( `DELETE FROM user_activity 
-      WHERE user_id = $1
-      AND activity_id = $2
-      RETURNING *`, [user_id, activity_id]
-    ).then(data => {
-          res.json(data.rows[0]);
-        }).catch(error => console.log(error));
+    const { joined_at, user_id, activity_id } = req.body.body;
+//if joined_at is falsy, user cancelled, want to rejoin, insert current time
+    if (joined_at){
+      db.query( `UPDATE user_activity 
+        SET joined_at = $1
+        WHERE user_id = $2
+        AND activity_id = $3
+        RETURNING *`, [new Date().toISOString().slice(0, 10), user_id, activity_id]
+      ).then(data => {
+            res.json(data.rows[0]);
+            // console.log(data.rows[0]);
+          }).catch(error => console.log(error));
+  //if true, joined, user want to cancel, set this record to null
+      } else {
+        db.query( `UPDATE user_activity 
+        SET joined_at = NULL
+        WHERE user_id = $1
+        AND activity_id = $2
+        RETURNING *`, [ user_id, activity_id]
+      ).then(data => {
+            res.json(data.rows[0]);
+            console.log(data.rows[0]);
+          }).catch(error => console.log(error));
+    }
   })
 
+    // add a "Favourite" event to user-activity table
+    router.post("/users/faved", (req, res) => {
+      const { favStatus, user_id, activity_id } = req.body.body;
+
+      db.query( 
+        `INSERT INTO user_activity (joined_at, favourite, user_id, activity_id) 
+        VALUES (NULL, TRUE, $1, $2)
+        RETURNING *`, [user_id, activity_id]
+      ).then(data => {
+        res.json(data.rows);
+      }).catch(error => console.log(error));
+    })
+  
+    // cancel a "Favourite" event to user-activity table
+    router.put("/users/faved", (req, res) => {
+      const { favStatus, user_id, activity_id } = req.body.body;
+      console.log("favStatus************** : ",favStatus)
+
+      db.query( `UPDATE user_activity 
+        SET favourite = $1
+        WHERE user_id = $2
+        AND activity_id = $3
+        RETURNING *;`, [favStatus, user_id, activity_id]
+      ).then(data => {
+            res.json(data.rows[0]);
+          }).catch(error => console.log(error));
+    })
 
   //Delete an activity for user
   router.delete("/user/activity/:id", (request, response) => {

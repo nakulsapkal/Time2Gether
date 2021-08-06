@@ -5,9 +5,9 @@ import { useHistory } from "react-router-dom";
 
 export default function UserJoin(props) {
 	const { user, state, activity } = useContext(databaseContext);
-	// console.log("joined_at******************", props.joined_at);
-	// console.log("user_id******************", user.id);
-	console.log("activity_id******************", activity[0].created_at);
+	console.log("joined_at******************", props.joined_at);
+	console.log("user_id******************", user.id);
+	// console.log("activity_id******************", activity[0].joined_at);
 
 	const history = useHistory();
 	const [values, setValues] = useState({
@@ -16,9 +16,11 @@ export default function UserJoin(props) {
 		activity_id: activity[0].id,
 	});
 
+    console.log("!props.joined_at************** : ",!props.joined_at)
+
 	const addJoin = async () => {
 		const response = await axios.post("/api/users/joined", {
-			body: values,
+			body: {...values, joined_at : new Date().toISOString().slice(0, 10) }
 		});
 
 		if (response.status !== 200) {
@@ -26,9 +28,9 @@ export default function UserJoin(props) {
 		}
 	};
 
-	const cancelJoined = async () => {
+	const changeJoined = async () => {
 		const response = await axios.put("/api/users/joined", {
-			body: values,
+			body: {...values, joined_at : !props.joined_at }
 		});
 
 		if (response.status !== 200) {
@@ -40,9 +42,9 @@ export default function UserJoin(props) {
 		e.preventDefault();
 
 		//joined before => cancel now
-		if (props.joined_at) {
+		if (props.joined_at !== 2) {
 			try {
-				await cancelJoined();
+				await changeJoined();
 				alert("You have cancelled successfully!");
 				history.push("/");
 			} catch (e) {
@@ -51,7 +53,7 @@ export default function UserJoin(props) {
 		}
 
 		// join now
-		if (!props.joined_at) {
+		if (props.joined_at === 2) {
 			try {
 				await addJoin();
 				alert("You have joined successfully!");
@@ -67,7 +69,9 @@ export default function UserJoin(props) {
       <div className="join-button">
         { activity[0].email === user.email ? "" :
         <button onClick={handleJoin}>
-          { values.joined_at ? "CANCEL" : "JOIN"}
+          {/* { props.joined_at ? "CANCEL" : "JOIN"} */}
+          { props.joined_at === 1 ? "CANCEL" : "JOIN"}
+
         </button>
         }
       </div> 
