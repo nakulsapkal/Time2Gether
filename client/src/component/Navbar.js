@@ -29,7 +29,7 @@ export default function Navbar() {
 			<div className="header__nav">
 				<div className="header__option">
 					<span className="header__optionLineTwo header__space">
-						{user ? (
+						{user && !checked ? (
 							<span
 								onClick={() => history.push("/promotions")}
 								className="header__optionLineTwo header__space"
