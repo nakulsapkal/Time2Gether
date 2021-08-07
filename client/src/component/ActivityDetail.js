@@ -6,8 +6,8 @@ import { databaseContext } from "providers/DatabaseProvider";
 import { stateContext } from "providers/StateProvider";
 
 export default function ActivityDetail() {
-	const { state } = useContext(databaseContext);
-	const { user, activity } = useContext(stateContext);
+	const { user, state } = useContext(databaseContext);
+	const { activity } = useContext(stateContext);
 	const { userActivities } = state;
 
 	const {
@@ -25,20 +25,20 @@ export default function ActivityDetail() {
 		postal_code,
 	} = activity[0];
 
-	let	joined_at, favStatus;
+	let joined_at, favStatus;
 
-	if(user) {
-		joined_at	= getJoinedTime(user.id, id, userActivities);
+	if (user) {
+		joined_at = getJoinedTime(user.id, id, userActivities);
 		favStatus = getFavStatus(user.id, id, userActivities);
-		console.log("joined_at************** : ",joined_at)
+		console.log("joined_at************** : Line 33", joined_at, user);
 	}
 
 	return (
 		<div className="card">
 			<section className="activity-detail">
 				<h3>Activity Details</h3>
-				<p>Start Date: {start_date}</p>
-				<p>Start Time: {end_date}</p>
+				<p>Start Date: {start_date.slice(0, 10)}</p>
+				<p>Start Time: {end_date.slice(0, 10)}</p>
 				<p>End Date: {start_time}</p>
 				<p>End Time: {end_time}</p>
 				<p>Details: {details}</p>
@@ -58,8 +58,8 @@ export default function ActivityDetail() {
 			</section>
 
 			<section>
-				{ user ? <UserJoin joined_at={joined_at} /> : ""}
-				{ user ? <UserFav favStatus={favStatus} /> : ""}
+				{user ? <UserJoin joined_at={joined_at} favStatus={favStatus} /> : ""}
+				{user ? <UserFav joined_at={joined_at} favStatus={favStatus} /> : ""}
 			</section>
 		</div>
 	);

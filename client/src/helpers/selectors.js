@@ -13,8 +13,12 @@ function getActivityByUser(id, activities) {
 }
 
 function getActivityCreatedByUser(id, activities) {
+	console.log("activities:", activities);
 	return activities.filter(
-		(actObj) => actObj.user_id === id && actObj.joined_at === null
+		(actObj) =>
+			actObj.user_id === id &&
+			actObj.created_at !== null &&
+			actObj.joined_at === null
 	);
 }
 
@@ -51,12 +55,12 @@ function getJoinedTime(id, act_id, activities) {
 				(actObj) => actObj.user_id === id && actObj.activity_id === act_id
 			);
 	}
-	console.log("act.joined_at******************", act.joined_at);
+	//console.log("act.joined_at******************", act.joined_at);
 
 	if (act === undefined) status = 2; //no record, need insert new
 	if (act && act.joined_at) status = 1; //currently joined
 	if (act && act.joined_at === false) status = 0; //record exist but cancelled once
-	console.log("status******************", status);
+	//console.log("status******************", status);
 	return status;
 }
 

@@ -26,7 +26,8 @@ module.exports = (db) => {
 			`SELECT user_activity.id AS user_activity_id,joined_at,favourite,user_activity.user_id,activity_id,created_at,start_date,end_date,start_time,end_time,img,details,address_id,street_number,street_name,city,province,postal_code,category_id,categories.name as category from user_activity
       JOIN activities ON user_activity.activity_id = activities.id
       JOIN address ON  activities.address_id = address.id
-      JOIN categories ON activities.category_id = categories.id;`
+      JOIN categories ON activities.category_id = categories.id
+			WHERE activities.created_at IS NOT NULL;`
 		)
 			.then((result) => {
 				// console.log("One Activity record from activities:", result.rows[0]);
@@ -104,7 +105,7 @@ module.exports = (db) => {
 						.then((data2) => {
 							res.json({
 								address: data.rows[0],
-								activities: data1.rows[0],
+								activity: data1.rows[0],
 								user_activity: data2.rows[0],
 							});
 						})

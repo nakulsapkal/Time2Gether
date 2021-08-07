@@ -1,38 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./ActivityCreate.css";
 import axios from "axios";
-import { getLoggedUserId } from "../helpers/selectors";
-import { useHistory, useLocation } from "react-router-dom";
-
-// import 'date-fns';
-// import DateFnsUtils from '@date-io/date-fns';
-// import {
-//   DatePicker,
-//   TimePicker,
-//   DateTimePicker,
-//   MuiPickersUtilsProvider,
-// } from '@material-ui/pickers';
+import { useHistory } from "react-router-dom";
+import { databaseContext } from "providers/DatabaseProvider";
 
 export default function ActivityCreate() {
-	const location = useLocation();
-	const activityObj = location.state;
+	const { state, setState } = useContext(databaseContext);
 	let history = useHistory();
-	const loginUserId = getLoggedUserId();
+	const activityObj = history.location.state;
 
 	const [values, setValues] = useState({
-		img: activityObj && (location.state.img || ""),
-		details: activityObj && (location.state.details || ""),
-		category: activityObj && (location.state.category || ""),
-		start_date: activityObj && (location.state.start_date.slice(0, 10) || ""),
-		end_date: activityObj && (location.state.end_date.slice(0, 10) || ""),
-		start_time: activityObj && (location.state.start_time || ""),
-		end_time: activityObj && (location.state.end_time || ""),
-		street_number: activityObj && (location.state.street_number || ""),
-		street_name: activityObj && (location.state.street_name || ""),
-		city: activityObj && (location.state.city || ""),
-		province: activityObj && (location.state.province || ""),
-		postal_code: activityObj && (location.state.postal_code || ""),
-		loginUserId: loginUserId,
+		img: activityObj && (activityObj.img || ""),
+		details: activityObj && (activityObj.details || ""),
+		category: activityObj && (activityObj.category || ""),
+		start_date: activityObj && (activityObj.start_date.slice(0, 10) || ""),
+		end_date: activityObj && (activityObj.end_date.slice(0, 10) || ""),
+		start_time: activityObj && (activityObj.start_time || ""),
+		end_time: activityObj && (activityObj.end_time || ""),
+		street_number: activityObj && (activityObj.street_number || ""),
+		street_name: activityObj && (activityObj.street_name || ""),
+		city: activityObj && (activityObj.city || ""),
+		province: activityObj && (activityObj.province || ""),
+		postal_code: activityObj && (activityObj.postal_code || ""),
 	});
 
 	//get data from users' input for each form field
@@ -48,17 +37,60 @@ export default function ActivityCreate() {
 				values: values,
 				activityObj: activityObj,
 			});
-			if (response.status !== 200) {
-				throw new Error(`Request failed: ${response.status}`);
-			}
-		} else {
-			const response = await axios.post("/api/activities/create", {
-				body: values,
+
+			const newState = state;
+			newState.activities = state.activities.map((activity) => {
+				if (activity.id === activityObj.activity_id) {
+					return { ...activity, ...values };
+				}
+
+				return activity;
 			});
+
+			setState({ ...newState });
 
 			if (response.status !== 200) {
 				throw new Error(`Request failed: ${response.status}`);
 			}
+		} else {
+			let newActivity;
+			await axios
+				.post("/api/activities/create", {
+					body: values,
+				})
+				.then((result) => {
+					if (result.status !== 200) {
+						throw new Error(`Request failed: ${result.status}`);
+					}
+					newActivity = {
+						address_id: result.data.address.id,
+						category: "",
+						category_id: result.data.activity.category_id,
+						city: result.data.address.city,
+						created_at: result.data.activity.created_at,
+						details: result.data.activity.details,
+						end_date: result.data.activity.end_date,
+						end_time: result.data.activity.end_time,
+						id: result.data.activity.id,
+						img: result.data.activity.img,
+						postal_code: result.data.address.postal_code,
+						province: result.data.address.province,
+						start_date: result.data.activity.start_date,
+						start_time: result.data.activity.start_time,
+						street_name: result.data.address.street_name,
+						street_number: result.data.address.street_number,
+						title: null,
+					};
+					console.log("NewActivity:Line: 119", newActivity);
+				})
+				.catch((err) => {
+					console.error("Error While Deleting Activity: ", err);
+				});
+
+			const newState = state;
+			newState.activities.push(newActivity);
+
+			setState({ ...newState });
 		}
 	};
 
@@ -74,21 +106,6 @@ export default function ActivityCreate() {
 			} else {
 				alert("Your activity was successfully created!");
 			}
-
-			setValues({
-				img: "",
-				details: "",
-				category: "",
-				start_date: "",
-				end_date: "",
-				start_time: "",
-				end_time: "",
-				street_number: "",
-				street_name: "",
-				city: "",
-				province: "",
-				postal_code: "",
-			});
 		} catch (e) {
 			alert(`Failed! ${e.message}`);
 		}
@@ -108,8 +125,8 @@ export default function ActivityCreate() {
         </div> */}
 				<div>
 					<label>Category*:</label>
-					<select value={values.category} onChange={set("category")}>
-						<option>Select Category</option>
+					<select value={values.category} onChange={set("category")} required>
+						<option value="">Select Category</option>
 						<option value="Outdoor sports">Outdoor sports</option>
 						<option value="Baking">Baking</option>
 						<option value="Indoor Sports">Indoor sports</option>

@@ -2,38 +2,84 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { stateContext } from "providers/StateProvider";
 import { useHistory } from "react-router-dom";
+import { databaseContext } from "providers/DatabaseProvider";
 
 export default function UserJoin(props) {
-	const { user, activity } = useContext(stateContext);
-	console.log("joined_at******************", props.joined_at);
-	console.log("user_id******************", user.id);
+	const { activity } = useContext(stateContext);
+	const { user, state, setState } = useContext(databaseContext);
+	// console.log("joined_at******************", props.joined_at);
+	// console.log("user_id******************", user.id);
 
 	const history = useHistory();
 	const [values, setValues] = useState({
 		joined_at: props.joined_at,
 		user_id: user.id,
 		activity_id: activity[0].id,
+		favStatus: props.favStatus,
 	});
 
-	console.log("!props.joined_at************** : ", !props.joined_at);
+	// console.log("!props.joined_at************** : ", !props.joined_at);
 
 	const addJoin = async () => {
-		const response = await axios.post("/api/users/joined", {
-			body: { ...values, joined_at: new Date().toISOString().slice(0, 10) },
-		});
-
-		if (response.status !== 200) {
-			throw new Error(`Request failed: ${response.status}`);
-		}
+		console.log("Values in User Join:Line 34", values, activity);
+		return await axios
+			.post("/api/users/joined", {
+				body: { ...values, joined_at: new Date().toISOString().slice(0, 10) },
+			})
+			.then((result) => {
+				if (result.status !== 200) {
+					throw new Error(`Request failed: ${result.status}`);
+				} else {
+					const newUserActivity = result.data;
+					const newState = state;
+					newState.userActivities.push(newUserActivity);
+					setState({ ...newState });
+				}
+			});
 	};
 
 	const changeJoined = async () => {
-		const response = await axios.put("/api/users/joined", {
-			body: { ...values, joined_at: !props.joined_at },
-		});
+		console.log("Values in User Join:Line 34", values, activity);
 
-		if (response.status !== 200) {
-			throw new Error(`Request failed: ${response.status}`);
+		if (props.favStatus === 1) {
+			return await axios
+				.put("/api/users/joined", {
+					body: { ...values, joined_at: !props.joined_at },
+				})
+				.then((result) => {
+					console.log("result.data", result.data);
+					if (result.status !== 200) {
+						throw new Error(`Request failed: ${result.status}`);
+					} else {
+						const updatedUserActivity = result.data;
+						const newState = state;
+						newState.userActivities.map((activity) => {
+							if (activity.id === updatedUserActivity.id) {
+								return { ...activity, ...updatedUserActivity };
+							}
+						});
+						setState({ ...newState });
+					}
+				});
+		} else {
+			return await axios
+				.delete("/api/users/joined", {
+					data: values,
+				})
+				.then((result) => {
+					if (result.status !== 200) {
+						throw new Error(`Request failed: ${result.status}`);
+					} else {
+						const deletedUserActivity = state.userActivities.filter(
+							(activity) => activity.activity_id !== values.activity_id
+						);
+						const newState = state;
+						if (deletedUserActivity) {
+							newState.userActivities = [...deletedUserActivity];
+							setState({ ...newState });
+						}
+					}
+				});
 		}
 	};
 
