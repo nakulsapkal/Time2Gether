@@ -55,6 +55,8 @@ function Signup() {
 			<div class="text-center">
 				<h1>Create a New User</h1>
 			</div>
+
+			
 			<form onSubmit={Registration} class="user">
 				<div class="form-group">
 					<input
@@ -89,10 +91,16 @@ function Signup() {
 						placeholder="Password"
 					/>
 				</div>
-
+				
 				<button type="submit" class="btn btn-primary  btn-block">
 					Create User
 				</button>
+
+				<div class="text-center">
+				<br></br>
+					<a href="/business/signup">Business Account Registration</a>
+				</div>
+				
 			</form>
 		</div>
 	);
