@@ -14,6 +14,7 @@ import BusinessSignup from "./BusinessSignup";
 import BusinessLogin from "./BusinessLogin";
 import Promotions from "./Promotions/Promotions";
 import PromotionDetails from "./Promotions/PromotionDetails";
+import PromotionCreate from "./Promotions/PromotionCreate";
 
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -49,8 +50,11 @@ function App() {
 							<Route path="/promotions">
 								<Promotions />
 							</Route>
-							<Route path="/promotion/details">
+							<Route path="/promotions/details">
 								<PromotionDetails />
+							</Route>
+							<Route path="/promotion/create">
+								<PromotionCreate />
 							</Route>
 							<Route path="/business/signup">
 								<BusinessSignup />

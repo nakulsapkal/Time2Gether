@@ -9,7 +9,7 @@ export default function Navbar() {
 	const history = useHistory();
 	const { checked } = useContext(databaseContext);
 
-	console.log("This checked is from Navbar:", checked);
+	//console.log("This checked is from Navbar:", checked);
 
 	return (
 		<div className="header">
@@ -54,10 +54,10 @@ export default function Navbar() {
 								</span>
 							) : (
 								<span
-									onClick={() => history.push("/promotions/create")}
+									onClick={() => history.push("/promotion/create")}
 									className="header__optionLineTwo header__space"
 								>
-									Create Promotions
+									Create Promotion
 								</span>
 							)
 						) : (
