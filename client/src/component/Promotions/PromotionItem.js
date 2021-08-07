@@ -16,7 +16,7 @@ export default function PromotionItem(props) {
 			className="promcard"
 			onClick={() => {
 				setPromotion(getPromotionById(id, promotions));
-        history.push("/promotion/details");
+        history.push("/promotions/details");
 			}}
 		>
 			<p>{title}</p>

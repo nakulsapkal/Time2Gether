@@ -1,27 +1,20 @@
 import React, { useState } from "react";
 import "./PromotionCreate.css";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
 import { getLoggedUserId } from "../../helpers/selectors";
 import { Redirect, Link, useHistory } from "react-router-dom";
 
 export default function PromotionCreate(props) {
-	const location = useLocation();
-	console.log("History State:", location);
-	const promotionsObj = location.state;
-	const loginUser = JSON.parse(localStorage.getItem("userData"));
-	//const loginUserId = loginUser.id;
 	let history = useHistory();
 	const loginUserId = getLoggedUserId();
-  console.log("Logged bisuness user+++++++++:", loginUserId);
+  console.log("Logged bisuness user. This is from PromotionCreate.js:", loginUserId);
 
 	const [values, setValues] = useState({
 		title: "",
 		start_date: "",
 		end_date: "",
-		start_time: "",
-		detailes: "",
-		province: "",
+		details: "",
+		promo_code: "",
 		loginUserId: loginUserId,
 	});
 
@@ -32,7 +25,7 @@ export default function PromotionCreate(props) {
 	};
 
 	const saveFormData = async () => {
-		console.log("values from line 35: ", values);
+		console.log("values from PromotionCreate.js. Line 35: ", values);
 		const response = await axios.post("/api/promotions/create", {
 			body: values,
 		});
@@ -45,18 +38,15 @@ export default function PromotionCreate(props) {
 	const onSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			// await saveFormData();
-			// alert("Your activity was successfully created!");
 			await saveFormData();
 			history.push("/promotions");
 			alert("Your promotion was successfully created!");
 			setValues({
-				ititle: "",
-        start_date: "",
-        end_date: "",
-        start_time: "",
-        detailes: "",
-        province: "",
+				title: "",
+				start_date: "",
+				end_date: "",
+				details: "",
+				loginUserId: loginUserId,
 			});
 		} catch (e) {
 			alert(`Failed! ${e.message}`);
@@ -70,7 +60,7 @@ export default function PromotionCreate(props) {
 
 				<div>
 					<label>Title:</label>
-					<textarea value={values.details} onChange={set("title")} />
+					<textarea value={values.title} onChange={set("title")} />
 				</div>
 				
 
@@ -99,6 +89,11 @@ export default function PromotionCreate(props) {
 				<div>
 					<label>Details:</label>
 					<textarea value={values.details} onChange={set("details")} />
+				</div>
+
+				<div>
+					<label>Promo Code:</label>
+					<textarea value={values.details} onChange={set("promo_code")} />
 				</div>
 
 				<div>

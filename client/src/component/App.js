@@ -47,13 +47,13 @@ function App() {
 							<Route path="/user/activities">
 								<MyActivities />
 							</Route>
-							<Route path="/promotions">
+							<Route path="/promotions" exact>
 								<Promotions />
 							</Route>
-							<Route path="/promotions/details">
+							<Route path="/promotions/details" exact>
 								<PromotionDetails />
 							</Route>
-							<Route path="/promotion/create">
+							<Route path="/promotions/create" exact>
 								<PromotionCreate />
 							</Route>
 							<Route path="/business/signup">

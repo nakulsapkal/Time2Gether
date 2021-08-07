@@ -54,7 +54,7 @@ export default function Navbar() {
 								</span>
 							) : (
 								<span
-									onClick={() => history.push("/promotion/create")}
+									onClick={() => history.push("/promotions/create")}
 									className="header__optionLineTwo header__space"
 								>
 									Create Promotion
