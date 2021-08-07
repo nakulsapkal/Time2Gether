@@ -235,6 +235,8 @@ export default function DatabaseProvider(props) {
 		setPhoneNumber,
 		promotion, 
 		setPromotion,
+		state,
+		setState,
 	};
 
 	// We can now use this as a component to wrap anything
