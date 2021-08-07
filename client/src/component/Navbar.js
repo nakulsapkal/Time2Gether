@@ -34,14 +34,26 @@ export default function Navbar() {
 					>
 						Promotions
 					</span>
+				</div>
+				
+				<div className="header__option">
 					<span className="header__optionLineTwo header__space">
 						{user ? (
-							<span
-								onClick={() => history.push("/activities/create")}
-								className="header__optionLineTwo header__space"
-							>
-								Create
-							</span>
+							!checked ? (
+								<span
+									onClick={() => history.push("/activities/create")}
+									className="header__optionLineTwo header__space"
+								>
+									Create Activity
+								</span>
+							) : (
+								<span
+									onClick={() => history.push("/promotions/create")}
+									className="header__optionLineTwo header__space"
+								>
+									Create Promotions
+								</span>
+							)
 						) : (
 							""
 						)}
@@ -60,7 +72,7 @@ export default function Navbar() {
 								</span>
 							) : (
 								<span
-									onClick={() => history.push("/promotions")}
+									onClick={() => history.push("/promotions/business")}
 									className="header__optionLineTwo header__space"
 								>
 									My Promotions
@@ -71,12 +83,7 @@ export default function Navbar() {
 						)}
 					</span>
 				</div>
-				<div className="header__option">
-					<span
-						className="header__optionLineTwo header__space"
-						onClick={() => history.push("/promotions")}
-					></span>
-				</div>
+				
 
 				<div className="header__option">
 					{user ? (
@@ -86,7 +93,7 @@ export default function Navbar() {
 							</span>
 						) : (
 							<span className="header__optionLineTwo header__space">
-								Hi, {user && user.business_name}!
+								Hi, {user && user.email}!
 							</span>
 						)
 					) : (
