@@ -33,7 +33,30 @@ export default function UserFav(props) {
 				if (result.status !== 200) {
 					throw new Error(`Request failed: ${result.status}`);
 				} else {
-					const newUserActivity = result.data;
+					const newUserActivity = {
+						activity_id: result.data.activity_id,
+						favourite: result.data.favourite,
+						joined_at: result.data.joined_at,
+						user_activity_id: result.data.id,
+						user_id: result.data.user_id,
+						address_id: activity[0].address_id,
+						category: "",
+						category_id: activity[0].category_id,
+						city: activity[0].city,
+						created_at: activity[0].created_at,
+						details: activity[0].details,
+						end_date: activity[0].end_date,
+						end_time: activity[0].end_time,
+						img: activity[0].img,
+						postal_code: activity[0].postal_code,
+						province: activity[0].province,
+						start_date: activity[0].start_date,
+						start_time: activity[0].start_time,
+						street_name: activity[0].street_name,
+						street_number: activity[0].street_number,
+						title: null,
+					};
+
 					const newState = state;
 					newState.userActivities.push(newUserActivity);
 					setState({ ...newState });

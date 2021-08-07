@@ -48,7 +48,7 @@ export default function MyActivities() {
 		<div>
 			<div>
 				<select onChange={handleChange}>
-					<option>Select Activity Category</option>
+					<option value="">Select Activity Category</option>
 					<option value="Created">Created</option>
 					<option value="Upcoming">Upcoming</option>
 					<option value="History">History</option>

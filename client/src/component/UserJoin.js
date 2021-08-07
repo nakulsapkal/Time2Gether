@@ -21,7 +21,6 @@ export default function UserJoin(props) {
 	// console.log("!props.joined_at************** : ", !props.joined_at);
 
 	const addJoin = async () => {
-		console.log("Values in User Join:Line 34", values, activity);
 		return await axios
 			.post("/api/users/joined", {
 				body: { ...values, joined_at: new Date().toISOString().slice(0, 10) },
@@ -30,7 +29,35 @@ export default function UserJoin(props) {
 				if (result.status !== 200) {
 					throw new Error(`Request failed: ${result.status}`);
 				} else {
-					const newUserActivity = result.data;
+					console.log("result.data in User Join:Line 32", result.data);
+					console.log("activity in User Join:Line 33", activity);
+
+					const newUserActivity = {
+						activity_id: result.data.activity_id,
+						favourite: result.data.favourite,
+						joined_at: result.data.joined_at,
+						user_activity_id: result.data.id,
+						user_id: result.data.user_id,
+						address_id: activity[0].address_id,
+						category: "",
+						category_id: activity[0].category_id,
+						city: activity[0].city,
+						created_at: activity[0].created_at,
+						details: activity[0].details,
+						end_date: activity[0].end_date,
+						end_time: activity[0].end_time,
+						img: activity[0].img,
+						postal_code: activity[0].postal_code,
+						province: activity[0].province,
+						start_date: activity[0].start_date,
+						start_time: activity[0].start_time,
+						street_name: activity[0].street_name,
+						street_number: activity[0].street_number,
+						title: null,
+					};
+					//const newUserActivity = result.data;
+					console.log("newUserActivity in User Join:Line 59", newUserActivity);
+
 					const newState = state;
 					newState.userActivities.push(newUserActivity);
 					setState({ ...newState });
@@ -54,9 +81,8 @@ export default function UserJoin(props) {
 						const updatedUserActivity = result.data;
 						const newState = state;
 						newState.userActivities.map((activity) => {
-							if (activity.id === updatedUserActivity.id) {
+							if (activity.id === updatedUserActivity.id)
 								return { ...activity, ...updatedUserActivity };
-							}
 						});
 						setState({ ...newState });
 					}
