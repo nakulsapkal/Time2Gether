@@ -1,12 +1,18 @@
 import { createContext, useContext, useEffect } from "react";
 import { stateContext } from "./StateProvider";
 import axios from "axios";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+const client = new W3CWebSocket("ws://127.0.0.1:8004/");
 
 export default function DatabaseProvider(props) {
 	const { user, state, setState, setUser } = useContext(stateContext);
 
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
+		client.onOpen = (event) => {
+			console.log("WebSocket Client Connected");
+		};
+
 		const p1 = axios.get("/api/users");
 		const p2 = axios.get("/api/activities");
 		const p3 = axios.get("/api/business/users");

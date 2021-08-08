@@ -11,8 +11,8 @@ import Footer from "./Footer";
 import MyActivities from "./MyActivities";
 import BusinessSignup from "./BusinessSignup";
 import BusinessLogin from "./BusinessLogin";
-
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+//client connects to server
 
 function App() {
 	return (

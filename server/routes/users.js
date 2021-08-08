@@ -44,7 +44,7 @@ module.exports = (db) => {
 			[joined_at, user_id, activity_id]
 		)
 			.then((data) => {
-				res.json(data.rows[0]);
+				res.json(data.rows);
 				console.log(data.rows[0]);
 			})
 			.catch((error) => console.log(error));
@@ -86,22 +86,6 @@ module.exports = (db) => {
 		}
 	});
 
-	// Delete user_activity record when person did cancel the activity and also has unfav the activity and as a result of it we are removing record from this table.
-	router.delete("/users/joined", (req, res) => {
-		const { user_id, activity_id } = req.body;
-		db.query(
-			`DELETE FROM user_activity 
-        WHERE user_id = $1
-        AND activity_id = $2`,
-			[user_id, activity_id]
-		)
-			.then((data) => {
-				res.json({ deleted: true });
-				console.log(data);
-			})
-			.catch((error) => console.log(error));
-	});
-
 	// add a "Favourite" event to user-activity table
 	router.post("/users/faved", (req, res) => {
 		const { favStatus, user_id, activity_id } = req.body.body;
@@ -113,7 +97,7 @@ module.exports = (db) => {
 			[user_id, activity_id]
 		)
 			.then((data) => {
-				res.json(data.rows[0]);
+				res.json(data.rows);
 			})
 			.catch((error) => console.log(error));
 	});
