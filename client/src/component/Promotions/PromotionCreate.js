@@ -63,14 +63,7 @@ export default function PromotionCreate() {
 			await saveFormData();
 			history.push("/promotions");
 			alert("Your promotion was successfully created!");
-			// setValues({
-			// 	title: "",
-			// 	start_date: "",
-			// 	end_date: "",
-			// 	details: "",
-			// 	loginUserId: loginUserId,
-			// });
-		} catch (e) {
+			} catch (e) {
 			alert(`Failed! ${e.message}`);
 		}
 	};

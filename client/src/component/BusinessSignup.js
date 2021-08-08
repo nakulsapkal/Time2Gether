@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
 
 function BusinessSignup(props) {
@@ -19,6 +20,7 @@ function BusinessSignup(props) {
 		addBusinessUser,
 	} = useContext(databaseContext);
 
+	const history = useHistory();
 	const Registration = (event) => {
 		if (businessName === "") {
 			setError("Company name cannot be blank");
@@ -55,7 +57,11 @@ function BusinessSignup(props) {
 				password: password,
 			};
 			//console.log("This is businessData in line 39 of signup",businessData)
-			addBusinessUser(businessData);
+			const result = addBusinessUser(businessData);
+			if (result) {
+				history.push("/promotions");
+			}
+		
 		}
 	};
 

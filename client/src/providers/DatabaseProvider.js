@@ -142,7 +142,6 @@ export default function DatabaseProvider(props) {
 	function addBusinessUser(businessUser) {
 		const apiUrl = "/api/business/signup";
 		const regNum = businessUser.registrationNumber;
-		//console.log("Registration number +++++++++++", regNum);
 		if (validateRegNum(regNum) === true) {
 			alert("Registration number is already in use");
 		} else {
@@ -152,10 +151,23 @@ export default function DatabaseProvider(props) {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((res) => {
+					const newBusinessUser = res.data;
 					const newState = state;
-					newState.businessUser = [...businessUser];
+					newState.businessUser.push(newBusinessUser);
+					console.log("This is newBusinessUser (from databaseprov):", newBusinessUser);
 					setState({ ...newState });
 					alert("New business user is successfully added!");
+				
+
+					// let userData = res.data;
+					// if (userData) {
+					// 	localStorage.setItem("userData", JSON.stringify(userData));
+					// }
+
+
+					if (newBusinessUser) {
+						localStorage.setItem("newBusinessUser", JSON.stringify(newBusinessUser));
+					}
 				})
 				.catch((error) => console.log(error));
 		}
