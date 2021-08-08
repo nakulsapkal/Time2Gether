@@ -1,4 +1,4 @@
-import "./App.css";
+import "./shared.css";
 import React from "react";
 import StateProvider from "providers/StateProvider";
 import Activity from "component/Activity";
@@ -11,6 +11,7 @@ import Footer from "./Footer";
 import MyActivities from "./MyActivities";
 import BusinessSignup from "./BusinessSignup";
 import BusinessLogin from "./BusinessLogin";
+import Message from "./Message";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -34,6 +35,7 @@ function App() {
 							<Route path="/business/login" component={BusinessLogin} />
 						</Switch>
 					</section>
+					<section><Message /></section>
 					<section>
 						<Footer />
 					</section>

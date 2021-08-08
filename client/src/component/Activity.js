@@ -6,7 +6,7 @@ export default function Activity() {
 	const { state } = useContext(databaseContext);
 	const { activities } = state;
 	return (
-		<div className="App">
+		<div className="activities">
 			{/* the state has been initialized as an object so setState somehow change it to obj.
       W/t Object.entries, .map will complaint activities is not an array */}
 			{Object.entries(activities).map(([key, item]) => {

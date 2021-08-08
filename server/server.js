@@ -24,6 +24,7 @@ app.use("/api", businessUserRouter(db));
 const activityRouter = require("./routes/activities");
 app.use("/api", activityRouter(db));
 
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });

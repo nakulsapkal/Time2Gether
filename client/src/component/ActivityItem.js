@@ -13,7 +13,7 @@ export default function ActivityItem(props) {
 	const history = useHistory();
 
 	return (
-		<div>
+		<div className="activtiy-card">
 			{myActivities && (
 				<div
 					className="card"

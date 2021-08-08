@@ -55,7 +55,7 @@ module.exports = (db) => {
 			postal_code,
 		} = req.body.body;
 		// console.log("body content line 27",req.body.body)
-		console.log("categoryId: ", category);
+		// console.log("categoryId: ", category);
 		const categoryList = {
 			1: "Outdoor sports",
 			2: "Baking",

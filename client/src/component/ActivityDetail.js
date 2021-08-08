@@ -1,3 +1,4 @@
+import './ActivityDetail.css';
 import React, { useContext } from "react";
 import { getJoinedTime, getFavStatus } from "../helpers/selectors";
 import UserJoin from "component/UserJoin";
@@ -34,7 +35,7 @@ export default function ActivityDetail() {
 	}
 
 	return (
-		<div className="card">
+		<div className="detail-card">
 			<section className="activity-detail">
 				<h3>Activity Details</h3>
 				<p>Start Date: {start_date.slice(0, 10)}</p>

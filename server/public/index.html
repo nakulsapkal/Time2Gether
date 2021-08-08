@@ -1,13 +1,61 @@
+<!doctype html>
 <html>
+   <head>
+      <title>Socket.IO chat</title>
+      <style>
+         * { margin: 0; padding: 0; box-sizing: border-box; }
+         body { font: 13px Helvetica, Arial; }
+         form { background: #000; padding: 3px; position: fixed;   
+         bottom: 0; width: 100%; }
+         form input { border: 0; padding: 10px; width: 90%; 
+         margin-right: 0.5%; }
+         form button { width: 9%; background: rgb(130, 224, 255);
+         border: none; padding: 10px; }
+         #messages { list-style-type: none; margin: 0; padding: 0; }
+         #messages li { padding: 5px 10px; }
+         #messages li:nth-child(odd) { background: #eee; }
+      </style>
+   </head>
+   <body>
+      <ul id="messages"></ul>
+      <form action="">
+         <input id="username" autocomplete="off" 
+          placeholder="username"/>
+         <input id="m" autocomplete="off" placeholder="equation"/>
+         <button>Send</button>
+      </form>
+      <script src="http://localhost:8003/socket.io/socket.io.js">
+      </script>
+      <script>
+         const socket = io("http://localhost:8003/socketMessages");
+         const form = document.querySelector('form');
+         const messages = document.querySelector('#messages');
+   function createMessage(msg) {
+      const li = document.createElement('li');
+     li.textContent =`${msg.text},${msg.username},${msg.created_at}`
+      messages.append(li);
+   }
+   function createMessages(msgs) {
+      msgs.forEach(createMessage);
+   }
 
-<head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-
-<body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
-</body>
-
+   fetch("http://localhost:8001/api/messages")
+   .then(res => res.json())
+   .then(createMessages);
+   
+   form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      socket.emit('chat message', JSON.stringify({
+      text: document.querySelector('#m').value,
+      username: document.querySelector('#username').value
+     }));
+      e.target.reset();
+   });
+   socket.on('chat message', function (msgs) {
+      console.log(msgs)
+      messages.innerHTML = "";
+      createMessages(msgs);
+   });
+         </script>
+   </body>
 </html>

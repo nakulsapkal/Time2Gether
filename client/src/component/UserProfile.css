@@ -1,17 +1,17 @@
-.card {
+/* .card {
   margin: 5px;
   padding: 25px;
   text-align: center;
   background-color: whitesmoke;
-  width: 500px;
-  border: 1px solid black;
-  border-radius: 2px;
+  width: 300px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
 }
 
 .card--img {
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
   border-radius: 50%;
   border: 5px solid limegreen;
-}
+} */
