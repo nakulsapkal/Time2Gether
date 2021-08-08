@@ -81,7 +81,7 @@ export default function Navbar() {
 									onClick={() => history.push("/promotions/business")}
 									className="header__optionLineTwo header__space"
 								>
-									""
+									
 									{/* My Promotions */}
 								</span>
 							)

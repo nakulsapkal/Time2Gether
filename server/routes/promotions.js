@@ -30,9 +30,9 @@ module.exports = (db) => {
      console.log("body content from route Promotions.js at backend server. Line 30",req.body.body);
     
     db.query(
-      `INSERT INTO promotions (title, start_date, end_date, details, business_id)
+      `INSERT INTO promotions (title, start_date, end_date, details, promo_code, business_id)
 
-      VALUES ($1, $2, $3, $4, $5) RETURNING *`, [title, start_date, end_date, details, loginUserId]
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [title, start_date, end_date, details, promo_code, loginUserId]
       )
       .then(data => {
         res.json({ promotions: data.rows });
