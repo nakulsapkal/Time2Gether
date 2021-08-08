@@ -24,6 +24,7 @@ module.exports = (db) => {
       start_date,
       end_date,
       details,
+      promo_code,
       loginUserId,
     } = req.body.body;
      console.log("body content from route Promotions.js at backend server. Line 30",req.body.body);

@@ -7,7 +7,7 @@ export default function PromotionDetails(props) {
 	console.log("This is promotion from line 6 in ItemDetails", promotion);
 
 	const { promotions } = state;
-	const { id, title, start_date, end_date, details } = promotion[0];
+	const { id, title, start_date, end_date, details, promo_code } = promotion[0];
 	
 	return (
 		<div className="proms">
@@ -17,6 +17,7 @@ export default function PromotionDetails(props) {
 				<p>Start Date: {start_date}</p>
 				<p>End Date: {end_date}</p>
 				<p>Details: {details}</p>
+				<p>Promo code: {promo_code}</p>
 			</section>
 		</div>
 	);

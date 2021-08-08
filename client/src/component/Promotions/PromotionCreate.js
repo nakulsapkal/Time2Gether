@@ -43,6 +43,7 @@ export default function PromotionCreate() {
 				start_date: values.start_date,
 				end_date: values.end_date,
 				details: values.details,
+				promo_code: values.promo_code,
 				loginUserId: loginUserId,
 			};
 			console.log("This is new Promotion. Line 48", newPromotion);
@@ -106,6 +107,10 @@ export default function PromotionCreate() {
 					<textarea value={values.details} onChange={set("details")} />
 				</div>
 
+				<div>
+					<label>Promo code:</label>
+					<textarea value={values.promo_code} onChange={set("promo_code")} />
+				</div>
 			
 				<div>
 					<button type="submit">Submit</button>

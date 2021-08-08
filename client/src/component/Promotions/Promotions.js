@@ -18,6 +18,7 @@ export default function Promotions() {
 						start_date={item.start_date}
 						start_time={item.start_time}
 						details={item.details}
+						promo_code={item.promo_code}
 					/>
 				);
 			})}
