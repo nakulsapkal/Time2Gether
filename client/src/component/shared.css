@@ -1,0 +1,92 @@
+html,
+body {
+  height: 99%;
+  background-color: white;
+}
+
+div[id] {
+  height: 100%;
+}
+
+.activities {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+}
+input {
+  flex: 1;
+  outline: none;
+  padding: 10px;
+  margin-right: 5px;
+  font-size: medium;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+
+select {
+  font-size: small;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  height:30px;
+  margin-top:10px;
+}
+
+button {
+  font-size: medium;
+  border-radius: 5px;
+  background-color: #3fda73;
+  color: white;
+  border: 1px solid lightgray;
+  
+}
+
+h1 {
+  padding-left: 50px;
+}
+
+form button {
+  margin-top: 20px;
+}
+
+form input,
+form select,
+form textarea {
+  display: inline-block;
+  width: 300px;
+  max-width: 300px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+form textarea {
+  min-height: 100px;
+}
+
+form {
+  border: 1px solid lightgray;
+  padding: 20px;
+  padding-top: 10px;
+  /* border-radius: 5px; */
+}
+
+form label {
+  display: inline-block;
+  margin-top: 10px;
+  width: 100px;
+  vertical-align: top;
+}
+
+form label {
+  display: inline-block;
+  margin-top: 10px;
+  width: 100px;
+  vertical-align: top;
+} 
+
+form label::before,
+form button::before {
+  content: "\A";
+}

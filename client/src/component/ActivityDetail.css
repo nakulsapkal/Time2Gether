@@ -1,0 +1,12 @@
+.detail-card{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  outline: none;
+  padding: 30px;
+  margin: 5px;
+  font-size: medium;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
