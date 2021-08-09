@@ -9,7 +9,7 @@ export default function Navbar() {
 	const { user, setUser } = useContext(databaseContext);
 	const { setEmail, setPassword } = useContext(stateContext);
 	const history = useHistory();
-	const { checked } = useContext(databaseContext);
+	const { checked } = useContext(stateContext);
 
 	//console.log("This checked is from Navbar:", checked);
 
