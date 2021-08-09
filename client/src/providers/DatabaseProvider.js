@@ -3,7 +3,7 @@ import { stateContext } from "./StateProvider";
 import axios from "axios";
 
 export default function DatabaseProvider(props) {
-	const { user, state, checked, setChecked, setState, setUser, email } = useContext(stateContext);
+	const { user, state, setState, setUser, email } = useContext(stateContext);
 
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
@@ -43,29 +43,35 @@ export default function DatabaseProvider(props) {
 
 
 	// Validate email and password befor loginig in for usual user
-	function validateUser(userEmail, userPassword) {
-		console.log("This is from user validation function in DatabaseProvider:", checked);
+	function validateUser(userEmail, userPassword, checked) {
+
 		if (!checked) {
 			let userData = state.users.find(
 				(obj) => obj.email === userEmail && obj.password === userPassword
-			);
+				);
 				if (userData) {
 					localStorage.setItem("userData", JSON.stringify(userData));
 					console.log("User userData from DatabaseProv:", userData);
 					return userData;
 				}
-				return false;
-		} else {
+				else{
+					return false;
+					
+				}
+			} else {
+			console.log("This is from user validation function in DatabaseProvider: Line 62", checked, state.businessUsers);
 			let userData = state.businessUsers.find(
 				(obj) =>
-					obj.email === email && 	obj.password === userPassword
+					obj.email === userEmail && 	obj.password === userPassword
 			);
 				if (userData) {
 					localStorage.setItem("userData", JSON.stringify(userData));
 					console.log("Business userData from DatabaseProv:", userData);
 					return userData;
+				}else{
+					return false;
+
 				}
-			return false;
 		}
 	};
 

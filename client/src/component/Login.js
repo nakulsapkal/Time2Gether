@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
 import { stateContext } from "providers/StateProvider";
@@ -17,20 +17,22 @@ export default function Login() {
 	} = useContext(stateContext);
 
 	const handleChange = () => {
+		console.log("Checked before", checked.toString());
 		setChecked(!checked);
-		//console.log(" Checkdata first time from Login", checked);
+		console.log("Checked after", checked.toString());
 	};
 
 	const history = useHistory();
 	const validate = (event) => {
 		event.preventDefault();
-		let user = validateUser(email, password);
+		let user = validateUser(email, password, checked);
 		
 		if (user && !checked) {
-			//console.log(" Checkdata second time from Login", checked);
+			console.log(" Checkdata first time from Login", checked);
 			setUser(user);
 			history.push("/");
 		} else if (user && checked) {
+			console.log(" Checkdata second time from Login", checked);
 			setUser(user);
 			history.push("/promotions");
 		} else {
@@ -78,6 +80,7 @@ export default function Login() {
 				<div>
 					<label>
 						<input type="checkbox" checked={checked} onChange={handleChange} />
+						<p>Is "Business user checked?" ---  {checked.toString()}</p>
 						Business user
 					</label>
 				</div>
