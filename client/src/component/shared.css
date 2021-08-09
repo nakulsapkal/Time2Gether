@@ -8,14 +8,29 @@ div[id] {
   height: 100%;
 }
 
-.activities {
-
+div #profile {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start
 }
+
+.activities {
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* responsive: desktop 4 item per row and laptop 3 items */
+.activtiy-card{
+  display: inline-block;
+  padding-left:10px;
+  width: 26%;
+}
+
+
 input {
   flex: 1;
   outline: none;
@@ -89,4 +104,24 @@ form label {
 form label::before,
 form button::before {
   content: "\A";
+}
+@media only screen and (min-width: 600px) {
+  /* For tablet/phone: */
+  .activtiy-card{width: 45%;}
+  /* .col-s-1 {width: 8.33%;} */
+
+}
+
+@media only screen and (min-width: 992px) {
+  /* For laptops: */
+  .activtiy-card{width: 30%;}
+  /* .col-s-1 {width: 8.33%;} */
+
+}
+
+@media only screen and (min-width: 1440px) {
+  /* For desktop: */
+  .activtiy-card{width: 23%;}
+  /* .col-2 {width: 16.66%;} */
+
 }

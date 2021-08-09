@@ -45,8 +45,8 @@ export default function MyActivities() {
 	}
 
 	return (
-		<div>
-			<div>
+		<div id="profile">
+			<div className="profile-sidebar">
 				<select onChange={handleChange}>
 					<option value="">Select Activity Category</option>
 					<option value="Created">Created</option>
@@ -55,7 +55,10 @@ export default function MyActivities() {
 					<option value="Favourite">Favourite</option>
 				</select>
 
-				{user && <UserProfile />}
+				<div>
+					{user && <UserProfile />}
+				</div>
+			</div>
 				{option === CREATED &&
 					Object.entries(createdActivities).map(([key, item]) => {
 						return (
@@ -71,8 +74,10 @@ export default function MyActivities() {
 									img={item.img}
 									myactivities={true}
 								/>
-								<button onClick={() => handleEditActivity(item)}>EDIT</button>
-								<button onClick={() => deleteActivity(item)}>DELETE</button>
+								<div className="profile-buttons">
+									<button onClick={() => handleEditActivity(item)}>EDIT</button>
+									<button onClick={() => deleteActivity(item)}>DELETE</button>
+								</div>
 							</div>
 						);
 					})}
@@ -124,7 +129,7 @@ export default function MyActivities() {
 							/>
 						);
 					})}
-			</div>
+		
 		</div>
 	);
 }

@@ -6,8 +6,8 @@ export function UserProfile() {
 	const { user } = useContext(databaseContext);
 	const { first_name, last_name, avatar } = user;
 	return (
-		<div className="card">
-			<img className="card--img" src={avatar} alt="img" />
+		<div className="profile-card">
+			<img className="profile--img" src={avatar} alt="img" />
 			<h2>
 				{first_name}
 				{last_name}

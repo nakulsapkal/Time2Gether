@@ -1,0 +1,17 @@
+
+div #profile {
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start
+}
+
+.profile-sidebar{
+  display: flex;
+  flex-direction:column;
+}
+
+.profile-buttons{
+  margin-left: 35px;
+
+}

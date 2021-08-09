@@ -1,17 +1,17 @@
-/* .card {
+.profile-card{
   margin: 5px;
   padding: 25px;
   text-align: center;
   background-color: whitesmoke;
-  width: 300px;
+  width: 100px;
   border: 1px solid lightgray;
   border-radius: 5px;
 }
 
-.card--img {
-  width: 200px;
-  height: 200px;
+.profile--img{
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 50%;
   border: 5px solid limegreen;
-} */
+}
