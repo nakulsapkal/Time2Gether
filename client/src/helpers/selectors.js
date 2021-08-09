@@ -32,6 +32,20 @@ function getUpcomingActivityForUser(id, activities) {
 	);
 }
 
+function getHostIdByActivityId(id, activities) {
+	console.log("Selector File:", id, activities);
+	const activity = activities.filter(
+		(actObj) =>
+			actObj.activity_id === id &&
+			actObj.created_at !== null &&
+			actObj.joined_at === null &&
+			actObj.favourite === false
+	);
+
+	console.log("Selector File activity:", activity);
+	return activity[0].user_id;
+}
+
 function getActivityHistoryForUser(id, activities) {
 	let date = new Date().toISOString().slice(0, 10);
 	return activities.filter(
@@ -89,4 +103,5 @@ export {
 	getActivityHistoryForUser,
 	getJoinedTime,
 	getFavStatus,
+	getHostIdByActivityId,
 };

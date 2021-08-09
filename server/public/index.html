@@ -1,3 +1,14 @@
+<!-- <html>
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <h1>Express</h1>
+  <p>Welcome to Express</p>
+</body>
+</html> -->
+
 <!doctype html>
 <html>
    <head>
@@ -27,7 +38,7 @@
       <script src="http://localhost:8003/socket.io/socket.io.js">
       </script>
       <script>
-         const socket = io("http://localhost:8003/socketMessages");
+         const socket = io("http://localhost:8003");
          const form = document.querySelector('form');
          const messages = document.querySelector('#messages');
    function createMessage(msg) {

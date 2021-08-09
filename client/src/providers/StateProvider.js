@@ -8,6 +8,8 @@ export default function StateProvider(props) {
 		userActivities: [],
 	});
 
+	const [room, setRoom] = useState("");
+	const [socket, setSocket] = useState("");
 	const [user, setUser] = useState([]);
 	const [activity, setActivity] = useState([]);
 	const [email, setEmail] = useState("");
@@ -51,6 +53,8 @@ export default function StateProvider(props) {
 		setRegistrationNumber,
 		phoneNumber,
 		setPhoneNumber,
+		room,
+		setRoom,
 	};
 
 	return (

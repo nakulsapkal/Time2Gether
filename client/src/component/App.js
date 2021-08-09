@@ -12,6 +12,7 @@ import MyActivities from "./MyActivities";
 import BusinessSignup from "./BusinessSignup";
 import BusinessLogin from "./BusinessLogin";
 import Message from "./Message";
+import Chat from "./Chat";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -35,7 +36,12 @@ function App() {
 							<Route path="/business/login" component={BusinessLogin} />
 						</Switch>
 					</section>
-					<section><Message /></section>
+					{/* <section>
+						<Message />
+					</section> */}
+					{/* <section>
+						<Chat />
+					</section> */}
 					<section>
 						<Footer />
 					</section>

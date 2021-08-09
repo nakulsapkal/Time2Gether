@@ -2,11 +2,24 @@ import { createContext, useContext, useEffect } from "react";
 import { stateContext } from "./StateProvider";
 import axios from "axios";
 
+// //Socket IO
+// import socketClient from "socket.io-client";
+// const SERVER = "localhost:8003";
+// let socket;
 export default function DatabaseProvider(props) {
 	const { user, state, setState, setUser } = useContext(stateContext);
 
+	// const connectToRoom = () => {
+	// 	socket.emit("chat message", room);
+	// };
+
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
+		// socket = socketClient(SERVER);
+		// socket.on("connection", () => {
+		// 	console.log(`I'm connected with the back-end`);
+		// });
+
 		const p1 = axios.get("/api/users");
 		const p2 = axios.get("/api/activities");
 		const p3 = axios.get("/api/business/users");
