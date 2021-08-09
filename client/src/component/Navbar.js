@@ -3,9 +3,11 @@ import "./Navbar.css";
 import SearchIcon from "@material-ui/icons/Search";
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
+import { stateContext } from "providers/StateProvider";
 
 export default function Navbar() {
-	const { user } = useContext(databaseContext);
+	const { user, setUser } = useContext(databaseContext);
+	const { setEmail, setPassword } = useContext(stateContext);
 	const history = useHistory();
 	const { checked } = useContext(databaseContext);
 
@@ -107,7 +109,6 @@ export default function Navbar() {
 							className="header__optionLineTwo header__space"
 							onClick={() => history.push("/signup")}
 						>
-							{" "}
 							SignUp
 						</span>
 					)}
@@ -117,8 +118,11 @@ export default function Navbar() {
 					{user ? (
 						<span
 							onClick={() => {
-								history.push("/login");
+								setUser("");
+								setEmail("");
+								setPassword();
 								localStorage.removeItem("userData");
+								history.push("/login");
 							}}
 							className="header__optionLineTwo header__space"
 						>

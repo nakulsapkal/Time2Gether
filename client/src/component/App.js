@@ -1,6 +1,5 @@
 import "./App.css";
 import React from "react";
-// import useApplicationData from "hooks/useApplicationData";
 import StateProvider from "providers/StateProvider";
 import Activity from "component/Activity";
 import ActivityDetail from "component/ActivityDetail";
@@ -29,39 +28,17 @@ function App() {
 					</section>
 					<section>
 						<Switch>
-							<Route path="/" exact>
-								<Activity />
-							</Route>
-							<Route path="/activities/detail">
-								<ActivityDetail />
-							</Route>
-							<Route path="/activities/create">
-								<ActivityCreate />
-							</Route>
-							<Route path="/login">
-								<Login />
-							</Route>
-							<Route path="/signup">
-								<Signup />
-							</Route>
-							<Route path="/user/activities">
-								<MyActivities />
-							</Route>
-							<Route path="/promotions" exact>
-								<Promotions />
-							</Route>
-							<Route path="/promotions/details" exact>
-								<PromotionDetails />
-							</Route>
-							<Route path="/promotions/create" exact>
-								<PromotionCreate />
-							</Route>
-							<Route path="/business/signup">
-								<BusinessSignup />
-							</Route>
-							<Route path="/business/login">
-								<BusinessLogin />
-							</Route>
+							<Route path="/" exact component={Activity} />
+							<Route path="/activities/detail" component={ActivityDetail} />
+							<Route path="/activities/create" component={ActivityCreate} />
+							<Route path="/login" component={Login} />
+							<Route path="/signup" component={Signup} />
+							<Route path="/user/activities" component={MyActivities} />
+							<Route path="/business/signup" component={BusinessSignup} />
+							<Route path="/business/login" component={BusinessLogin} />
+							<Route path="/promotions" exact component={Promotions} />
+							<Route path="/promotions/details" exact component={PromotionDetails} />
+							<Route path="/promotions/create" exact component={PromotionCreate} />
 						</Switch>
 					</section>
 					<section>

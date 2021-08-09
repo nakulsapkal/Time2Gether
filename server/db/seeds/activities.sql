@@ -74,16 +74,5 @@ VALUES (
     'Screening Soccer Match',
     '5',
     '2'
-  ),
-(
-    CURRENT_TIMESTAMP,
-    '08/15/2021',
-    '08/15/2021',
-    '09:00:00',
-    '14:00:00',
-    'http://www.density-calcium.com/_Uploads/dbsArticles/Sport(2).jpg',
-    'The summer holidays are a time of the year that most families look forward to with excitement, the time to relax, recuperate and switch off. However, that downtime period can also lead to an increase in inactivity.',
-    '1',
-    '1'
   )
 returning *;

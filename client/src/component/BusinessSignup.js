@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
+import { stateContext } from "providers/StateProvider";
 
-function BusinessSignup(props) {
+function BusinessSignup() {
+	const { addBusinessUser } = useContext(databaseContext);
 	const {
 		email,
 		password,
@@ -17,8 +19,7 @@ function BusinessSignup(props) {
 		setRegistrationNumber,
 		phoneNumber,
 		setPhoneNumber,
-		addBusinessUser,
-	} = useContext(databaseContext);
+	} = useContext(stateContext);
 
 	const history = useHistory();
 	const Registration = (event) => {

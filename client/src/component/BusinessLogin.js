@@ -1,20 +1,18 @@
 import React, { useContext } from "react";
 import { databaseContext } from "providers/DatabaseProvider";
+import { stateContext } from "providers/StateProvider";
 import { useHistory } from "react-router-dom";
 
 export default function BusinessLogin() {
+	const { setUser, validateBusinessUser } = useContext(databaseContext);
 	const {
-		email,
 		error,
-		setUser,
 		password,
-		setEmail,
 		setPassword,
 		setError,
 		registrationNumber,
 		setRegistrationNumber,
-		validateBusinessUser,
-	} = useContext(databaseContext);
+	} = useContext(stateContext);
 
 	const history = useHistory();
 	const validate = (event) => {

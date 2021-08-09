@@ -1,42 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./ActivityCreate.css";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
-import { getLoggedUserId } from "../helpers/selectors";
-import { Redirect, Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { databaseContext } from "providers/DatabaseProvider";
 
-// import 'date-fns';
-// import DateFnsUtils from '@date-io/date-fns';
-// import {
-//   DatePicker,
-//   TimePicker,
-//   DateTimePicker,
-//   MuiPickersUtilsProvider,
-// } from '@material-ui/pickers';
-
-export default function ActivityCreate(props) {
-	const location = useLocation();
-	console.log("History State:", location);
-	const activityObj = location.state;
-	const loginUser = JSON.parse(localStorage.getItem("userData"));
-	//const loginUserId = loginUser.id;
+export default function ActivityCreate() {
+	const { state, setState } = useContext(databaseContext);
 	let history = useHistory();
-	const loginUserId = getLoggedUserId();
+	const activityObj = history.location.state;
 
 	const [values, setValues] = useState({
-		img: "",
-		details: "",
-		category: "",
-		start_date: "",
-		end_date: "",
-		start_time: "",
-		end_time: "",
-		street_number: "",
-		street_name: "",
-		city: "",
-		province: "",
-		postal_code: "",
-		loginUserId: loginUserId,
+		img: activityObj && (activityObj.img || ""),
+		details: activityObj && (activityObj.details || ""),
+		category: activityObj && (activityObj.category || ""),
+		start_date: activityObj && (activityObj.start_date.slice(0, 10) || ""),
+		end_date: activityObj && (activityObj.end_date.slice(0, 10) || ""),
+		start_time: activityObj && (activityObj.start_time || ""),
+		end_time: activityObj && (activityObj.end_time || ""),
+		street_number: activityObj && (activityObj.street_number || ""),
+		street_name: activityObj && (activityObj.street_name || ""),
+		city: activityObj && (activityObj.city || ""),
+		province: activityObj && (activityObj.province || ""),
+		postal_code: activityObj && (activityObj.postal_code || ""),
 	});
 
 	//get data from users' input for each form field
@@ -47,38 +32,80 @@ export default function ActivityCreate(props) {
 	};
 
 	const saveFormData = async () => {
-		console.log("values from line 30: ", values);
-		const response = await axios.post("/api/activities/create", {
-			body: values,
-		});
+		if (activityObj !== undefined) {
+			const response = await axios.put("/api/activities/edit", {
+				values: values,
+				activityObj: activityObj,
+			});
 
-		if (response.status !== 200) {
-			throw new Error(`Request failed: ${response.status}`);
+			const newState = state;
+			newState.activities = state.activities.map((activity) => {
+				if (activity.id === activityObj.activity_id) {
+					return { ...activity, ...values };
+				}
+
+				return activity;
+			});
+
+			setState({ ...newState });
+
+			if (response.status !== 200) {
+				throw new Error(`Request failed: ${response.status}`);
+			}
+		} else {
+			let newActivity;
+			await axios
+				.post("/api/activities/create", {
+					body: values,
+				})
+				.then((result) => {
+					if (result.status !== 200) {
+						throw new Error(`Request failed: ${result.status}`);
+					}
+					newActivity = {
+						address_id: result.data.address.id,
+						category: "",
+						category_id: result.data.activity.category_id,
+						city: result.data.address.city,
+						created_at: result.data.activity.created_at,
+						details: result.data.activity.details,
+						end_date: result.data.activity.end_date,
+						end_time: result.data.activity.end_time,
+						id: result.data.activity.id,
+						img: result.data.activity.img,
+						postal_code: result.data.address.postal_code,
+						province: result.data.address.province,
+						start_date: result.data.activity.start_date,
+						start_time: result.data.activity.start_time,
+						street_name: result.data.address.street_name,
+						street_number: result.data.address.street_number,
+						title: null,
+					};
+					console.log("NewActivity:Line: 119", newActivity);
+				})
+				.catch((err) => {
+					console.error("Error While Deleting Activity: ", err);
+				});
+
+			const newState = state;
+			newState.activities.push(newActivity);
+
+			setState({ ...newState });
 		}
 	};
 
 	const onSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			// await saveFormData();
-			// alert("Your activity was successfully created!");
 			await saveFormData();
+
 			history.push("/");
-			alert("Your activity was successfully created!");
-			setValues({
-				img: "",
-				details: "",
-				category: "",
-				start_date: "",
-				end_date: "",
-				start_time: "",
-				end_time: "",
-				street_number: "",
-				street_name: "",
-				city: "",
-				province: "",
-				postal_code: "",
-			});
+
+			if (activityObj) {
+				alert("Your activity was successfully edited!");
+			} else {
+				alert("Your activity was successfully created!");
+			}
 		} catch (e) {
 			alert(`Failed! ${e.message}`);
 		}
@@ -98,8 +125,8 @@ export default function ActivityCreate(props) {
         </div> */}
 				<div>
 					<label>Category*:</label>
-					<select value={values.category} onChange={set("category")}>
-						<option>Select Category</option>
+					<select value={values.category} onChange={set("category")} required>
+						<option value="">Select Category</option>
 						<option value="Outdoor sports">Outdoor sports</option>
 						<option value="Baking">Baking</option>
 						<option value="Indoor Sports">Indoor sports</option>
@@ -213,6 +240,7 @@ export default function ActivityCreate(props) {
 
 				<div>
 					<button type="submit">Submit</button>
+					{/*Need to convert it to input tag */}
 					<button>Cancel</button>
 				</div>
 			</form>

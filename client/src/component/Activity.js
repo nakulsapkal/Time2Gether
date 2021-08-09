@@ -1,16 +1,10 @@
 import React, { useContext } from "react";
 import ActivityItem from "./ActivityItem";
 import { databaseContext } from "providers/DatabaseProvider";
-import { stateContext } from "providers/StateProvider";
 
 export default function Activity() {
-	//const { setActivity } = props;
 	const { state } = useContext(databaseContext);
-	//const { activity, setActivity } = useContext(stateContext);
-
 	const { activities } = state;
-	//const { activity, setActivity } = stateContext;
-
 	return (
 		<div className="App">
 			{/* the state has been initialized as an object so setState somehow change it to obj.
@@ -26,7 +20,6 @@ export default function Activity() {
 						end_time={item.end_time}
 						details={item.details}
 						img={item.img}
-						//setActivity={setActivity}
 					/>
 				);
 			})}
