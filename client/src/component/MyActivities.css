@@ -3,7 +3,8 @@ div #profile {
     display: flex;
     flex-wrap: nowrap;
     align-content: center;
-    justify-content: flex-start
+    justify-content: flex-start;
+    width: fit-content;
 }
 
 .profile-sidebar{
