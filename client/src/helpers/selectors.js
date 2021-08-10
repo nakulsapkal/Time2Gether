@@ -2,6 +2,14 @@ function getActivityById(id, activities) {
 	return activities.filter((a) => a.id === id);
 }
 
+function getPromotionById(id, promotions) {
+	console.log("this is from selector id", id);
+	console.log("this is from selector --- promotions", id, promotions);
+	let result = promotions.filter((a) => a.id === id);
+	//console.log("The result from selector",result);
+	return promotions.filter((a) => a.id === id);
+}
+
 function getLoggedUserId() {
 	const loginUser = JSON.parse(localStorage.getItem("userData"));
 	const loginUserId = loginUser.id;
@@ -30,6 +38,20 @@ function getUpcomingActivityForUser(id, activities) {
 			actObj.joined_at !== null &&
 			actObj.start_date > date
 	);
+}
+
+function getHostIdByActivityId(id, activities) {
+	console.log("Selector File:", id, activities);
+	const activity = activities.filter(
+		(actObj) =>
+			actObj.activity_id === id &&
+			// actObj.created_at !== null &&
+			actObj.joined_at === null &&
+			actObj.favourite === false
+	);
+
+	console.log("Selector File activity:", activity);
+	return activity[0].user_id;
 }
 
 function getActivityHistoryForUser(id, activities) {
@@ -88,5 +110,7 @@ export {
 	getActivitiesFavouriteByUser,
 	getActivityHistoryForUser,
 	getJoinedTime,
+	getPromotionById,
 	getFavStatus,
+	getHostIdByActivityId,
 };

@@ -1,10 +1,11 @@
-import './ActivityDetail.css';
+import "./ActivityDetail.css";
 import React, { useContext } from "react";
 import { getJoinedTime, getFavStatus } from "../helpers/selectors";
 import UserJoin from "component/UserJoin";
 import UserFav from "component/UserFav";
 import { databaseContext } from "providers/DatabaseProvider";
 import { stateContext } from "providers/StateProvider";
+import Message from "./Message";
 
 export default function ActivityDetail() {
 	const { user, state } = useContext(databaseContext);
@@ -62,6 +63,8 @@ export default function ActivityDetail() {
 				{user ? <UserJoin joined_at={joined_at} favStatus={favStatus} /> : ""}
 				{user ? <UserFav joined_at={joined_at} favStatus={favStatus} /> : ""}
 			</section>
+
+			<section>{user ? <Message /> : ""}</section>
 		</div>
 	);
 }

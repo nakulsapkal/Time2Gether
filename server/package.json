@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node server.js",
-    "local": "./node_modules/.bin/nodemon --watch server -e js server/server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

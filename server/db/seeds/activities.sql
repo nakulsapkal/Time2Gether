@@ -1,4 +1,5 @@
 INSERT INTO activities(
+    title,
     created_at,
     start_date,
     end_date,
@@ -10,6 +11,7 @@ INSERT INTO activities(
     category_id
   )
 VALUES (
+    'Summer Outdoor Activities',
     CURRENT_TIMESTAMP,
     '08/15/2021',
     '08/15/2021',
@@ -21,6 +23,7 @@ VALUES (
     '1'
   ),
   (
+    'Ball Game',
     CURRENT_TIMESTAMP,
     '09/01/2021',
     '09/01/2021',
@@ -32,6 +35,7 @@ VALUES (
     '1'
   ),
   (
+    'Baking Cakes',
     CURRENT_TIMESTAMP,
     '10/01/2021',
     '10/02/2021',
@@ -43,6 +47,7 @@ VALUES (
     '2'
   ),
   (
+    'Indoor Activity',
     CURRENT_TIMESTAMP,
     '10/15/2021',
     '10/15/2021',
@@ -54,6 +59,7 @@ VALUES (
     '3'
   ),
   (
+    'Cooking Time',
     CURRENT_TIMESTAMP,
     '11/01/2021',
     '11/01/2021',
@@ -65,6 +71,7 @@ VALUES (
     '3'
   ),
   (
+    'Screening Soccer Match',
     CURRENT_TIMESTAMP,
     '12/01/2021',
     '12/01/2021',

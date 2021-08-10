@@ -23,7 +23,7 @@ module.exports = (db) => {
 	router.get("/userActivities", (req, res) => {
 		// console.log("Activity Router:", db);
 		db.query(
-			`SELECT user_activity.id AS user_activity_id,joined_at,favourite,user_activity.user_id,activity_id,created_at,start_date,end_date,start_time,end_time,img,details,address_id,street_number,street_name,city,province,postal_code,category_id,categories.name as category from user_activity
+			`SELECT user_activity.id AS user_activity_id,joined_at,favourite,user_activity.user_id,title,activity_id,created_at,start_date,end_date,start_time,end_time,img,details,address_id,street_number,street_name,city,province,postal_code,category_id,categories.name as category from user_activity
       JOIN activities ON user_activity.activity_id = activities.id
       JOIN address ON  activities.address_id = address.id
       JOIN categories ON activities.category_id = categories.id
@@ -40,9 +40,9 @@ module.exports = (db) => {
 
 	router.post("/activities/create", (req, res) => {
 		const {
+			title,
 			img,
 			details,
-			loginUserId,
 			category,
 			start_date,
 			end_date,
@@ -53,8 +53,9 @@ module.exports = (db) => {
 			city,
 			province,
 			postal_code,
+			user_id,
 		} = req.body.body;
-		// console.log("body content line 27",req.body.body)
+		console.log("body content line 27***************", user_id);
 		// console.log("categoryId: ", category);
 		const categoryList = {
 			1: "Outdoor sports",
@@ -78,11 +79,11 @@ module.exports = (db) => {
 
 				db.query(
 					` INSERT INTO activities 
-            (img, details, category_id, created_at,
-            start_date, end_date, start_time, end_time, address_id) 
-  
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
+            (title,img, details, category_id, created_at,
+            start_date, end_date, start_time, end_time, address_id)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10) RETURNING *`,
 					[
+						title,
 						img,
 						details,
 						categoryId,
@@ -100,7 +101,7 @@ module.exports = (db) => {
               (user_id, activity_id, joined_at) 
     
               VALUES ($1, $2, $3) RETURNING *`,
-						[loginUserId, activity_id, null]
+						[user_id, activity_id, null]
 					)
 						.then((data2) => {
 							res.json({
@@ -117,6 +118,7 @@ module.exports = (db) => {
 
 	router.put("/activities/edit", (req, res) => {
 		const {
+			title,
 			img,
 			details,
 			loginUserId,
@@ -132,28 +134,8 @@ module.exports = (db) => {
 			postal_code,
 		} = req.body.values;
 
-		const {
-			activity_id,
-			address_id,
-			// category,
-			category_id,
-			// city,
-			created_at,
-			// details,
-			// end_date,
-			// end_time,
-			// favourite,
-			// img,
-			// joined_at,
-			// postal_code,
-			// province,
-			// start_date,
-			// start_time,
-			// street_name,
-			// street_number,
-			// user_activity_id,
-			// user_id,
-		} = req.body.activityObj;
+		const { activity_id, address_id, category_id, created_at } =
+			req.body.activityObj;
 
 		db.query(
 			`UPDATE address
@@ -175,9 +157,9 @@ module.exports = (db) => {
 					` UPDATE activities 
             SET 
 							img= $1, details= $2, category_id= $3, created_at= $4,
-							start_date= $5, end_date= $6, start_time= $7, end_time= $8, address_id= $9
+							start_date= $5, end_date= $6, start_time= $7, end_time= $8, address_id= $9, title=$10
             WHERE 
-							activities.id = $10 
+							activities.id = $11 
 						RETURNING *`,
 					[
 						img,
@@ -189,12 +171,11 @@ module.exports = (db) => {
 						start_time,
 						end_time,
 						address_id,
+						title,
 						activity_id,
 					]
 				)
 					.then((data1) => {
-						console.log("Updated Address:", data.rows);
-						console.log("Updated Activity ", data1.rows);
 						res.json({
 							//address: data.rows[0],
 							//activity: data1.rows[0],
