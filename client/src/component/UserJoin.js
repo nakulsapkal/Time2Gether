@@ -53,7 +53,7 @@ export default function UserJoin(props) {
 						start_time: activity[0].start_time,
 						street_name: activity[0].street_name,
 						street_number: activity[0].street_number,
-						title: null,
+						title: activity[0].title,
 					};
 					//const newUserActivity = result.data;
 					console.log("newUserActivity in User Join:Line 59", newUserActivity);

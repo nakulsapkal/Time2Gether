@@ -9,7 +9,7 @@ export default function ActivityItem(props) {
 	const { state } = useContext(databaseContext);
 	const { setActivity } = useContext(stateContext);
 	const { activities, userActivities } = state;
-	const { id, details, img, myActivities } = props;
+	const { id, details, img, myActivities, title } = props;
 	const history = useHistory();
 
 	return (
@@ -22,7 +22,7 @@ export default function ActivityItem(props) {
 						history.push("/activities/detail");
 					}}
 				>
-					<p>{details}</p>
+					<p>{title}</p>
 					<img className="card--img" src={img} alt="img" />
 				</div>
 			)}
@@ -34,7 +34,7 @@ export default function ActivityItem(props) {
 						history.push("/activities/detail");
 					}}
 				>
-					<p>{details}</p>
+					<p>{title}</p>
 					<img className="card--img" src={img} alt="img" />
 				</div>
 			)}

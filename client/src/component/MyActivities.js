@@ -23,6 +23,7 @@ export default function MyActivities() {
 		activitiesHistory,
 		favouriteActivities;
 	if (user) {
+		console.log("Line 26 My activities:", state);
 		createdActivities = getActivityCreatedByUser(user.id, userActivities);
 		upcomingActivities = getUpcomingActivityForUser(user.id, userActivities);
 		activitiesHistory = getActivityHistoryForUser(user.id, userActivities);
@@ -63,6 +64,7 @@ export default function MyActivities() {
 								<ActivityItem
 									key={key}
 									id={item.activity_id}
+									title={item.title}
 									start_date={item.start_date}
 									end_date={item.end_date}
 									start_time={item.start_time}
@@ -82,6 +84,7 @@ export default function MyActivities() {
 							<ActivityItem
 								key={key}
 								id={item.activity_id}
+								title={item.title}
 								start_date={item.start_date}
 								end_date={item.end_date}
 								start_time={item.start_time}
@@ -98,6 +101,7 @@ export default function MyActivities() {
 							<ActivityItem
 								key={key}
 								id={item.activity_id}
+								title={item.title}
 								start_date={item.start_date}
 								end_date={item.end_date}
 								start_time={item.start_time}
@@ -114,6 +118,7 @@ export default function MyActivities() {
 							<ActivityItem
 								key={key}
 								id={item.activity_id}
+								title={item.title}
 								start_date={item.start_date}
 								end_date={item.end_date}
 								start_time={item.start_time}

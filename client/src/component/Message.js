@@ -7,48 +7,8 @@ import axios from "axios";
 
 //Socket IO
 import socketClient from "socket.io-client";
-import { RestaurantMenu } from "@material-ui/icons";
+import { LeakAddTwoTone } from "@material-ui/icons";
 const SERVER = "localhost:8003";
-
-// const initialState = {
-// 	messages: [],
-// 	sender: "",
-// 	typing: false,
-// };
-
-// function reducer(state, action) {
-// 	switch (action.type) {
-// 		case "send-message":
-// 			const message = {
-// 				message: action.payload,
-// 				sender: "you",
-// 				timestamp: new Date(),
-// 			};
-// 			return {
-// 				...state,
-// 				messages: [...state.messages, message],
-// 				typing: false,
-// 			};
-// 		case "reply":
-// 			const reply = {
-// 				sender: "not-you",
-// 				message: action.payload,
-// 				timestamp: new Date(),
-// 			};
-// 			return {
-// 				...state,
-// 				messages: [...state.messages, reply],
-// 				typing: false,
-// 			};
-// 		case "typing":
-// 			return {
-// 				...state,
-// 				typing: true,
-// 			};
-// 		default:
-// 			return state;
-// 	}
-// }
 
 export default function Message() {
 	const [arrivalMessage, setArrivalMessage] = useState(null);
@@ -62,31 +22,33 @@ export default function Message() {
 	const socket = useRef();
 	const { userActivities } = state;
 
-	// console.log("userActivities in messages :", user);
-	const receiverId = getHostIdByActivityId(activity[0].id, userActivities);
-	// console.log("receiverId Line 65:", activity, receiverId, userActivities);
-
-	//const receiverId = "12";
+	let receiverId;
+	console.log("Activity:", activity, userActivities);
+	if (activity) {
+		//receiverId = getHostIdByActivityId(activity[0].id, userActivities);
+		receiverId = "1";
+	}
+	const scrollRef = useRef();
 	useEffect(() => {
 		socket.current = socketClient("ws://localhost:8003");
 		socket.current.on("getMessage", (data) => {
 			setArrivalMessage({
-				sender: data.senderId,
-				text: data.text,
-				createdAt: Date.now(),
+				senderId: data.senderId.senderId,
+				content: data.senderId.content,
+				conversationId: data.senderId.conversationId,
+				createdAt: new Date(),
 			});
 		});
 	}, []);
 
 	useEffect(() => {
 		arrivalMessage &&
-			currentChat?.members.includes(arrivalMessage.sender) &&
+			currentChat?.members.includes(arrivalMessage.senderId) &&
 			setMessages((prev) => [...prev, arrivalMessage]);
 		//users.includes(arrivalMessage.sender) &&
 	}, [arrivalMessage, currentChat]);
 
 	useEffect(() => {
-		console.log("User from messages:", user);
 		socket.current.on("welcome", (data) => {
 			console.log(data);
 		});
@@ -97,21 +59,19 @@ export default function Message() {
 		// 	);
 		// });
 	}, [user]);
+
 	useEffect(() => {
 		const getConversations = async () => {
 			try {
 				const res = await axios.get(
 					"/api/conversations/" + user.id + "-" + receiverId
 				);
-				console.log("Conversation:", res.data);
 				let currentChatData = {
 					conv_id: res.data[0].conv_id,
 					members: [res.data[0].conv_user1id, res.data[0].conv_user2id],
 				};
 				setCurrentChat(currentChatData);
 				setConversation(res.data[0].conv_id);
-				//const allMessages= res.data.map((msgs)>)
-				setMessages(res.data);
 			} catch (err) {
 				console.log(err);
 			}
@@ -119,18 +79,17 @@ export default function Message() {
 		getConversations();
 	}, [user, receiverId]);
 
-	// useEffect(() => {
-	// 	const getMessages = async () => {
-	// 		try {
-	// 			const res = await axios.get("/api/conversations/", { currentChat });
-	// 			console.log("Messages:", res.data);
-	// 			setMessages(res.data);
-	// 		} catch (err) {
-	// 			console.log(err);
-	// 		}
-	// 	};
-	// 	getMessages();
-	// }, [currentChat]);
+	useEffect(() => {
+		const getMessages = async () => {
+			try {
+				const res = await axios.get("/api/messages/" + currentChat.conv_id);
+				setMessages(res.data);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		getMessages();
+	}, [currentChat, receiverId, user]);
 
 	let hide = {
 		display: "none",
@@ -138,64 +97,46 @@ export default function Message() {
 	let show = {
 		display: "block",
 	};
-	//let textRef = React.createRef();
-	// const {messages} = props
 
 	const [chatopen, setChatopen] = useState(false);
 	const toggle = (e) => {
 		setChatopen(!chatopen);
 	};
 
-	//const [state, dispatch] = useReducer(reducer, initialState);
 	const chatTxt = React.createRef();
-
-	// function sendChat() {
-	// 	dispatch({ type: "send-message", payload: chatTxt.current.value });
-	// 	chatTxt.current.value = "";
-	// 	chatTxt.current.focus();
-	// 	dispatch({ type: "typing" });
-	// 	fetch("https://api.kanye.rest/")
-	// 		.then((d) => d.json())
-	// 		.then((d) =>
-	// 			setTimeout(() => {
-	// 				dispatch({ type: "reply", payload: d.quote });
-	// 			}, Math.random() * (2500 - 500) + 500)
-	// 		);
-	// }
 
 	const sendChat = async (e) => {
 		e.preventDefault();
-		// console.log("sendChat:", socket);
-		// socket.current.emit("addUser", receiverId);
 
-		console.log("sendChat:", socket);
 		const messageToDB = {
 			receiverId,
 			senderId: user.id,
 			content: newMessage,
 			conversationId: conversation,
+			createdAt: new Date(),
 		};
 
-		console.log("sendChat:", socket, user.id, receiverId, chatTxt, newMessage);
 		socket.current.emit("sendMessage", {
-			senderId: user.id,
 			receiverId,
-			text: newMessage,
+			senderId: user.id,
+			content: newMessage,
+			conversationId: conversation,
+			createdAt: new Date(),
 		});
 
 		try {
-			console.log("sendChat:", socket, messageToDB);
-
 			const res = await axios.post("/api/messages/create", messageToDB);
-
-			console.log("sendChat:", socket);
-			setMessages([...messages, res.data]);
+			messages.push(res.data[0]);
+			setMessages([...messages]);
 			setNewMessage("");
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
+	useEffect(() => {
+		scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+	}, [messages]);
 	return (
 		<div id="chatCon">
 			<div className="pop">
@@ -211,19 +152,24 @@ export default function Message() {
 				<div className="header">Chat with me</div>
 				<div className="chat-container">
 					<div className="chat-list">
-						{messages.map((msg) => {
-							const message = msg && (
-								<div
-									key={msg.created_at}
-									className={`chat-message ${msg.senderId}`}
-								>
-									<div className="message-text">{msg.content}</div>
-									<div className="timestamp">{msg.created_at}</div>
-								</div>
-							);
-							return <div>{message}</div>;
-						})}
-						{/* {state.typing && <code>Typing...</code>} */}
+						{currentChat ? (
+							messages.map((msg) => {
+								const message = msg && (
+									<div
+										key={msg.created_at}
+										className={`chat-message ${msg.senderId}`}
+									>
+										<div className="message-text">{msg.content}</div>
+										<div className="timestamp">{msg.created_at}</div>
+									</div>
+								);
+								return <div>{message}</div>;
+							})
+						) : (
+							<span className="noConversationText">
+								Open a conversation to start a chat.
+							</span>
+						)}
 					</div>
 					<form className="chat-controls" onSubmit={(e) => e.preventDefault()}>
 						<input

@@ -62,8 +62,9 @@ export default function ActivityDetail() {
 			<section>
 				{user ? <UserJoin joined_at={joined_at} favStatus={favStatus} /> : ""}
 				{user ? <UserFav joined_at={joined_at} favStatus={favStatus} /> : ""}
-				{user ? <Message /> : ""}
 			</section>
+
+			<section>{user ? <Message /> : ""}</section>
 		</div>
 	);
 }
