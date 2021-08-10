@@ -35,6 +35,7 @@ function App() {
 							<Route path="/user/activities" component={MyActivities} />
 							<Route path="/business/signup" component={BusinessSignup} />
 							<Route path="/business/login" component={BusinessLogin} />
+							<Route path="/users/promotions" component={Promotions} />
 							<Route path="/promotions" exact component={Promotions} />
 							<Route
 								path="/promotions/details"

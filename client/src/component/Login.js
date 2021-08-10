@@ -26,15 +26,17 @@ export default function Login() {
 	const validate = (event) => {
 		event.preventDefault();
 		let user = validateUser(email, password, checked);
-		
+
 		if (user && !checked) {
 			//console.log(" Checkdata first time from Login", checked);
 			setUser(user);
 			history.push("/");
+			reset();
 		} else if (user && checked) {
 			//console.log(" Checkdata second time from Login", checked);
 			setUser(user);
 			history.push("/promotions");
+			reset();
 		} else {
 			setError("Username or Password is incorrect!");
 		}

@@ -58,10 +58,11 @@ module.exports = (db) => {
 		console.log("body content line 27***************", user_id);
 		// console.log("categoryId: ", category);
 		const categoryList = {
-			1: "Outdoor sports",
-			2: "Baking",
-			3: "Indoor sports",
-			4: "Cooking",
+			1: "Physical",
+			2: "Mental",
+			3: "Social",
+			4: "Leisure",
+			5: "Occupational",
 		};
 
 		const categoryId = Object.keys(categoryList).find(

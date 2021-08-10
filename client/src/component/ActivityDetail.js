@@ -4,6 +4,7 @@ import {
 	getJoinedTime,
 	getFavStatus,
 	getActivityCreatedByUser,
+	getActivitiesFavouriteByUser,
 } from "../helpers/selectors";
 import UserJoin from "component/UserJoin";
 import UserFav from "component/UserFav";
@@ -32,13 +33,17 @@ export default function ActivityDetail() {
 	} = activity[0];
 
 	let joined_at, favStatus;
-	let createdActivities;
+	//let createdActivities, favouriteActivities;
 
 	if (user) {
-		createdActivities = getActivityCreatedByUser(user.id, userActivities).find(
-			(obj) => obj.activity_id === id
-		);
-		console.log("CreatedACT:", createdActivities, id, user);
+		// createdActivities = getActivityCreatedByUser(user.id, userActivities).find(
+		// 	(obj) => obj.activity_id === id
+		// );
+		// favouriteActivities = getActivitiesFavouriteByUser(
+		// 	user.id,
+		// 	userActivities
+		// ).find((obj) => obj.activity_id === id);
+		// console.log("CreatedACT:", createdActivities, id, user);
 		joined_at = getJoinedTime(user.id, id, userActivities);
 		favStatus = getFavStatus(user.id, id, userActivities);
 		console.log("joined_at************** : Line 33", joined_at, user);
@@ -68,22 +73,18 @@ export default function ActivityDetail() {
 				<p>Postal Code: {postal_code}</p>
 			</section>
 
-			{/* <section>
+			<section>
 				{user ? <UserJoin joined_at={joined_at} favStatus={favStatus} /> : ""}
 				{user ? <UserFav joined_at={joined_at} favStatus={favStatus} /> : ""}
-			</section> */}
-			<section>
+			</section>
+			{/* <section>
 				{user
 					? !createdActivities && (
 							<UserJoin joined_at={joined_at} favStatus={favStatus} />
 					  )
 					: ""}
-				{user
-					? !createdActivities && (
-							<UserFav joined_at={joined_at} favStatus={favStatus} />
-					  )
-					: ""}
-			</section>
+				{user ? <UserFav joined_at={joined_at} favStatus={favStatus} /> : ""}
+			</section> */}
 
 			<section>{user ? <Message /> : ""}</section>
 		</div>

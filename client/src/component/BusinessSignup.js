@@ -62,7 +62,6 @@ function BusinessSignup() {
 			if (result) {
 				history.push("/promotions");
 			}
-		
 		}
 	};
 

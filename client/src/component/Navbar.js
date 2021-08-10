@@ -15,24 +15,13 @@ export default function Navbar() {
 
 	return (
 		<div className="header">
-			{user && !checked ? (
-				<a href="/">
-					<img
-						className="header__logo"
-						alt="logo"
-						src="https://i.imgur.com/M8uyg0m.png"
-					/>
-				</a>
-			) : (
-				<a href="/promotions">
-					<img
-						className="header__logo"
-						alt="logo"
-						src="https://i.imgur.com/M8uyg0m.png"
-					/>
-				</a>
-			)}
-
+			<a href="/">
+				<img
+					className="header__logo"
+					alt="logo"
+					src="https://i.imgur.com/M8uyg0m.png"
+				/>
+			</a>
 			<div className="header__search">
 				<input className="header__searchInput" type="text" />
 				<SearchIcon className="header__searchIcon" />
@@ -43,7 +32,7 @@ export default function Navbar() {
 					<span className="header__optionLineTwo header__space">
 						{user && !checked ? (
 							<span
-								onClick={() => history.push("/promotions")}
+								onClick={() => history.push("/users/promotions")}
 								className="header__optionLineTwo header__space"
 							>
 								Promotions
@@ -93,7 +82,7 @@ export default function Navbar() {
 									onClick={() => history.push("/promotions")}
 									className="header__optionLineTwo header__space"
 								>
-									My Promotions
+									{/* My Promotions */}
 								</span>
 							)
 						) : (
@@ -131,7 +120,7 @@ export default function Navbar() {
 								setEmail("");
 								setPassword();
 								localStorage.removeItem("userData");
-								history.push("/login");
+								history.push("/");
 							}}
 							className="header__optionLineTwo header__space"
 						>

@@ -114,32 +114,33 @@ export default function DatabaseProvider(props) {
 
 	// Add a new user to the database
 	function addUser(user) {
+		let newUser;
 		const apiUrl = "/api/users/signup";
 		const email = user.email;
 		if (validateEmail(email) === true) {
 			alert("email is already in use");
 		} else {
-			console.log("user", user);
-			return axios
+			axios
 				.post(apiUrl, user, { headers: { "Content-Type": "application/json" } })
 				.then((res) => {
-					const newUser = res.data;
+					newUser = res.data;
 					const newState = state;
 					newState.users.push(newUser);
 					console.log("This is newState.users", newState.users);
 					setState({ ...newState });
 					alert("New user is successfully added!");
-					let userData = res.data;
-					if (userData) {
-						localStorage.setItem("userData", JSON.stringify(userData));
-					}
+					localStorage.setItem("userData", JSON.stringify(newUser));
+					setUser(newUser);
 				})
 				.catch((error) => console.log(error));
 		}
+		return newUser;
 	}
 
 	// Add a new business user to the database
 	function addBusinessUser(businessUser) {
+		let newBusinessUser;
+
 		const apiUrl = "/api/business/signup";
 		const regNum = businessUser.registrationNumber;
 		if (validateRegNum(regNum) === true) {
@@ -151,7 +152,7 @@ export default function DatabaseProvider(props) {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((res) => {
-					const newBusinessUser = res.data;
+					newBusinessUser = res.data;
 					const newState = state;
 					newState.businessUser.push(newBusinessUser);
 					console.log(
@@ -160,17 +161,12 @@ export default function DatabaseProvider(props) {
 					);
 					setState({ ...newState });
 					alert("New business user is successfully added!");
-
-					if (newBusinessUser) {
-						localStorage.setItem("userData", JSON.stringify(newBusinessUser));
-					}
-
-					// if (newBusinessUser) {
-					// 	localStorage.setItem("newBusinessUser", JSON.stringify(newBusinessUser));
-					// }
+					localStorage.setItem("userData", JSON.stringify(newBusinessUser));
+					setUser(newBusinessUser);
 				})
 				.catch((error) => console.log(error));
 		}
+		return newBusinessUser;
 	}
 
 	//Delete an activity for a user
