@@ -4,8 +4,9 @@ import { databaseContext } from "providers/DatabaseProvider";
 import { stateContext } from "providers/StateProvider";
 
 function Signup() {
-	const { addUser } = useContext(databaseContext);
+	const { setUser, addUser } = useContext(databaseContext);
 	const {
+		user,
 		email,
 		password,
 		firstName,
@@ -45,20 +46,20 @@ function Signup() {
 			};
 			const result = addUser(customData);
 			if (result) {
+
 				history.push("/");
 			}
 		}
 	};
 
 	return (
-		<div class="container">
-			<div class="text-center">
+		<div className="container">
+			<div className="text-center">
 				<h1>Create a New User</h1>
 			</div>
 
-			
-			<form onSubmit={Registration} class="user">
-				<div class="form-group">
+			<form onSubmit={Registration} className="user">
+				<div className="form-group">
 					<input
 						type="text"
 						name="First name"
@@ -67,7 +68,7 @@ function Signup() {
 					/>
 				</div>
 
-				<div class="form-group">
+				<div className="form-group">
 					<input
 						type="text"
 						name="Last name"
@@ -75,7 +76,7 @@ function Signup() {
 						placeholder="Last name"
 					/>
 				</div>
-				<div class="form-group">
+				<div className="form-group">
 					<input
 						type="email"
 						name="Email"
@@ -83,7 +84,7 @@ function Signup() {
 						placeholder="Email"
 					/>
 				</div>
-				<div class="form-group">
+				<div className="form-group">
 					<input
 						type="password"
 						name="Password"
@@ -91,16 +92,15 @@ function Signup() {
 						placeholder="Password"
 					/>
 				</div>
-				
-				<button type="submit" class="btn btn-primary  btn-block">
+
+				<button type="submit" className="btn btn-primary  btn-block">
 					Create User
 				</button>
 
-				<div class="text-center">
-				<br></br>
+				<div className="text-center">
+					<br></br>
 					<a href="/business/signup">Business Account Registration</a>
 				</div>
-				
 			</form>
 		</div>
 	);

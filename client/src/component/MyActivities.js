@@ -23,7 +23,6 @@ export default function MyActivities() {
 		activitiesHistory,
 		favouriteActivities;
 	if (user) {
-		console.log("Line 26 My activities:", state);
 		createdActivities = getActivityCreatedByUser(user.id, userActivities);
 		upcomingActivities = getUpcomingActivityForUser(user.id, userActivities);
 		activitiesHistory = getActivityHistoryForUser(user.id, userActivities);

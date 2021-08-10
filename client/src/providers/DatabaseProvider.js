@@ -7,11 +7,8 @@ import axios from "axios";
 // const SERVER = "localhost:8003";
 // let socket;
 export default function DatabaseProvider(props) {
-	const { user, state, setState, setUser, promotions } = useContext(stateContext);
-
-	// const connectToRoom = () => {
-	// 	socket.emit("chat message", room);
-	// };
+	const { user, state, setState, setUser, promotions } =
+		useContext(stateContext);
 
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
@@ -28,11 +25,7 @@ export default function DatabaseProvider(props) {
 
 		Promise.all([p1, p2, p3, p4, p5]).then((all) => {
 			const [first, second, third, fourth, fifth] = all;
-			console.log("Users:", first.data.users);
-			console.log("Activities:", second.data.activities);
-			console.log("Business users:", third.data.businessUsers);
-			console.log("userActivities:", fourth.data.userActivities);
-			console.log("Promotions:",fifth.data.promotions)
+
 			//For purpose of immutability copying the prev state first
 			setState((prev) => ({
 				...prev,
@@ -43,53 +36,37 @@ export default function DatabaseProvider(props) {
 				promotions: fifth.data.promotions,
 			}));
 		});
+
+		//setup localstorage for logged-in user
 		setUser(JSON.parse(localStorage.getItem("userData")));
 
-		//Clean up function
-		// return () => {
-		// 	setState({});
-		// 	setActivity([]);
-		// 	setUser([]);
-		// };
 	}, []);
-
-
 
 	// Validate email and password befor loginig in for usual user
 	function validateUser(userEmail, userPassword, checked) {
-
 		if (!checked) {
 			let userData = state.users.find(
 				(obj) => obj.email === userEmail && obj.password === userPassword
-				);
-				if (userData) {
-					localStorage.setItem("userData", JSON.stringify(userData));
-					console.log("User userData from DatabaseProv:", userData);
-					return userData;
-				}
-				else{
-					return false;
-					
-				}
-			} else {
-			console.log("This is from user validation function in DatabaseProvider: Line 62", checked, state.businessUsers);
-			let userData = state.businessUsers.find(
-				(obj) =>
-					obj.email === userEmail && 	obj.password === userPassword
 			);
-				if (userData) {
-					localStorage.setItem("userData", JSON.stringify(userData));
-					console.log("Business userData from DatabaseProv:", userData);
-					return userData;
-				}else{
-					return false;
+			if (userData) {
+				localStorage.setItem("userData", JSON.stringify(userData));
+				return userData;
+			} else {
+				return false;
+			}
+		} else {
 
-				}
+			let userData = state.businessUsers.find(
+				(obj) => obj.email === userEmail && obj.password === userPassword);
+			if (userData) {
+				localStorage.setItem("userData", JSON.stringify(userData));
+				return userData;
+			} else {
+				return false;
+			}
 		}
-	};
+	}
 
-	// Validate registration number and password before loginning in for business user
-	
 	// Validate email before adding a new user
 	function validateEmail(userEmail) {
 		let userData;
@@ -116,63 +93,56 @@ export default function DatabaseProvider(props) {
 
 	// Add a new user to the database
 	function addUser(user) {
+		let newUser;
 		const apiUrl = "/api/users/signup";
 		const email = user.email;
 		if (validateEmail(email) === true) {
 			alert("email is already in use");
 		} else {
-			console.log("user", user);
-			return axios
+			axios
 				.post(apiUrl, user, { headers: { "Content-Type": "application/json" } })
 				.then((res) => {
-					const newUser = res.data;
+					newUser = res.data;
 					const newState = state;
 					newState.users.push(newUser);
-					console.log("This is newState.users", newState.users);
+					
 					setState({ ...newState });
 					alert("New user is successfully added!");
-					let userData = res.data;
-					if (userData) {
-						localStorage.setItem("userData", JSON.stringify(userData));
-					}
+					localStorage.setItem("userData", JSON.stringify(newUser));
+					setUser(newUser);
 				})
 				.catch((error) => console.log(error));
 		}
+		return newUser;
 	}
 
 	// Add a new business user to the database
 	function addBusinessUser(businessUser) {
+		let newBusinessUser;
+
 		const apiUrl = "/api/business/signup";
 		const regNum = businessUser.registrationNumber;
 		if (validateRegNum(regNum) === true) {
 			alert("Registration number is already in use");
 		} else {
-			console.log("Business user", businessUser);
+			
 			return axios
 				.post(apiUrl, businessUser, {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((res) => {
-					const newBusinessUser = res.data;
+					newBusinessUser = res.data;
 					const newState = state;
 					newState.businessUser.push(newBusinessUser);
-					console.log("This is newBusinessUser (from databaseprov):", newBusinessUser);
+					
 					setState({ ...newState });
 					alert("New business user is successfully added!");
-				
-
-					// let userData = res.data;
-					// if (userData) {
-					// 	localStorage.setItem("userData", JSON.stringify(userData));
-					// }
-
-
-					if (newBusinessUser) {
-						localStorage.setItem("newBusinessUser", JSON.stringify(newBusinessUser));
-					}
+					localStorage.setItem("userData", JSON.stringify(newBusinessUser));
+					setUser(newBusinessUser);
 				})
 				.catch((error) => console.log(error));
 		}
+		return newBusinessUser;
 	}
 
 	//Delete an activity for a user

@@ -7,8 +7,6 @@ import { databaseContext } from "providers/DatabaseProvider";
 export default function UserJoin(props) {
 	const { activity } = useContext(stateContext);
 	const { user, state, setState } = useContext(databaseContext);
-	// console.log("joined_at******************", props.joined_at);
-	// console.log("user_id******************", user.id);
 
 	const history = useHistory();
 	const [values, setValues] = useState({
@@ -17,8 +15,6 @@ export default function UserJoin(props) {
 		activity_id: activity[0].id,
 		favStatus: props.favStatus,
 	});
-
-	// console.log("!props.joined_at************** : ", !props.joined_at);
 
 	const addJoin = async () => {
 		return await axios
@@ -29,8 +25,6 @@ export default function UserJoin(props) {
 				if (result.status !== 200) {
 					throw new Error(`Request failed: ${result.status}`);
 				} else {
-					console.log("result.data in User Join:Line 32", result.data);
-					console.log("activity in User Join:Line 33", activity);
 
 					const newUserActivity = {
 						activity_id: result.data.activity_id,
@@ -55,8 +49,6 @@ export default function UserJoin(props) {
 						street_number: activity[0].street_number,
 						title: activity[0].title,
 					};
-					//const newUserActivity = result.data;
-					console.log("newUserActivity in User Join:Line 59", newUserActivity);
 
 					const newState = state;
 					newState.userActivities.push(newUserActivity);
@@ -66,7 +58,6 @@ export default function UserJoin(props) {
 	};
 
 	const changeJoined = async () => {
-		console.log("Values in User Join:Line 34", values, activity);
 
 		if (props.favStatus === 1) {
 			return await axios
@@ -137,11 +128,8 @@ export default function UserJoin(props) {
 
 	return (
 		<div className="join-button">
-			{activity[0].email === user.email ? (
-				""
-			) : (
+			{activity[0].email === user.email ? ( "" ) : (
 				<button onClick={handleJoin}>
-					{/* { props.joined_at ? "CANCEL" : "JOIN"} */}
 					{props.joined_at === 1 ? "CANCEL" : "JOIN"}
 				</button>
 			)}

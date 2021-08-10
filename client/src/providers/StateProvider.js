@@ -9,8 +9,6 @@ export default function StateProvider(props) {
 		promotions: [],
 	});
 
-	const [room, setRoom] = useState("");
-	const [socket, setSocket] = useState("");
 	const [user, setUser] = useState([]);
 	const [activity, setActivity] = useState([]);
 	const [email, setEmail] = useState("");

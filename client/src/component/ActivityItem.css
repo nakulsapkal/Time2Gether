@@ -1,24 +1,17 @@
 .card {
   margin: 25px;
   padding: 25px;
-  text-align: center;
+  align-items: center;
   background-color: whitesmoke;
   width: 10px;
   border: 1px solid lightgray;
   border-radius: 5px;
-  /* height:100px; */
   width:250px;
-  height:400px;
+  height:250px;
   display: flex;
   flex-direction: column;
    justify-content: space-between;
 }
-
-/* .activtiy-card {
-  display: flex;
-  flex-direction: column;
-   justify-content: space-between;
-} */
 
 .card--img {
   width: 200px;

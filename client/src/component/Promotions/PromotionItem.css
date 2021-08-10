@@ -1,21 +1,24 @@
+
+
 .promcard {
-  margin: 5px;
-  padding: 50px;
-  text-align: center;
-  background-color: rgb(165, 106, 38);
-  width: 500px;
-  border: 2px solid black;
-  border-radius: 10px;
-  font: 3em sans-serif;
+  margin: 25px;
+  padding: 25px;
+  align-items: center;
+  background-color: whitesmoke;
+  width: 10px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  width:250px;
+  height:250px;
+  display: flex;
+  flex-direction: column;
+   justify-content: space-between;
 }
 
 .proms {
-  margin: 5px;
-  padding: 50px;
-  text-align: center;
-  background-color: rgb(165, 106, 38);
-  width: 500px;
-  border: 2px solid black;
-  border-radius: 10px;
-  font: 2em sans-serif;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid limegreen;
 }

@@ -35,17 +35,10 @@ function App() {
 							<Route path="/user/activities" component={MyActivities} />
 							<Route path="/business/signup" component={BusinessSignup} />
 							<Route path="/business/login" component={BusinessLogin} />
+							<Route path="/users/promotions" component={Promotions} />
 							<Route path="/promotions" exact component={Promotions} />
-							<Route
-								path="/promotions/details"
-								exact
-								component={PromotionDetails}
-							/>
-							<Route
-								path="/promotions/create"
-								exact
-								component={PromotionCreate}
-							/>
+							<Route path="/promotions/details" exact component={PromotionDetails} />
+							<Route path="/promotions/create" exact component={PromotionCreate} />
 						</Switch>
 					</section>
 					<section>
