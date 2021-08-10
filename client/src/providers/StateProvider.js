@@ -6,6 +6,7 @@ export default function StateProvider(props) {
 		activities: [],
 		businessUser: [],
 		userActivities: [],
+		promotions: [],
 	});
 
 	const [room, setRoom] = useState("");
@@ -23,22 +24,23 @@ export default function StateProvider(props) {
 	const [ownerName, setOwnerName] = useState("");
 	const [registrationNumber, setRegistrationNumber] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
+	const [promotion, setPromotion] = useState([]);
 
 	const providerData = {
 		user,
+		setUser,
 		state,
 		setState,
-		setUser,
 		activity,
 		setActivity,
 		email,
-		password,
-		error,
-		checked,
 		setEmail,
+		password,
 		setPassword,
-		setChecked,
+		error,
 		setError,
+		checked,
+		setChecked,
 		firstName,
 		setFirstName,
 		lastName,
@@ -53,8 +55,8 @@ export default function StateProvider(props) {
 		setRegistrationNumber,
 		phoneNumber,
 		setPhoneNumber,
-		room,
-		setRoom,
+		promotion,
+		setPromotion,
 	};
 
 	return (

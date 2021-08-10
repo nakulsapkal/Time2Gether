@@ -7,7 +7,7 @@ import axios from "axios";
 // const SERVER = "localhost:8003";
 // let socket;
 export default function DatabaseProvider(props) {
-	const { user, state, setState, setUser } = useContext(stateContext);
+	const { user, state, setState, setUser, promotions } = useContext(stateContext);
 
 	// const connectToRoom = () => {
 	// 	socket.emit("chat message", room);
@@ -24,13 +24,15 @@ export default function DatabaseProvider(props) {
 		const p2 = axios.get("/api/activities");
 		const p3 = axios.get("/api/business/users");
 		const p4 = axios.get("/api/userActivities");
+		const p5 = axios.get("/api/promotions");
 
-		Promise.all([p1, p2, p3, p4]).then((all) => {
-			const [first, second, third, fourth] = all;
+		Promise.all([p1, p2, p3, p4, p5]).then((all) => {
+			const [first, second, third, fourth, fifth] = all;
 			console.log("Users:", first.data.users);
 			console.log("Activities:", second.data.activities);
 			console.log("Business users:", third.data.businessUsers);
 			console.log("userActivities:", fourth.data.userActivities);
+			console.log("Promotions:",fifth.data.promotions)
 			//For purpose of immutability copying the prev state first
 			setState((prev) => ({
 				...prev,
@@ -38,6 +40,7 @@ export default function DatabaseProvider(props) {
 				activities: second.data.activities,
 				businessUsers: third.data.businessUsers,
 				userActivities: fourth.data.userActivities,
+				promotions: fifth.data.promotions,
 			}));
 		});
 		setUser(JSON.parse(localStorage.getItem("userData")));
@@ -50,32 +53,43 @@ export default function DatabaseProvider(props) {
 		// };
 	}, []);
 
-	function validateUser(userEmail, userPassword) {
-		let userData = state.users.find(
-			(obj) => obj.email === userEmail && obj.password === userPassword
-		);
 
-		if (userData) {
-			localStorage.setItem("userData", JSON.stringify(userData));
-			return userData;
+
+	// Validate email and password befor loginig in for usual user
+	function validateUser(userEmail, userPassword, checked) {
+
+		if (!checked) {
+			let userData = state.users.find(
+				(obj) => obj.email === userEmail && obj.password === userPassword
+				);
+				if (userData) {
+					localStorage.setItem("userData", JSON.stringify(userData));
+					console.log("User userData from DatabaseProv:", userData);
+					return userData;
+				}
+				else{
+					return false;
+					
+				}
+			} else {
+			console.log("This is from user validation function in DatabaseProvider: Line 62", checked, state.businessUsers);
+			let userData = state.businessUsers.find(
+				(obj) =>
+					obj.email === userEmail && 	obj.password === userPassword
+			);
+				if (userData) {
+					localStorage.setItem("userData", JSON.stringify(userData));
+					console.log("Business userData from DatabaseProv:", userData);
+					return userData;
+				}else{
+					return false;
+
+				}
 		}
-		return false;
-	}
+	};
 
-	// Validate registration number and password before logining
-	function validateBusinessUser(registrationNumber, userPassword) {
-		let userData = state.businessUsers.find(
-			(obj) =>
-				obj.registration_number === registrationNumber &&
-				obj.password === userPassword
-		);
-
-		if (userData) {
-			localStorage.setItem("userData", JSON.stringify(userData));
-			return userData;
-		}
-		return false;
-	}
+	// Validate registration number and password before loginning in for business user
+	
 	// Validate email before adding a new user
 	function validateEmail(userEmail) {
 		let userData;
@@ -139,10 +153,23 @@ export default function DatabaseProvider(props) {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((res) => {
+					const newBusinessUser = res.data;
 					const newState = state;
-					newState.businessUser = [...businessUser];
+					newState.businessUser.push(newBusinessUser);
+					console.log("This is newBusinessUser (from databaseprov):", newBusinessUser);
 					setState({ ...newState });
 					alert("New business user is successfully added!");
+				
+
+					// let userData = res.data;
+					// if (userData) {
+					// 	localStorage.setItem("userData", JSON.stringify(userData));
+					// }
+
+
+					if (newBusinessUser) {
+						localStorage.setItem("newBusinessUser", JSON.stringify(newBusinessUser));
+					}
 				})
 				.catch((error) => console.log(error));
 		}
@@ -186,7 +213,7 @@ export default function DatabaseProvider(props) {
 		validateUser,
 		addBusinessUser,
 		deleteActivity,
-		validateBusinessUser,
+		promotions,
 	};
 
 	// that needs our state

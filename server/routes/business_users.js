@@ -21,7 +21,7 @@ module.exports = (db) => {
     db.query(
       `
       INSERT INTO business_users (business_name, owner_name, email, password, registration_number, phone_number) 
-      VALUES ($1, $2, $3, $4, $5, $6)`, [businessName, ownerName, email, password, registrationNumber,phoneNumber]
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [businessName, ownerName, email, password, registrationNumber,phoneNumber]
     )
       .then(data => {
         res.json(data.rows[0]);

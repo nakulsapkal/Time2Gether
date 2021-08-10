@@ -9,6 +9,10 @@ export default function Navbar() {
 	const { user, setUser } = useContext(databaseContext);
 	const { setEmail, setPassword } = useContext(stateContext);
 	const history = useHistory();
+	const { checked } = useContext(stateContext);
+
+	//console.log("This checked is from Navbar:", checked);
+
 	return (
 		<div className="header">
 			<a href="/">
@@ -27,12 +31,12 @@ export default function Navbar() {
 			<div className="header__nav">
 				<div className="header__option">
 					<span className="header__optionLineTwo header__space">
-						{user ? (
+						{user && !checked ? (
 							<span
-								onClick={() => history.push("/activities/create")}
+								onClick={() => history.push("/promotions")}
 								className="header__optionLineTwo header__space"
 							>
-								Create
+								Promotions
 							</span>
 						) : (
 							""
@@ -43,12 +47,46 @@ export default function Navbar() {
 				<div className="header__option">
 					<span className="header__optionLineTwo header__space">
 						{user ? (
-							<span
-								onClick={() => history.push("/user/activities")}
-								className="header__optionLineTwo header__space"
-							>
-								My Activity
-							</span>
+							!checked ? (
+								<span
+									onClick={() => history.push("/activities/create")}
+									className="header__optionLineTwo header__space"
+								>
+									Create Activity
+								</span>
+							) : (
+								<span
+									onClick={() => history.push("/promotions/create")}
+									className="header__optionLineTwo header__space"
+								>
+									Create Promotion
+								</span>
+							)
+						) : (
+							""
+						)}
+					</span>
+				</div>
+
+				<div className="header__option">
+					<span className="header__optionLineTwo header__space">
+						{user ? (
+							!checked ? (
+								<span
+									onClick={() => history.push("/user/activities")}
+									className="header__optionLineTwo header__space"
+								>
+									My Activity
+								</span>
+							) : (
+								<span
+									onClick={() => history.push("/promotions/business")}
+									className="header__optionLineTwo header__space"
+								>
+									
+									{/* My Promotions */}
+								</span>
+							)
 						) : (
 							""
 						)}
@@ -57,9 +95,15 @@ export default function Navbar() {
 
 				<div className="header__option">
 					{user ? (
-						<span className="header__optionLineTwo header__space">
-							Hi, {user && user.first_name}!
-						</span>
+						!checked ? (
+							<span className="header__optionLineTwo header__space">
+								Hi, {user && user.first_name}!
+							</span>
+						) : (
+							<span className="header__optionLineTwo header__space">
+								Hi, {user && user.email}!
+							</span>
+						)
 					) : (
 						<span
 							className="header__optionLineTwo header__space"

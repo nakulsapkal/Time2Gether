@@ -2,6 +2,14 @@ function getActivityById(id, activities) {
 	return activities.filter((a) => a.id === id);
 }
 
+function getPromotionById(id, promotions) {
+	console.log("this is from selector id", id);
+	console.log("this is from selector --- promotions", id, promotions);
+	let result = promotions.filter((a) => a.id === id);
+	//console.log("The result from selector",result);
+	return promotions.filter((a) => a.id === id);
+}
+
 function getLoggedUserId() {
 	const loginUser = JSON.parse(localStorage.getItem("userData"));
 	const loginUserId = loginUser.id;
@@ -102,6 +110,7 @@ export {
 	getActivitiesFavouriteByUser,
 	getActivityHistoryForUser,
 	getJoinedTime,
+	getPromotionById,
 	getFavStatus,
 	getHostIdByActivityId,
 };

@@ -39,7 +39,7 @@ export default function useApplicationData(params) {
   }, []);
 
   function validateUser(userEmail, userPassword) {
-    let userData = state.users.find(
+    let userData = state.users.find(console.log("This is from user validation function in DatabaseProvider. Line 49:", checked)
       (obj) => obj.email === userEmail && obj.password === userPassword
     );
 

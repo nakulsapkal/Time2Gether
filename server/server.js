@@ -26,25 +26,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
-//create routes
+//creating multiple routes and passing the db instnace for quering the database
 const userRouter = require("./routes/users");
 app.use("/api", userRouter(db));
 
 const businessUserRouter = require("./routes/business_users");
 app.use("/api", businessUserRouter(db));
 
-//passing the db instnace for quering the database
 const activityRouter = require("./routes/activities");
 app.use("/api", activityRouter(db));
 
-// Socket IO
 const messageRouter = require("./routes/messages");
 app.use("/api", messageRouter(db));
 
 const conversationRouter = require("./routes/conversations");
 app.use("/api", conversationRouter(db));
 
-// connects, creates message, and emits top 10 messages
+const promotionsRouter = require("./routes/promotions");
+app.use("/api", promotionsRouter(db));
+
 let users = [];
 
 const addUser = (receiverId, socketId) => {
@@ -98,7 +98,6 @@ io.on("connection", (socket) => {
 server.listen(socketPort, () => {
 	console.log(`listening on *:${socketPort}`);
 });
-// Socket IO END
 
 app.listen(PORT, () => {
 	console.log("Example app listening on port " + PORT);

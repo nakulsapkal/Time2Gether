@@ -11,8 +11,9 @@ import Footer from "./Footer";
 import MyActivities from "./MyActivities";
 import BusinessSignup from "./BusinessSignup";
 import BusinessLogin from "./BusinessLogin";
-import Message from "./Message";
-import Chat from "./Chat";
+import Promotions from "./Promotions/Promotions";
+import PromotionDetails from "./Promotions/PromotionDetails";
+import PromotionCreate from "./Promotions/PromotionCreate";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -34,14 +35,19 @@ function App() {
 							<Route path="/user/activities" component={MyActivities} />
 							<Route path="/business/signup" component={BusinessSignup} />
 							<Route path="/business/login" component={BusinessLogin} />
+							<Route path="/promotions" exact component={Promotions} />
+							<Route
+								path="/promotions/details"
+								exact
+								component={PromotionDetails}
+							/>
+							<Route
+								path="/promotions/create"
+								exact
+								component={PromotionCreate}
+							/>
 						</Switch>
 					</section>
-					{/* <section>
-						<Message />
-					</section> */}
-					{/* <section>
-						<Chat />
-					</section> */}
 					<section>
 						<Footer />
 					</section>
