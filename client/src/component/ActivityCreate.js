@@ -3,11 +3,9 @@ import "./ActivityCreate.css";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
-import { stateContext } from "providers/StateProvider";
 
 export default function ActivityCreate() {
 	const { user, state, setState } = useContext(databaseContext);
-	// const { user } = useContext(stateContext);
 	let history = useHistory();
 	const activityObj = history.location.state;
 
@@ -27,8 +25,8 @@ export default function ActivityCreate() {
 		title: activityObj && (activityObj.title || ""),
 		user_id: user.id,
 	});
-	// console.log("user.id line 27***************", user);
-	//get data from users' input for each form field
+
+	//a generic set function for each input value
 	const set = (data) => {
 		return ({ target: { value } }) => {
 			setValues((oldValues) => ({ ...oldValues, [data]: value }));
@@ -110,12 +108,11 @@ export default function ActivityCreate() {
 						street_number: result.data.address.street_number,
 						title: result.data.activity.title,
 					};
-					console.log("NewActivity:Line: 89", newActivity);
+
 					const newState = state;
-					console.log("newState: 90", newState);
+
 					newState.activities.push(newActivity);
 					newState.userActivities.push(newUserActivity);
-
 					setState({ ...newState });
 				})
 				.catch((err) => {

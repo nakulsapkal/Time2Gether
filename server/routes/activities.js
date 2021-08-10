@@ -4,7 +4,6 @@ const router = express.Router();
 module.exports = (db) => {
 	//fetch all activities
 	router.get("/activities", (req, res) => {
-		// console.log("Activity Router:", db);
 		db.query(
 			`SELECT activities.*, address.street_number, address.street_name, address.city, address.province, address.postal_code, categories.name as category from activities
        JOIN address ON address.id = activities.address_id
@@ -21,7 +20,6 @@ module.exports = (db) => {
 	});
 
 	router.get("/userActivities", (req, res) => {
-		// console.log("Activity Router:", db);
 		db.query(
 			`SELECT user_activity.id AS user_activity_id,joined_at,favourite,user_activity.user_id,title,activity_id,created_at,start_date,end_date,start_time,end_time,img,details,address_id,street_number,street_name,city,province,postal_code,category_id,categories.name as category from user_activity
       JOIN activities ON user_activity.activity_id = activities.id
@@ -30,7 +28,6 @@ module.exports = (db) => {
 			WHERE activities.created_at IS NOT NULL;`
 		)
 			.then((result) => {
-				// console.log("One Activity record from activities:", result.rows[0]);
 				res.json({ userActivities: result.rows });
 			})
 			.catch((err) => {
@@ -55,8 +52,7 @@ module.exports = (db) => {
 			postal_code,
 			user_id,
 		} = req.body.body;
-		console.log("body content line 27***************", user_id);
-		// console.log("categoryId: ", category);
+
 		const categoryList = {
 			1: "Physical",
 			2: "Mental",
@@ -135,8 +131,7 @@ module.exports = (db) => {
 			postal_code,
 		} = req.body.values;
 
-		const { activity_id, address_id, category_id, created_at } =
-			req.body.activityObj;
+		const { activity_id, address_id, category_id, created_at } = req.body.activityObj;
 
 		db.query(
 			`UPDATE address

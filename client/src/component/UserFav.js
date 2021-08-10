@@ -7,9 +7,6 @@ import { useHistory } from "react-router-dom";
 export default function UserFav(props) {
 	const { user, state, setState } = useContext(databaseContext);
 	const { activity } = useContext(stateContext);
-	// console.log("joined_at******************", props.joined_at);
-	// console.log("user_id******************", user.id);
-	// console.log("activity_id******************", activity[0].id);
 
 	const history = useHistory();
 	const [values, setValues] = useState({
@@ -19,11 +16,8 @@ export default function UserFav(props) {
 		joined_at: props.joined_at,
 	});
 
-	// console.log("props.favStatus************** : ",props.favStatus)
-
 	//check if the fav record exist
-	//if not, add
-	//if exist, update
+	//if not, add a new one into user-activity table
 	const addFav = async () => {
 		return await axios
 			.post("/api/users/faved", {
@@ -64,10 +58,10 @@ export default function UserFav(props) {
 			});
 	};
 
+	//if exist, update the current statues
 	const changeFav = async () => {
 		if (props.joined_at === 1) {
-			return await axios
-				.put("/api/users/faved", {
+			return await axios.put("/api/users/faved", {
 					body: { ...values, favStatus: !props.favStatus },
 				})
 				.then((result) => {
@@ -85,8 +79,8 @@ export default function UserFav(props) {
 					}
 				});
 		} else {
-			return await axios
-				.delete("/api/users/joined", {
+			//if join and fav are null/false, delete this record
+			return await axios.delete("/api/users/joined", {
 					data: values,
 				})
 				.then((result) => {
@@ -104,11 +98,6 @@ export default function UserFav(props) {
 					}
 				});
 		}
-
-		// console.log(response);
-		// if (response.status !== 200) {
-		// 	throw new Error(`Request failed: ${response.status}`);
-		// }
 	};
 
 	const handleFav = async (e) => {
@@ -134,8 +123,7 @@ export default function UserFav(props) {
 			}
 		}
 	};
-	// console.log(props.favStatus)
-	// console.log("activity_id******************", values.activity_id);
+
 	return (
 		<div className="fav-button">
 			<button onClick={handleFav}>

@@ -9,7 +9,6 @@ export default function PromotionCreate() {
 	const { user, state, setState } = useContext(databaseContext);
 	let history = useHistory();
 	const loginUserId = getLoggedUserId();
-	console.log("Logged bisuness user. This is from PromotionCreate.js:", user);
 
 	const [values, setValues] = useState({
 		title: "",

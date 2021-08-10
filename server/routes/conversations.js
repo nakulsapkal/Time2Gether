@@ -10,7 +10,6 @@ module.exports = (db) => {
 			indexOfD + 1,
 			req.params.id.length
 		);
-		console.log("user in converstation**************", user_id, participant_id);
 
 		db.query(
 			`SELECT messages.*, 

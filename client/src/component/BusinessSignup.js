@@ -57,7 +57,6 @@ function BusinessSignup() {
 				phoneNumber: phoneNumber,
 				password: password,
 			};
-			//console.log("This is businessData in line 39 of signup",businessData)
 			const result = addBusinessUser(businessData);
 			if (result) {
 				history.push("/promotions");

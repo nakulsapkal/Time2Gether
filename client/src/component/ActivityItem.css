@@ -6,19 +6,12 @@
   width: 10px;
   border: 1px solid lightgray;
   border-radius: 5px;
-  /* height:100px; */
   width:200px;
   height:400px;
   display: flex;
   flex-direction: column;
    justify-content: space-between;
 }
-
-/* .activtiy-card {
-  display: flex;
-  flex-direction: column;
-   justify-content: space-between;
-} */
 
 .card--img {
   width: 200px;

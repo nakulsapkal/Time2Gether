@@ -11,8 +11,6 @@ export default function Navbar() {
 	const history = useHistory();
 	const { checked } = useContext(stateContext);
 
-	//console.log("This checked is from Navbar:", checked);
-
 	return (
 		<div className="header">
 			<a href="/">
@@ -81,9 +79,7 @@ export default function Navbar() {
 								<span
 									onClick={() => history.push("/promotions")}
 									className="header__optionLineTwo header__space"
-								>
-									{/* My Promotions */}
-								</span>
+								></span>
 							)
 						) : (
 							""

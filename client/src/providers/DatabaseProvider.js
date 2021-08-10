@@ -10,10 +10,6 @@ export default function DatabaseProvider(props) {
 	const { user, state, setState, setUser, promotions } =
 		useContext(stateContext);
 
-	// const connectToRoom = () => {
-	// 	socket.emit("chat message", room);
-	// };
-
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
 		// socket = socketClient(SERVER);
@@ -29,11 +25,7 @@ export default function DatabaseProvider(props) {
 
 		Promise.all([p1, p2, p3, p4, p5]).then((all) => {
 			const [first, second, third, fourth, fifth] = all;
-			console.log("Users:", first.data.users);
-			console.log("Activities:", second.data.activities);
-			console.log("Business users:", third.data.businessUsers);
-			console.log("userActivities:", fourth.data.userActivities);
-			console.log("Promotions:", fifth.data.promotions);
+
 			//For purpose of immutability copying the prev state first
 			setState((prev) => ({
 				...prev,
@@ -44,14 +36,10 @@ export default function DatabaseProvider(props) {
 				promotions: fifth.data.promotions,
 			}));
 		});
+
+		//setup localstorage for logged-in user
 		setUser(JSON.parse(localStorage.getItem("userData")));
 
-		//Clean up function
-		// return () => {
-		// 	setState({});
-		// 	setActivity([]);
-		// 	setUser([]);
-		// };
 	}, []);
 
 	// Validate email and password befor loginig in for usual user
@@ -62,31 +50,22 @@ export default function DatabaseProvider(props) {
 			);
 			if (userData) {
 				localStorage.setItem("userData", JSON.stringify(userData));
-				console.log("User userData from DatabaseProv:", userData);
 				return userData;
 			} else {
 				return false;
 			}
 		} else {
-			console.log(
-				"This is from user validation function in DatabaseProvider: Line 62",
-				checked,
-				state.businessUsers
-			);
+
 			let userData = state.businessUsers.find(
-				(obj) => obj.email === userEmail && obj.password === userPassword
-			);
+				(obj) => obj.email === userEmail && obj.password === userPassword);
 			if (userData) {
 				localStorage.setItem("userData", JSON.stringify(userData));
-				console.log("Business userData from DatabaseProv:", userData);
 				return userData;
 			} else {
 				return false;
 			}
 		}
 	}
-
-	// Validate registration number and password before loginning in for business user
 
 	// Validate email before adding a new user
 	function validateEmail(userEmail) {
@@ -126,7 +105,7 @@ export default function DatabaseProvider(props) {
 					newUser = res.data;
 					const newState = state;
 					newState.users.push(newUser);
-					console.log("This is newState.users", newState.users);
+					
 					setState({ ...newState });
 					alert("New user is successfully added!");
 					localStorage.setItem("userData", JSON.stringify(newUser));
@@ -146,7 +125,7 @@ export default function DatabaseProvider(props) {
 		if (validateRegNum(regNum) === true) {
 			alert("Registration number is already in use");
 		} else {
-			console.log("Business user", businessUser);
+			
 			return axios
 				.post(apiUrl, businessUser, {
 					headers: { "Content-Type": "application/json" },
@@ -155,10 +134,7 @@ export default function DatabaseProvider(props) {
 					newBusinessUser = res.data;
 					const newState = state;
 					newState.businessUser.push(newBusinessUser);
-					console.log(
-						"This is newBusinessUser (from databaseprov):",
-						newBusinessUser
-					);
+					
 					setState({ ...newState });
 					alert("New business user is successfully added!");
 					localStorage.setItem("userData", JSON.stringify(newBusinessUser));

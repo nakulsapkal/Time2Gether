@@ -33,7 +33,7 @@ export default function ActivityDetail() {
 	} = activity[0];
 
 	let joined_at, favStatus;
-	//let createdActivities, favouriteActivities;
+
 
 	if (user) {
 		// createdActivities = getActivityCreatedByUser(user.id, userActivities).find(

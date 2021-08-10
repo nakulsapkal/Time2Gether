@@ -46,8 +46,7 @@ function Signup() {
 			};
 			const result = addUser(customData);
 			if (result) {
-				//setUser(result);
-				console.log("User:", user, result);
+
 				history.push("/");
 			}
 		}
