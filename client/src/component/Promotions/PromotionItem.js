@@ -6,7 +6,9 @@ import { stateContext } from "providers/StateProvider";
 import { getPromotionById } from "../../helpers/selectors";
 
 export default function PromotionItem(props) {
-	const { state, promotion, setPromotion } = useContext(databaseContext);
+	const { promotion, setPromotion } = useContext(stateContext);
+	const { state } = useContext(databaseContext);
+
 	const { promotions } = state;
 	const { id, title } = props;
  	const history = useHistory();

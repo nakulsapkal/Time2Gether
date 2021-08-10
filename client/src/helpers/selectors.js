@@ -3,9 +3,10 @@ function getActivityById(id, activities) {
 }
 
 function getPromotionById(id, promotions) {
-  //console.log("this is from selector id and promotions", id, promotions);
+  console.log("this is from selector id", id);
+	console.log("this is from selector --- promotions", id, promotions);
   let result = promotions.filter((a) => a.id === id);
-  console.log("The result from selector",result);
+  //console.log("The result from selector",result);
   return promotions.filter((a) => a.id === id);
 }
 
@@ -96,5 +97,5 @@ export {
   getActivityHistoryForUser,
   getJoinedTime,
   getPromotionById,
-  getFavStatus
+  getFavStatus,
 };

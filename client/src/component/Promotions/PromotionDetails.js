@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import { databaseContext } from "providers/DatabaseProvider";
+import { stateContext } from "providers/StateProvider";
 
 export default function PromotionDetails(props) {
-	const { state, promotion } = useContext(databaseContext);
-
-	console.log("This is promotion from line 6 in ItemDetails", promotion);
-
-	const { promotions } = state;
+	const { promotion } = useContext(stateContext);
+	
 	const { id, title, start_date, end_date, details, promo_code } = promotion[0];
+	console.log("This is promotion from line 8 in ItemDetails", promotion);
 	
 	return (
 		<div className="proms">

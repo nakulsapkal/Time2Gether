@@ -3,7 +3,7 @@ import { stateContext } from "./StateProvider";
 import axios from "axios";
 
 export default function DatabaseProvider(props) {
-	const { user, state, setState, setUser, userEmail } = useContext(stateContext);
+	const { user, state, setState, setUser, promotions } = useContext(stateContext);
 
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
@@ -200,6 +200,7 @@ export default function DatabaseProvider(props) {
 		validateUser,
 		addBusinessUser,
 		deleteActivity,
+		promotions,
 	};
 
 	// that needs our state
