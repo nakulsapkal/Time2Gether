@@ -2,14 +2,14 @@ import React, { useState, useContext } from "react";
 import "./PromotionCreate.css";
 import axios from "axios";
 import { getLoggedUserId } from "../../helpers/selectors";
-import { Redirect, Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
 
 export default function PromotionCreate() {
-	const { state, setState } = useContext(databaseContext);
+	const { user, state, setState } = useContext(databaseContext);
 	let history = useHistory();
 	const loginUserId = getLoggedUserId();
-  console.log("Logged bisuness user. This is from PromotionCreate.js:", loginUserId);
+	console.log("Logged bisuness user. This is from PromotionCreate.js:", user);
 
 	const [values, setValues] = useState({
 		title: "",
@@ -17,7 +17,7 @@ export default function PromotionCreate() {
 		end_date: "",
 		details: "",
 		promo_code: "",
-		loginUserId: loginUserId,
+		user_id: user.id,
 	});
 
 	//get data from users' input for each form field
@@ -30,32 +30,31 @@ export default function PromotionCreate() {
 	const saveFormData = async () => {
 		let newPromotion;
 		console.log("values from PromotionCreate.js. Line 32: ", values);
-		await axios.post("/api/promotions/create", {
-			body: values,
-		})
-		.then((result) => {
-			if (result.status !== 200) {
-				throw new Error(`Request failed: ${result.status}`);
-			}
-			console.log("Result", result);
-			newPromotion = {
-				title: values.title,
-				start_date: values.start_date,
-				end_date: values.end_date,
-				details: values.details,
-				promo_code: values.promo_code,
-				loginUserId: loginUserId,
-			};
-			console.log("This is new Promotion. Line 48", newPromotion);
-			const newState = state;
-		  newState.promotions.push(newPromotion);
-			setState({ ...newState});
-			
-		})
-		.catch((err) => {
-			console.error("Error while adding promotion: ", err);
-		})
-				
+		await axios
+			.post("/api/promotions/create", {
+				body: values,
+			})
+			.then((result) => {
+				if (result.status !== 200) {
+					throw new Error(`Request failed: ${result.status}`);
+				}
+				console.log("Result", result);
+				newPromotion = {
+					title: values.title,
+					start_date: values.start_date,
+					end_date: values.end_date,
+					details: values.details,
+					promo_code: values.promo_code,
+					user_id: user.id,
+				};
+				console.log("This is new Promotion. Line 48", newPromotion);
+				const newState = state;
+				newState.promotions.push(newPromotion);
+				setState({ ...newState });
+			})
+			.catch((err) => {
+				console.error("Error while adding promotion: ", err);
+			});
 	};
 
 	const onSubmit = async (event) => {
@@ -64,10 +63,14 @@ export default function PromotionCreate() {
 			await saveFormData();
 			history.push("/promotions");
 			alert("Your promotion was successfully created!");
-			} catch (e) {
+		} catch (e) {
 			alert(`Failed! ${e.message}`);
 		}
 	};
+
+	function reset() {
+		history.push("/promotions");
+	}
 
 	return (
 		<div className="create-promotion">
@@ -78,7 +81,6 @@ export default function PromotionCreate() {
 					<label>Title:</label>
 					<textarea value={values.title} onChange={set("title")} />
 				</div>
-				
 
 				<div>
 					<label>Start Date*:</label>
@@ -111,10 +113,10 @@ export default function PromotionCreate() {
 					<label>Promo code:</label>
 					<textarea value={values.promo_code} onChange={set("promo_code")} />
 				</div>
-			
+
 				<div>
 					<button type="submit">Submit</button>
-					<button>Cancel</button>
+					<input type="button" onClick={() => reset()} value="Cancel" />
 				</div>
 			</form>
 		</div>

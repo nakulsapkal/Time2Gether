@@ -276,7 +276,6 @@ export default function ActivityCreate() {
 
 				<div>
 					<button type="submit">Submit</button>
-					{/*Need to convert it to input tag */}
 					<input type="button" onClick={() => reset()} value="Cancel" />
 				</div>
 			</form>

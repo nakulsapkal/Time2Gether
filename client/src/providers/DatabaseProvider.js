@@ -7,7 +7,8 @@ import axios from "axios";
 // const SERVER = "localhost:8003";
 // let socket;
 export default function DatabaseProvider(props) {
-	const { user, state, setState, setUser, promotions } = useContext(stateContext);
+	const { user, state, setState, setUser, promotions } =
+		useContext(stateContext);
 
 	// const connectToRoom = () => {
 	// 	socket.emit("chat message", room);
@@ -32,7 +33,7 @@ export default function DatabaseProvider(props) {
 			console.log("Activities:", second.data.activities);
 			console.log("Business users:", third.data.businessUsers);
 			console.log("userActivities:", fourth.data.userActivities);
-			console.log("Promotions:",fifth.data.promotions)
+			console.log("Promotions:", fifth.data.promotions);
 			//For purpose of immutability copying the prev state first
 			setState((prev) => ({
 				...prev,
@@ -53,43 +54,40 @@ export default function DatabaseProvider(props) {
 		// };
 	}, []);
 
-
-
 	// Validate email and password befor loginig in for usual user
 	function validateUser(userEmail, userPassword, checked) {
-
 		if (!checked) {
 			let userData = state.users.find(
 				(obj) => obj.email === userEmail && obj.password === userPassword
-				);
-				if (userData) {
-					localStorage.setItem("userData", JSON.stringify(userData));
-					console.log("User userData from DatabaseProv:", userData);
-					return userData;
-				}
-				else{
-					return false;
-					
-				}
-			} else {
-			console.log("This is from user validation function in DatabaseProvider: Line 62", checked, state.businessUsers);
-			let userData = state.businessUsers.find(
-				(obj) =>
-					obj.email === userEmail && 	obj.password === userPassword
 			);
-				if (userData) {
-					localStorage.setItem("userData", JSON.stringify(userData));
-					console.log("Business userData from DatabaseProv:", userData);
-					return userData;
-				}else{
-					return false;
-
-				}
+			if (userData) {
+				localStorage.setItem("userData", JSON.stringify(userData));
+				console.log("User userData from DatabaseProv:", userData);
+				return userData;
+			} else {
+				return false;
+			}
+		} else {
+			console.log(
+				"This is from user validation function in DatabaseProvider: Line 62",
+				checked,
+				state.businessUsers
+			);
+			let userData = state.businessUsers.find(
+				(obj) => obj.email === userEmail && obj.password === userPassword
+			);
+			if (userData) {
+				localStorage.setItem("userData", JSON.stringify(userData));
+				console.log("Business userData from DatabaseProv:", userData);
+				return userData;
+			} else {
+				return false;
+			}
 		}
-	};
+	}
 
 	// Validate registration number and password before loginning in for business user
-	
+
 	// Validate email before adding a new user
 	function validateEmail(userEmail) {
 		let userData;
@@ -156,20 +154,20 @@ export default function DatabaseProvider(props) {
 					const newBusinessUser = res.data;
 					const newState = state;
 					newState.businessUser.push(newBusinessUser);
-					console.log("This is newBusinessUser (from databaseprov):", newBusinessUser);
+					console.log(
+						"This is newBusinessUser (from databaseprov):",
+						newBusinessUser
+					);
 					setState({ ...newState });
 					alert("New business user is successfully added!");
-				
-
-					// let userData = res.data;
-					// if (userData) {
-					// 	localStorage.setItem("userData", JSON.stringify(userData));
-					// }
-
 
 					if (newBusinessUser) {
-						localStorage.setItem("newBusinessUser", JSON.stringify(newBusinessUser));
+						localStorage.setItem("userData", JSON.stringify(newBusinessUser));
 					}
+
+					// if (newBusinessUser) {
+					// 	localStorage.setItem("newBusinessUser", JSON.stringify(newBusinessUser));
+					// }
 				})
 				.catch((error) => console.log(error));
 		}

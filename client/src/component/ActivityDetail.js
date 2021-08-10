@@ -1,6 +1,10 @@
 import "./ActivityDetail.css";
 import React, { useContext } from "react";
-import { getJoinedTime, getFavStatus } from "../helpers/selectors";
+import {
+	getJoinedTime,
+	getFavStatus,
+	getActivityCreatedByUser,
+} from "../helpers/selectors";
 import UserJoin from "component/UserJoin";
 import UserFav from "component/UserFav";
 import { databaseContext } from "providers/DatabaseProvider";
@@ -28,8 +32,13 @@ export default function ActivityDetail() {
 	} = activity[0];
 
 	let joined_at, favStatus;
+	let createdActivities;
 
 	if (user) {
+		createdActivities = getActivityCreatedByUser(user.id, userActivities).find(
+			(obj) => obj.activity_id === id
+		);
+		console.log("CreatedACT:", createdActivities, id, user);
 		joined_at = getJoinedTime(user.id, id, userActivities);
 		favStatus = getFavStatus(user.id, id, userActivities);
 		console.log("joined_at************** : Line 33", joined_at, user);
@@ -40,8 +49,8 @@ export default function ActivityDetail() {
 			<section className="activity-detail">
 				<h3>Activity Details</h3>
 				<p>Start Date: {start_date.slice(0, 10)}</p>
-				<p>Start Time: {end_date.slice(0, 10)}</p>
-				<p>End Date: {start_time}</p>
+				<p>End Date: {end_date.slice(0, 10)}</p>
+				<p>Start Time: {start_time}</p>
 				<p>End Time: {end_time}</p>
 				<p>Details: {details}</p>
 			</section>
@@ -59,9 +68,21 @@ export default function ActivityDetail() {
 				<p>Postal Code: {postal_code}</p>
 			</section>
 
-			<section>
+			{/* <section>
 				{user ? <UserJoin joined_at={joined_at} favStatus={favStatus} /> : ""}
 				{user ? <UserFav joined_at={joined_at} favStatus={favStatus} /> : ""}
+			</section> */}
+			<section>
+				{user
+					? !createdActivities && (
+							<UserJoin joined_at={joined_at} favStatus={favStatus} />
+					  )
+					: ""}
+				{user
+					? !createdActivities && (
+							<UserFav joined_at={joined_at} favStatus={favStatus} />
+					  )
+					: ""}
 			</section>
 
 			<section>{user ? <Message /> : ""}</section>
