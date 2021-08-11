@@ -20,10 +20,10 @@ Geocode.setLocationType("ROOFTOP");
 Geocode.enableDebug();
 export default function MapContainer(props) {
 
-  const [defaultCenter, setDefaultCenter] = useState({});
+  // const [defaultCenter, setDefaultCenter] = useState({});
   const mapStyles = {
-    height: "40vh",
-    width: "40%",
+    height: "500px",
+    width: "800px",
   };
   
   // useEffect(() => {
@@ -32,6 +32,7 @@ export default function MapContainer(props) {
   // }, [props.temp]);
   
   return (
+    
     <LoadScript googleMapsApiKey="put your key here">
       <GoogleMap mapContainerStyle={mapStyles} zoom={13} center={props.temp}>
        {console.log(props.temp)}
