@@ -1,5 +1,5 @@
 import "./ActivityDetail.css";
-import React, { useContext } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import {
 	getJoinedTime,
 	getFavStatus,
@@ -12,11 +12,19 @@ import { databaseContext } from "providers/DatabaseProvider";
 import { stateContext } from "providers/StateProvider";
 import Message from "./Message";
 
+import MapContainer from './MapContainer';
+import Geocode from "react-geocode";
+Geocode.setApiKey("AIzaSyACb3HouyPTRq5NhEZzCVSpN2y-mgYexTk");
+Geocode.setLanguage("en");
+Geocode.setRegion("ca");
+Geocode.setLocationType("ROOFTOP");
+Geocode.enableDebug();
+
 export default function ActivityDetail() {
 	const { user, state } = useContext(databaseContext);
 	const { activity } = useContext(stateContext);
 	const { userActivities } = state;
-
+	const [temp, setTemp ] = useState({})
 	const {
 		id,
 		title,
@@ -47,9 +55,22 @@ export default function ActivityDetail() {
 		// console.log("CreatedACT:", createdActivities, id, user);
 		joined_at = getJoinedTime(user.id, id, userActivities);
 		favStatus = getFavStatus(user.id, id, userActivities);
-		console.log("joined_at************** : Line 33", joined_at, user);
+		// console.log("joined_at************** : Line 33", joined_at, user);
 	}
 
+	useEffect(() => {
+    Geocode.fromAddress(postal_code)
+      .then((response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        // console.log(lat, lng);
+        setTemp({ lat, lng });
+      })
+      .then((res) => {
+        console.log("temp", temp);
+      });
+  }, []);
+
+  
 	return (
 		<div id="detail-card">
 			<section className="activity-detail">
@@ -73,8 +94,9 @@ export default function ActivityDetail() {
 				{user ? <UserJoin joined_at={joined_at} favStatus={favStatus} /> : ""}
 				{user ? <UserFav joined_at={joined_at} favStatus={favStatus} /> : ""}
 			</section>
-
+{        console.log("temp", temp)}
 			<section>{user ? <Message /> : ""}</section>
+			<section>{temp && <MapContainer temp={temp} />}</section>
 		</div>
 	);
 }
