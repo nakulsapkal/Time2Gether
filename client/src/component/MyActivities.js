@@ -55,7 +55,7 @@ export default function MyActivities() {
 					<option value="Favourite">Favourite</option>
 				</select>
 
-				<div>
+				<div className="profile-item">
 					{user && <UserProfile />}
 				</div>
 			</div>

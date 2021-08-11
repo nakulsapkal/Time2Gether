@@ -1,7 +1,7 @@
 
 
 .promcard {
-  margin: 25px;
+  margin: 100px 50px;
   padding: 25px;
   align-items: center;
   background-color: whitesmoke;
@@ -18,7 +18,31 @@
 .proms {
   width: 200px;
   height: 200px;
-  object-fit: cover;
+  
   border-radius: 50%;
-  border: 5px solid limegreen;
+  
+}
+
+#promo-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  outline: none;
+  padding: 55px;
+  margin: 20px 10px;
+  font-size: medium;
+  border-radius: 5px;
+  align-items: flex-start;
+}
+
+.promo-detail{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  width:40vw;
+  padding: 100px 50px;
+  
 }

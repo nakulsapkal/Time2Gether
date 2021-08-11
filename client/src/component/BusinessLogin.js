@@ -34,7 +34,7 @@ export default function BusinessLogin() {
 	}
 
 	return (
-		<main>
+		<main className="text-center">
 			<header>
 				<h1>Busines Login</h1>
 			</header>

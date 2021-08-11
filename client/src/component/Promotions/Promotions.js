@@ -9,7 +9,7 @@ export default function Promotions() {
 	console.log("Promotions from promotions:", promotions);
 
 	return (
-		<div className="App">
+		<div className="activities">
 			{Object.entries(promotions).map(([key, item]) => {
 				return (
 					<PromotionItem

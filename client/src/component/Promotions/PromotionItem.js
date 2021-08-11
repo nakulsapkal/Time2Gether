@@ -10,7 +10,7 @@ export default function PromotionItem(props) {
 	const { state } = useContext(databaseContext);
 
 	const { promotions } = state;
-	const { id, title } = props;
+	const { id, title, promo_code, start_date } = props;
 	const history = useHistory();
 
 	return (
@@ -21,7 +21,9 @@ export default function PromotionItem(props) {
 				history.push("/promotions/details");
 			}}
 		>
-			<p>{title}</p>
+			<h3>{title}</h3>
+			<p>Start from {start_date.slice(0,10)}</p>
+			<p>Click me to get the deal!</p>
 		</div>
 	);
 }

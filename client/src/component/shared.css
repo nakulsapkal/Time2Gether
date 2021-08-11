@@ -13,13 +13,13 @@ div #profile {
   flex-wrap: nowrap;
   align-content: center;
   justify-content: flex-start;
-  padding: 25px 25px;
+  padding: 100px 25px;
 }
 
 .activities {
   display: inline-flex;
   flex-wrap: wrap;
-  margin: 0;
+  margin: 60px 0;
   padding: 0;
   text-align: left;
 }
@@ -59,7 +59,7 @@ button {
   border: 1px solid lightgray; 
   width: 100px;
   padding:10px;
-  margin: 10px 50px
+  margin: 10px 40px
 
 }
 
@@ -77,6 +77,9 @@ h1 {
   padding-left: 50px;
 }
 
+.text-center{
+  margin-top:100px;
+}
 form button {
   margin-top: 20px;
 }

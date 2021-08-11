@@ -7,16 +7,19 @@
 
 #chatCon .chat-box {
 	width: 100%;
-	height: 500px;
+	height: 650px;
 	border-radius: 25px;
 }
 
-#chatCon .chat-box .header {
+#chatCon .chat-box .chat-header {
 	background-color: #3fda73;
 	padding: 1px 12px;
 	border-radius: 20px 20px 0 0;
 	color: #fff;
 	font-size: 20px;
+	height:40px;
+	padding-top: 15px;
+
 }
 
 #chatCon .chat-box .msg-area {
@@ -169,4 +172,8 @@
 	flex-wrap: wrap;
 	align-content: stretch;
 	justify-content: flex-end;
+}
+
+#chat-send-button{
+	margin:5px;
 }

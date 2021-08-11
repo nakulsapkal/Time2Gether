@@ -45,7 +45,7 @@ export default function Login() {
 	}
 
 	return (
-		<main>
+		<main className="text-center">
 			<header>
 				<h1>Login</h1>
 			</header>

@@ -3,9 +3,10 @@
   display: flex;
   align-items: center;
   background-color: #f16428;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 100;
+  width:100%;
 }
 
 .header__logo {

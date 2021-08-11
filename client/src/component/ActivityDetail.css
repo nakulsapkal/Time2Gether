@@ -4,10 +4,9 @@
   justify-content: center;
   flex-wrap: wrap;
   outline: none;
-  padding: 30px;
-  margin: 5px;
+  padding: 55px;
+  margin: 20px 10px;
   font-size: medium;
-  border: 1px solid lightgray;
   border-radius: 5px;
   align-items: flex-start;
 }
@@ -20,3 +19,9 @@
   align-items: flex-start;
   width:40vw;
 }
+
+.detail-button{
+  display: flex;
+  flex-direction: row;
+}
+

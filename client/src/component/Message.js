@@ -7,7 +7,6 @@ import axios from "axios";
 
 //Socket IO
 import socketClient from "socket.io-client";
-import { LeakAddTwoTone } from "@material-ui/icons";
 const SERVER = "localhost:8003";
 
 export default function Message() {
@@ -149,7 +148,7 @@ export default function Message() {
 				</p>
 			</div>
 			<div className="chat-box" style={chatopen ? show : hide}>
-				<div className="header">Chat with me</div>
+				<div className="chat-header">Chat with me</div>
 				<div className="chat-container">
 					<div className="chat-list">
 						{currentChat ? (

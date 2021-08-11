@@ -69,7 +69,7 @@ export default function ActivityDetail() {
 				<p>{street_number} {street_name}, {city}, {province} {postal_code} </p>
 			</section>
 
-			<section>
+			<section className="detail-button">
 				{user ? <UserJoin joined_at={joined_at} favStatus={favStatus} /> : ""}
 				{user ? <UserFav joined_at={joined_at} favStatus={favStatus} /> : ""}
 			</section>

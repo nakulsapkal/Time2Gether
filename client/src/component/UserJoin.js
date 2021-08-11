@@ -130,7 +130,7 @@ export default function UserJoin(props) {
 		<div className="join-button">
 			{activity[0].email === user.email ? ( "" ) : (
 				<button onClick={handleJoin}>
-					{props.joined_at === 1 ? "CANCEL" : "JOIN"}
+					{props.joined_at === 1 ? "Cancel" : "Join"}
 				</button>
 			)}
 		</div>
