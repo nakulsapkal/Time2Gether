@@ -75,15 +75,14 @@ export default function Login() {
 					/>
 				</div>
 
-				<div>
-					<label>
-						<input type="checkbox" checked={checked} onChange={handleChange} />
-						Business user
-					</label>
+				<div style={{padding: '10px 0'}}>
+					<label style={{marginRight: '40px'}}>Business user</label>
+					<input type="checkbox" checked={checked} onChange={handleChange} />
+				
 				</div>
 
 				<div>
-					<input type="button" onClick={() => reset()} value="Cancel" />
+					<input id="cancel-button" type="button" onClick={() => reset()} value="Cancel" />
 					<button type="submit">Login</button>
 				</div>
 				<div>{error}</div>

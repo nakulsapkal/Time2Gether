@@ -58,7 +58,7 @@ function Signup() {
 				<h1>Create a New User</h1>
 			</div>
 
-			<form onSubmit={Registration} className="user">
+			<form onSubmit={Registration}>
 				<div className="form-group">
 					<input
 						type="text"
@@ -93,8 +93,9 @@ function Signup() {
 					/>
 				</div>
 
+				<input id="cancel-button" type="button" value="Cancel" />
 				<button type="submit" className="btn btn-primary  btn-block">
-					Create User
+					Signup
 				</button>
 
 				<div className="text-center">

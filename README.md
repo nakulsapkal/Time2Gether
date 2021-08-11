@@ -95,3 +95,9 @@ User cases
     2, Admins can verify applications manually and inform owners of the result by email
     3, Owners can CRUD promotion activities once approved by admins
     4, Owners can require upfront payment or deposit
+
+
+
+
+workflow 
+1, 

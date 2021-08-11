@@ -12,7 +12,8 @@ div #profile {
   display: flex;
   flex-wrap: nowrap;
   align-content: center;
-  justify-content: flex-start
+  justify-content: flex-start;
+  padding: 25px 25px;
 }
 
 .activities {
@@ -55,10 +56,23 @@ button {
   border-radius: 5px;
   background-color: #3fda73;
   color: white;
-  border: 1px solid lightgray;
-  
+  border: 1px solid lightgray; 
+  width: 100px;
+  padding:10px;
+  margin: 10px 50px
+
 }
 
+#cancel-button {
+  font-size: medium;
+  border-radius: 5px;
+  background-color: lightgray;
+  color: white;
+  border: 1px solid lightgray; 
+  width: 100px;
+  
+  margin-right:50px;
+}
 h1 {
   padding-left: 50px;
 }
@@ -83,7 +97,7 @@ form textarea {
 
 form {
   border: 1px solid lightgray;
-  padding: 20px;
+  padding: 50px;
   padding-top: 10px;
   /* border-radius: 5px; */
 }

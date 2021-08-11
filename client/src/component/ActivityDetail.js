@@ -19,6 +19,7 @@ export default function ActivityDetail() {
 
 	const {
 		id,
+		title,
 		start_date,
 		end_date,
 		start_time,
@@ -50,13 +51,12 @@ export default function ActivityDetail() {
 	}
 
 	return (
-		<div className="detail-card">
+		<div id="detail-card">
 			<section className="activity-detail">
-				<h3>Activity Details</h3>
-				<p>Start Date: {start_date.slice(0, 10)}</p>
-				<p>End Date: {end_date.slice(0, 10)}</p>
-				<p>Start Time: {start_time}</p>
-				<p>End Time: {end_time}</p>
+				<h2>{title}</h2>
+				<h4>Activity Details</h4>
+				<p>Start Time: {start_date.slice(0, 10)} {start_time}</p>
+				<p>End Time: {end_date.slice(0, 10)} {end_time}</p>
 				<p>Details: {details}</p>
 			</section>
 
@@ -65,26 +65,14 @@ export default function ActivityDetail() {
 			</section>
 
 			<section className="location-detail">
-				<h3>Location Details</h3>
-				<p>Street Number: {street_number}</p>
-				<p>Street Name: {street_name}</p>
-				<p>City: {city}</p>
-				<p>Province: {province}</p>
-				<p>Postal Code: {postal_code}</p>
+				<h4>Location Details</h4>
+				<p>{street_number} {street_name}, {city}, {province} {postal_code} </p>
 			</section>
 
 			<section>
 				{user ? <UserJoin joined_at={joined_at} favStatus={favStatus} /> : ""}
 				{user ? <UserFav joined_at={joined_at} favStatus={favStatus} /> : ""}
 			</section>
-			{/* <section>
-				{user
-					? !createdActivities && (
-							<UserJoin joined_at={joined_at} favStatus={favStatus} />
-					  )
-					: ""}
-				{user ? <UserFav joined_at={joined_at} favStatus={favStatus} /> : ""}
-			</section> */}
 
 			<section>{user ? <Message /> : ""}</section>
 		</div>

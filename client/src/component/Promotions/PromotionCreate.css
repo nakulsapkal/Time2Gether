@@ -3,7 +3,7 @@
   flex-direction: column;
 }
 
-form {
+/* form {
   border: 1px solid lightgray;
   padding: 20px;
   padding-top: 10px;
@@ -38,4 +38,4 @@ form textarea {
 
 form textarea {
   min-height: 100px;
-}
+} */

@@ -1,7 +1,7 @@
-.detail-card{
+#detail-card{
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  flex-direction: column;
+  justify-content: center;
   flex-wrap: wrap;
   outline: none;
   padding: 30px;
@@ -9,4 +9,14 @@
   font-size: medium;
   border: 1px solid lightgray;
   border-radius: 5px;
+  align-items: flex-start;
+}
+
+.activity-detail{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  width:40vw;
 }

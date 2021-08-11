@@ -62,7 +62,7 @@ export default function BusinessLogin() {
 					/>
 				</div>
 				<div>
-					<input type="button" onClick={() => reset()} value="Cancel" />
+					<input id="cancel-button" type="button" onClick={() => reset()} value="Cancel" />
 					<button type="submit">Login</button>
 				</div>
 				<div>{error}</div>
