@@ -1,6 +1,7 @@
 INSERT INTO categories(name)
-VALUES('Outdoor'),
-  ('Indoor'),
-  ('Baking'),
-  ('Cooking')
+VALUES('Physical'),
+  ('Mental'),
+  ('Social'),
+  ('Leisure'),
+  ('Occupational')
 returning *;

@@ -79,23 +79,28 @@ export default function ActivityDetail() {
 				<p>Start Time: {start_date.slice(0, 10)} {start_time}</p>
 				<p>End Time: {end_date.slice(0, 10)} {end_time}</p>
 				<p>Details: {details}</p>
-			</section>
+			{/* </section>
 
-			<section className="activity-img">
-				<img className="card--img" src={img} alt="img" />
-			</section>
-
-			<section className="location-detail">
+			<section className="location-detail"> */}
 				<h4>Location Details</h4>
 				<p>{street_number} {street_name}, {city}, {province} {postal_code} </p>
 			</section>
 
 			<section className="detail-button">
+				<section className="activity-img">
+				<img className="card--img" src={img} alt="img" />
+				</section>
+				
+			<section>{user ? <Message /> : ""}</section>
 				{user ? <UserJoin joined_at={joined_at} favStatus={favStatus} /> : ""}
 				{user ? <UserFav joined_at={joined_at} favStatus={favStatus} /> : ""}
+
 			</section>
+
+
+
+
 {        console.log("temp", temp)}
-			<section>{user ? <Message /> : ""}</section>
 			<section>{temp && <MapContainer temp={temp} />}</section>
 		</div>
 	);

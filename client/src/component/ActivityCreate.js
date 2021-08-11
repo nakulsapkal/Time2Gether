@@ -150,6 +150,7 @@ export default function ActivityCreate() {
 				<div>
 					<label>Title*:</label>
 					<input
+						id="title"
 						type="text"
 						required
 						value={values.title}
@@ -160,9 +161,11 @@ export default function ActivityCreate() {
 					<label>Category*:</label>
 					<select value={values.category} onChange={set("category")} required>
 						<option value="">Select Category</option>
-						<option value="Outdoor sports">Outdoor sports</option>
-						<option value="Baking">Baking</option>
-						<option value="Indoor Sports">Indoor sports</option>
+						<option value="Physical">Physical</option>
+						<option value="Mental">Mental</option>
+						<option value="Social">Social</option>
+						<option value="Leisure">Leisure</option>
+						<option value="Occupational">Occupational</option>
 					</select>
 				</div>
 
