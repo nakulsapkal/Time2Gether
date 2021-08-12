@@ -9,6 +9,10 @@
   font-size: medium;
   border-radius: 5px;
   align-items: flex-start;
+  /* nakul */
+  background-color: cornsilk;
+	font-family: fantasy;
+	font-size: large;
 }
 
 .activity-detail{

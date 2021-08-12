@@ -1,5 +1,5 @@
 .card {
-  margin: 25px;
+  /* margin: 50px;
   padding: 25px;
   align-items: center;
   background-color: whitesmoke;
@@ -10,7 +10,23 @@
   height:250px;
   display: flex;
   flex-direction: column;
+   justify-content: space-between; */
+   margin: 50px;
+   padding: 25px;
+   align-items: center;
+   background-color: cornsilk;
+   width: 10px;
+   border: 1px solid;
+   border-radius: 5px;
+   width: 250px;
+   height: 300px;
+   display: flex;
+   flex-direction: column;
    justify-content: space-between;
+   font-size: larger;
+   font-family: fantasy;
+   font-weight: 900;
+   color: sienna;
 }
 
 .card--img {

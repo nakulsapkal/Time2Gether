@@ -33,4 +33,18 @@ VALUES(
     'Hanley',
     'Saskatchewan',
     'S4P 3Y2'
-  ) returning *;
+  ),
+  (
+    '190',
+    'Sherwood Ave',
+    'Toronto',
+    'ON',
+    'M4P 2A8'
+  ),
+  (
+    '5234',
+    'Kelso Road',
+    'Milton',
+    'ON',
+    'L9E 0C6'
+  )returning *;

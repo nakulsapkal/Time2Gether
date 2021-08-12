@@ -159,7 +159,8 @@ export default function Message() {
 										className={`chat-message ${msg.senderId}`}
 									>
 										<div className="message-text">{msg.content}</div>
-										<div className="timestamp">{msg && msg.created_at.slice(0,16).split("T").join(" ")}</div>
+										<div className="timestamp">{msg.created_at ? msg.created_at.slice(0,16).split("T") : new Date()}</div>
+										{/* <div className="timestamp">{msg && msg.created_at.slice(0,16).split("T").join(" ")}</div> */}
 									</div>
 					
 								);

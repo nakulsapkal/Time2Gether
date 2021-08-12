@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import "./Navbar.css";
-import SearchIcon from "@material-ui/icons/Search";
+
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
 import { stateContext } from "providers/StateProvider";
+import Searchbar from "component/Searchbar";
 
 export default function Navbar() {
 	const { user, setUser } = useContext(databaseContext);
@@ -20,11 +21,12 @@ export default function Navbar() {
 					src="https://i.imgur.com/M8uyg0m.png"
 				/>
 			</a>
-			<div className="header__search">
-				<input className="header__searchInput" type="text" />
-				<SearchIcon className="header__searchIcon" />
-			</div>
 
+		<Searchbar />
+		{/* <div className="header__search">
+            <input className="header__searchInput" type="text" />
+            <SearchIcon className="header__searchIcon" />
+        </div> */}
 			<div className="header__nav">
 				<div className="header__option">
 					<span className="header__optionLineTwo header__space">

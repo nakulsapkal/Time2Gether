@@ -23,6 +23,30 @@ VALUES (
     '1'
   ),
   (
+    'Dog meeting and hangout',
+    CURRENT_TIMESTAMP,
+    '08/16/2021',
+    '09/15/2021',
+    '18:00:00',
+    '19:00:00',
+    'https://erikbern.com/assets/dogs-meeting.jpg',
+    'I walk my dog here everyday. Sherwood Park has really nice off-leash dog trails! Welcome everyone who enjoy an accompany. ',
+    '6',
+    '4'
+  ),
+  (
+    'Yoga In The Park',
+    CURRENT_TIMESTAMP,
+    '09/24/2021',
+    '09/24/2021',
+    '18:00:00',
+    '19:00:00',
+    'https://www.todocanada.ca/wp-content/uploads/Yoga-In-The-Park-245x165.jpg',
+    'Join us at Kelso Conservation Area for Yoga in the Park on Tuesday and Thursday evenings, from 6-7pm. Modo Yoga Milton will share a class that is both accessible for beginners, with precise instructions around the poses, sequences and breath, and enjoyable for intermediates, with opportunities for more challenging modifications ',
+    '1',
+    '7'
+  ),
+  (
     'Ball Game',
     CURRENT_TIMESTAMP,
     '09/01/2021',
