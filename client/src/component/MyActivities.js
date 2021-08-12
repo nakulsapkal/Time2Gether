@@ -55,85 +55,82 @@ export default function MyActivities() {
 					<option value="Favourite">Favourite</option>
 				</select>
 
-				<div className="profile-item">
-					{user && <UserProfile />}
-				</div>
+				<div className="profile-item">{user && <UserProfile />}</div>
 			</div>
-				{option === CREATED &&
-					Object.entries(createdActivities).map(([key, item]) => {
-						return (
-							<div key={key}>
-								<ActivityItem
-									key={key}
-									id={item.activity_id}
-									title={item.title}
-									start_date={item.start_date}
-									end_date={item.end_date}
-									start_time={item.start_time}
-									end_time={item.end_time}
-									details={item.details}
-									img={item.img}
-									myactivities={true}
-								/>
-								<div className="profile-buttons">
-									<button onClick={() => handleEditActivity(item)}>EDIT</button>
-									<button onClick={() => deleteActivity(item)}>DELETE</button>
-								</div>
+			{option === CREATED &&
+				Object.entries(createdActivities).map(([key, item]) => {
+					return (
+						<div key={key}>
+							<ActivityItem
+								key={key}
+								id={item.activity_id}
+								title={item.title}
+								start_date={item.start_date}
+								end_date={item.end_date}
+								start_time={item.start_time}
+								end_time={item.end_time}
+								details={item.details}
+								img={item.img}
+								myactivities={true}
+							/>
+							<div className="profile-buttons">
+								<button onClick={() => handleEditActivity(item)}>EDIT</button>
+								<button onClick={() => deleteActivity(item)}>DELETE</button>
 							</div>
-						);
-					})}
-				{option === UPCOMING &&
-					Object.entries(upcomingActivities).map(([key, item]) => {
-						return (
-							<ActivityItem
-								key={key}
-								id={item.activity_id}
-								title={item.title}
-								start_date={item.start_date}
-								end_date={item.end_date}
-								start_time={item.start_time}
-								end_time={item.end_time}
-								details={item.details}
-								img={item.img}
-								myactivities={true}
-							/>
-						);
-					})}
-				{option === FAVOURITE &&
-					Object.entries(favouriteActivities).map(([key, item]) => {
-						return (
-							<ActivityItem
-								key={key}
-								id={item.activity_id}
-								title={item.title}
-								start_date={item.start_date}
-								end_date={item.end_date}
-								start_time={item.start_time}
-								end_time={item.end_time}
-								details={item.details}
-								img={item.img}
-								myactivities={true}
-							/>
-						);
-					})}
-				{option === HISTORY &&
-					Object.entries(activitiesHistory).map(([key, item]) => {
-						return (
-							<ActivityItem
-								key={key}
-								id={item.activity_id}
-								title={item.title}
-								start_date={item.start_date}
-								end_date={item.end_date}
-								start_time={item.start_time}
-								end_time={item.end_time}
-								details={item.details}
-								img={item.img}
-								myactivities={true}
-							/>
-						);
-					})}
-		
+						</div>
+					);
+				})}
+			{option === UPCOMING &&
+				Object.entries(upcomingActivities).map(([key, item]) => {
+					return (
+						<ActivityItem
+							key={key}
+							id={item.activity_id}
+							title={item.title}
+							start_date={item.start_date}
+							end_date={item.end_date}
+							start_time={item.start_time}
+							end_time={item.end_time}
+							details={item.details}
+							img={item.img}
+							myactivities={true}
+						/>
+					);
+				})}
+			{option === FAVOURITE &&
+				Object.entries(favouriteActivities).map(([key, item]) => {
+					return (
+						<ActivityItem
+							key={key}
+							id={item.activity_id}
+							title={item.title}
+							start_date={item.start_date}
+							end_date={item.end_date}
+							start_time={item.start_time}
+							end_time={item.end_time}
+							details={item.details}
+							img={item.img}
+							myactivities={true}
+						/>
+					);
+				})}
+			{option === HISTORY &&
+				Object.entries(activitiesHistory).map(([key, item]) => {
+					return (
+						<ActivityItem
+							key={key}
+							id={item.activity_id}
+							title={item.title}
+							start_date={item.start_date}
+							end_date={item.end_date}
+							start_time={item.start_time}
+							end_time={item.end_time}
+							details={item.details}
+							img={item.img}
+							myactivities={true}
+						/>
+					);
+				})}
 		</div>
 	);
 }

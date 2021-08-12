@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import Geocode from "react-geocode";
 
-
 Geocode.setApiKey("put your key here");
 // set response language. Defaults to english.
 Geocode.setLanguage("en");
@@ -19,25 +18,23 @@ Geocode.setLocationType("ROOFTOP");
 // Enable or disable logs. Its optional.
 Geocode.enableDebug();
 export default function MapContainer(props) {
+	// const [defaultCenter, setDefaultCenter] = useState({});
+	const mapStyles = {
+		height: "500px",
+		width: "800px",
+	};
 
-  // const [defaultCenter, setDefaultCenter] = useState({});
-  const mapStyles = {
-    height: "500px",
-    width: "800px",
-  };
-  
-  // useEffect(() => {
-  //   props.temp && setDefaultCenter(props.temp);
-  // // setDefaultCenter({ lat: 43.70758319999999, lng: -79.3967069 });
-  // }, [props.temp]);
-  
-  return (
-    
-    <LoadScript googleMapsApiKey="put your key here">
-      <GoogleMap mapContainerStyle={mapStyles} zoom={13} center={props.temp}>
-       {console.log(props.temp)}
-        <Marker position={props.temp} />
-      </GoogleMap>
-    </LoadScript>
-  );
+	// useEffect(() => {
+	//   props.temp && setDefaultCenter(props.temp);
+	// // setDefaultCenter({ lat: 43.70758319999999, lng: -79.3967069 });
+	// }, [props.temp]);
+
+	return (
+		<LoadScript googleMapsApiKey="put your key here">
+			<GoogleMap mapContainerStyle={mapStyles} zoom={13} center={props.temp}>
+				{console.log(props.temp)}
+				<Marker position={props.temp} />
+			</GoogleMap>
+		</LoadScript>
+	);
 }

@@ -145,7 +145,7 @@ export default function ActivityCreate() {
 	return (
 		<div className="create-activity">
 			<form onSubmit={onSubmit} className="create-form">
-				<h2>Create Activity</h2>
+				{activityObj ? <h2>Edit Activity</h2> : <h2>Create Activity</h2>}
 
 				<div>
 					<label>Title*:</label>
@@ -275,7 +275,12 @@ export default function ActivityCreate() {
 				</div>
 
 				<div>
-					<input id="cancel-button" type="button" onClick={() => reset()} value="Cancel" />
+					<input
+						id="cancel-button"
+						type="button"
+						onClick={() => reset()}
+						value="Cancel"
+					/>
 					<button type="submit">Submit</button>
 				</div>
 			</form>

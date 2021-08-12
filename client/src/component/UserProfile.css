@@ -1,17 +1,30 @@
-.profile-card{
-  margin: 5px;
-  padding: 25px;
-  text-align: center;
-  background-color: whitesmoke;
-  width: 100px;
-  border: 1px solid lightgray;
-  border-radius: 5px;
+.profile-card {
+	margin: 3px;
+	padding: 25px;
+	text-align: center;
+	background-color: whitesmoke;
+	width: 12rem;
+	border: 1px solid lightgray;
+	border-radius: 5px;
+	width: 15.5rem;
+	font-size: larger;
+	font-family: fantasy;
+	font-weight: 900;
+	height: 17.7rem;
 }
 
-.profile--img{
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 5px solid limegreen;
+.profile--img {
+	width: 15rem;
+	height: 14rem;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 5px solid limegreen;
+}
+
+select {
+	font-size: large;
+	border: 1px solid lightgray;
+	border-radius: 5px;
+	height: 30px;
+	width: 18.9rem;
 }

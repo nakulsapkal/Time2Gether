@@ -9,7 +9,7 @@ export function UserProfile() {
 		<div className="profile-card">
 			<img className="profile--img" src={avatar} alt="img" />
 			<h2>
-				{first_name}
+				{first_name}&ensp;
 				{last_name}
 			</h2>
 		</div>

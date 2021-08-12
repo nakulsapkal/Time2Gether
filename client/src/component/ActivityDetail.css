@@ -1,32 +1,34 @@
-#detail-card{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  outline: none;
-  padding: 55px;
-  margin: 20px 10px;
-  font-size: medium;
-  border-radius: 5px;
-  align-items: flex-start;
+#detail-card {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	outline: none;
+	padding: 55px;
+	margin: 20px 10px;
+	font-size: medium;
+	border-radius: 5px;
+	align-items: flex-start;
+	background-color: cornsilk;
+	font-family: fantasy;
+	font-size: large;
 }
 
-.activity-detail{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  width:40vw;
+.activity-detail {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	width: 40vw;
 }
 
-.detail-button{
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-content: stretch;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
+.detail-button {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-content: stretch;
+	justify-content: center;
+	align-items: center;
+	margin-top: 50px;
 }
-
