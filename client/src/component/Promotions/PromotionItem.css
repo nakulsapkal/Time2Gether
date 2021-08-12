@@ -1,48 +1,54 @@
-
-
 .promcard {
-  margin: 100px 50px;
-  padding: 25px;
-  align-items: center;
-  background-color: whitesmoke;
-  width: 10px;
-  border: 1px solid lightgray;
-  border-radius: 5px;
-  width:250px;
-  height:250px;
-  display: flex;
-  flex-direction: column;
-   justify-content: space-between;
+	margin: 25px;
+	padding: 25px;
+	align-items: center;
+	background-color: cornsilk;
+	width: 10px;
+	border: 1px solid;
+	border-radius: 5px;
+	width: 250px;
+	height: 300px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	font-size: larger;
+	font-family: fantasy;
+	font-weight: 900;
+	color: sienna;
 }
 
 .proms {
-  width: 200px;
-  height: 200px;
-  
-  border-radius: 50%;
-  
+	width: 200px;
+	height: 200px;
+
+	border-radius: 50%;
 }
 
-#promo-card{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-wrap: wrap;
-  outline: none;
-  padding: 55px;
-  margin: 20px 10px;
-  font-size: medium;
-  border-radius: 5px;
-  align-items: flex-start;
+#promo-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-wrap: wrap;
+	outline: none;
+	padding: 55px;
+	margin: 20px 10px;
+	font-size: medium;
+	border-radius: 5px;
+	align-items: flex-start;
 }
 
-.promo-detail{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  width:40vw;
-  padding: 100px 50px;
-  
+.promo-detail {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	width: 97%;
+	height: 50rem;
+	padding: 100px 50px;
+	border-radius: 5px;
+	align-items: flex-start;
+	background-color: cornsilk;
+	font-family: monospace;
+	font-size: x-large;
 }
