@@ -24,8 +24,8 @@ export default function Message() {
 	let receiverId;
 	console.log("Activity:", activity, userActivities);
 	if (activity) {
-		//receiverId = getHostIdByActivityId(activity[0].id, userActivities);
-		receiverId = "2";
+		receiverId = getHostIdByActivityId(activity[0].id, userActivities);
+		//receiverId = "2";
 	}
 	const scrollRef = useRef();
 	useEffect(() => {
@@ -159,9 +159,7 @@ export default function Message() {
 										className={`chat-message ${msg.senderId}`}
 									>
 										<div className="message-text">{msg.content}</div>
-										<div className="timestamp">
-											{msg && msg.created_at.slice(0, 16).split("T").join(" ")}
-										</div>
+										<div className="timestamp">{msg && msg.created_at}</div>
 									</div>
 								);
 								return <div>{message}</div>;
