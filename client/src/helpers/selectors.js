@@ -2,6 +2,10 @@ function getActivityById(id, activities) {
 	return activities.filter((a) => a.id === id);
 }
 
+function getPromotionById(id, promotions) {
+	return promotions.filter((a) => a.id === id);
+}
+
 function getLoggedUserId() {
 	const loginUser = JSON.parse(localStorage.getItem("userData"));
 	const loginUserId = loginUser.id;
@@ -13,7 +17,7 @@ function getActivityByUser(id, activities) {
 }
 
 function getActivityCreatedByUser(id, activities) {
-	console.log("activities:", activities);
+
 	return activities.filter(
 		(actObj) =>
 			actObj.user_id === id &&
@@ -30,6 +34,20 @@ function getUpcomingActivityForUser(id, activities) {
 			actObj.joined_at !== null &&
 			actObj.start_date > date
 	);
+}
+
+function getHostIdByActivityId(id, activities) {
+
+	const activity = activities.filter(
+		(actObj) =>
+			actObj.activity_id === id &&
+			// actObj.created_at !== null &&
+			actObj.joined_at === null &&
+			actObj.favourite === false
+	);
+
+	console.log("Selector File activity:", activity);
+	return activity[0].user_id;
 }
 
 function getActivityHistoryForUser(id, activities) {
@@ -49,18 +67,15 @@ function getJoinedTime(id, act_id, activities) {
 	let status, act;
 
 	if (id && act_id) {
-		act =
-			act_id &&
-			activities.find(
+		act = act_id && activities.find(
 				(actObj) => actObj.user_id === id && actObj.activity_id === act_id
 			);
 	}
-	//console.log("act.joined_at******************", act.joined_at);
 
-	if (act === undefined) status = 2; //no record, need insert new
+	if (act === undefined) status = 2; //no record, need to insert a new one
 	if (act && act.joined_at) status = 1; //currently joined
-	if (act && act.joined_at === false) status = 0; //record exist but cancelled once
-	//console.log("status******************", status);
+	if (act && act.joined_at === false) status = 0; //record exist but cancelled before
+
 	return status;
 }
 
@@ -88,5 +103,7 @@ export {
 	getActivitiesFavouriteByUser,
 	getActivityHistoryForUser,
 	getJoinedTime,
+	getPromotionById,
 	getFavStatus,
+	getHostIdByActivityId,
 };

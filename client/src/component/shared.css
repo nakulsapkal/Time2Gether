@@ -1,0 +1,145 @@
+html,
+body {
+  height: 99%;
+  background-color: white;
+}
+
+div[id] {
+  height: 100%;
+}
+
+div #profile {
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
+  padding: 100px 25px;
+}
+
+.activities {
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin: 60px 0;
+  padding: 0;
+  text-align: left;
+}
+
+
+/* responsive: desktop 4 item per row and laptop 3 items */
+.activtiy-card{
+  display: inline-block;
+  padding-left:10px;
+  width: 26%;
+}
+
+
+input {
+  flex: 1;
+  outline: none;
+  padding: 10px;
+  margin-right: 5px;
+  font-size: medium;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+
+select {
+  font-size: small;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  height:30px;
+  margin-top:10px;
+}
+
+button {
+  font-size: medium;
+  border-radius: 5px;
+  background-color: #3fda73;
+  color: white;
+  border: 1px solid lightgray; 
+  width: 100px;
+  padding:10px;
+  margin: 10px 40px
+
+}
+
+#cancel-button {
+  font-size: medium;
+  border-radius: 5px;
+  background-color: lightgray;
+  color: white;
+  border: 1px solid lightgray; 
+  width: 100px;
+  
+  margin-right:50px;
+}
+h1 {
+  padding-left: 50px;
+}
+
+.text-center{
+  margin-top:100px;
+}
+form button {
+  margin-top: 20px;
+}
+
+form input,
+form select,
+form textarea {
+  display: inline-block;
+  width: 300px;
+  max-width: 300px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+form textarea {
+  min-height: 100px;
+}
+
+form {
+  border: 1px solid lightgray;
+  padding: 50px;
+  padding-top: 10px;
+  /* border-radius: 5px; */
+}
+
+form label {
+  display: inline-block;
+  margin-top: 10px;
+  width: 100px;
+  vertical-align: top;
+}
+
+form label {
+  display: inline-block;
+  margin-top: 10px;
+  width: 100px;
+  vertical-align: top;
+} 
+
+form label::before,
+form button::before {
+  content: "\A";
+}
+@media only screen and (min-width: 600px) {
+  /* For tablet/phone: */
+  .activtiy-card{width: 45%;}
+  /* .col-s-1 {width: 8.33%;} */
+
+}
+
+@media only screen and (min-width: 992px) {
+  /* For laptops: */
+  .activtiy-card{width: 30%;}
+  /* .col-s-1 {width: 8.33%;} */
+
+}
+
+@media only screen and (min-width: 1440px) {
+  /* For desktop: */
+  .activtiy-card{width: 23%;}
+  /* .col-2 {width: 16.66%;} */
+
+}

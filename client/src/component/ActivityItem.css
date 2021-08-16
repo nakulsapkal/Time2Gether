@@ -1,17 +1,26 @@
 .card {
-  margin: 5px;
-  padding: 25px;
-  text-align: center;
-  background-color: whitesmoke;
-  width: 500px;
-  border: 1px solid black;
-  border-radius: 2px;
+	margin: 25px;
+	padding: 25px;
+	align-items: center;
+	background-color: cornsilk;
+	width: 10px;
+	border: 1px solid;
+	border-radius: 5px;
+	width: 250px;
+	height: 300px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	font-size: larger;
+	font-family: fantasy;
+	font-weight: 900;
+	color: sienna;
 }
 
 .card--img {
-  width: 250px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 5px solid limegreen;
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 5px solid dashed;
 }

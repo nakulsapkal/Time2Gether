@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
 import { stateContext } from "providers/StateProvider";
 
@@ -20,6 +21,7 @@ function BusinessSignup() {
 		setPhoneNumber,
 	} = useContext(stateContext);
 
+	const history = useHistory();
 	const Registration = (event) => {
 		if (businessName === "") {
 			setError("Company name cannot be blank");
@@ -55,17 +57,20 @@ function BusinessSignup() {
 				phoneNumber: phoneNumber,
 				password: password,
 			};
-			addBusinessUser(businessData);
+			const result = addBusinessUser(businessData);
+			if (result) {
+				history.push("/promotions");
+			}
 		}
 	};
 
 	return (
-		<div class="container">
-			<div class="text-center">
+		<div className="container">
+			<div className="text-center">
 				<h1>Create a New Business User</h1>
 			</div>
-			<form onSubmit={Registration} class="user">
-				<div class="form-group">
+			<form onSubmit={Registration} className="user">
+				<div className="form-group">
 					<input
 						type="text"
 						name="Company name"
@@ -73,7 +78,7 @@ function BusinessSignup() {
 						placeholder="Company name"
 					/>
 				</div>
-				<div class="form-group">
+				<div className="form-group">
 					<input
 						type="text"
 						name="Owner name"
@@ -81,7 +86,7 @@ function BusinessSignup() {
 						placeholder="Owner name"
 					/>
 				</div>
-				<div class="form-group">
+				<div className="form-group">
 					<input
 						type="email"
 						name="Email"
@@ -89,7 +94,7 @@ function BusinessSignup() {
 						placeholder="Email"
 					/>
 				</div>
-				<div class="form-group">
+				<div className="form-group">
 					<input
 						type="text"
 						name="RegistrationNumber"
@@ -97,7 +102,7 @@ function BusinessSignup() {
 						placeholder="Registration number"
 					/>
 				</div>
-				<div class="form-group">
+				<div className="form-group">
 					<input
 						type="text"
 						name="Phone number"
@@ -105,7 +110,7 @@ function BusinessSignup() {
 						placeholder="Phone number"
 					/>
 				</div>
-				<div class="form-group">
+				<div className="form-group">
 					<input
 						type="password"
 						name="Password"
@@ -114,7 +119,7 @@ function BusinessSignup() {
 					/>
 				</div>
 
-				<button type="submit" class="btn btn-primary  btn-block">
+				<button type="submit" className="btn btn-primary  btn-block">
 					Create Business User
 				</button>
 			</form>

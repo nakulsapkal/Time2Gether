@@ -1,41 +1,9 @@
 .create-form {
-  display: flex;
-  flex-direction: column;
-}
-
-form {
-  border: 1px solid lightgray;
-  padding: 20px;
-  padding-top: 10px;
-  border-radius: 5px;
-}
-
-form label {
-  display: inline-block;
-  margin-top: 10px;
-  width: 100px;
-  vertical-align: top;
-}
-
-form label::before,
-form button::before {
-  content: "\A";
-}
-
-form button {
-  margin-top: 30px;
-}
-
-form input,
-form select,
-form textarea {
-  display: inline-block;
-  width: 300px;
-  max-width: 300px;
-  margin-top: 10px;
-  box-sizing: border-box;
-}
-
-form textarea {
-  min-height: 100px;
+	margin-top: 2%;
+	display: flex;
+	flex-direction: column;
+	font-size: 1rem;
+	font-weight: 900;
+	font-family: fantasy;
+	background-color: cornsilk;
 }

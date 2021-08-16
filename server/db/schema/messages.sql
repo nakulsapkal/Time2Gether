@@ -1,6 +1,9 @@
+DROP TABLE IF EXISTS messages CASCADE;
 CREATE TABLE messages (
-	ID SERIAL PRIMARY KEY,
-	text varchar(255) NOT NULL,
-	username varchar(255) NOT NULL,
-	created_at TIMESTAMP NOT NULL DEFAULT now()
+	id SERIAL PRIMARY KEY,
+  senderId INTEGER NOT NULL,
+  content TEXT NOT NULL,
+  readStatus BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP NOT NULL,
+  conversationId INTEGER REFERENCES conversations(id) ON DELETE CASCADE
 );

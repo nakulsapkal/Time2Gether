@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
 
 export default function ActivityCreate() {
-	const { state, setState } = useContext(databaseContext);
+	const { user, state, setState } = useContext(databaseContext);
 	let history = useHistory();
 	const activityObj = history.location.state;
 
@@ -22,9 +22,11 @@ export default function ActivityCreate() {
 		city: activityObj && (activityObj.city || ""),
 		province: activityObj && (activityObj.province || ""),
 		postal_code: activityObj && (activityObj.postal_code || ""),
+		title: activityObj && (activityObj.title || ""),
+		user_id: user.id,
 	});
 
-	//get data from users' input for each form field
+	//a generic set function for each input value
 	const set = (data) => {
 		return ({ target: { value } }) => {
 			setValues((oldValues) => ({ ...oldValues, [data]: value }));
@@ -79,18 +81,43 @@ export default function ActivityCreate() {
 						start_time: result.data.activity.start_time,
 						street_name: result.data.address.street_name,
 						street_number: result.data.address.street_number,
-						title: null,
+						title: result.data.activity.title,
+						user_id: result.data.user_activity.user_id,
 					};
-					console.log("NewActivity:Line: 119", newActivity);
+
+					const newUserActivity = {
+						activity_id: result.data.user_activity.activity_id,
+						favourite: result.data.user_activity.favourite,
+						joined_at: result.data.user_activity.joined_at,
+						user_activity_id: result.data.user_activity.id,
+						user_id: result.data.user_activity.user_id,
+						address_id: result.data.address.id,
+						category: "",
+						category_id: result.data.activity.category_id,
+						city: result.data.address.city,
+						created_at: result.data.activity.created_at,
+						details: result.data.activity.details,
+						end_date: result.data.activity.end_date,
+						end_time: result.data.activity.end_time,
+						img: result.data.activity.img,
+						postal_code: result.data.address.postal_code,
+						province: result.data.address.province,
+						start_date: result.data.activity.start_date,
+						start_time: result.data.activity.start_time,
+						street_name: result.data.address.street_name,
+						street_number: result.data.address.street_number,
+						title: result.data.activity.title,
+					};
+
+					const newState = state;
+
+					newState.activities.push(newActivity);
+					newState.userActivities.push(newUserActivity);
+					setState({ ...newState });
 				})
 				.catch((err) => {
 					console.error("Error While Deleting Activity: ", err);
 				});
-
-			const newState = state;
-			newState.activities.push(newActivity);
-
-			setState({ ...newState });
 		}
 	};
 
@@ -111,25 +138,34 @@ export default function ActivityCreate() {
 		}
 	};
 
+	function reset() {
+		history.push("/");
+	}
+
 	return (
 		<div className="create-activity">
 			<form onSubmit={onSubmit} className="create-form">
-				<h2>Create Activity</h2>
+				{activityObj ? <h2>Edit Activity</h2> : <h2>Create Activity</h2>}
 
-				{/* <div>
-          <label>Name*:</label>
-          <input 
-            type="text" required
-            value={values.name} onChange={set("name")}
-          />
-        </div> */}
+				<div>
+					<label>Title*:</label>
+					<input
+						id="title"
+						type="text"
+						required
+						value={values.title}
+						onChange={set("title")}
+					/>
+				</div>
 				<div>
 					<label>Category*:</label>
 					<select value={values.category} onChange={set("category")} required>
 						<option value="">Select Category</option>
-						<option value="Outdoor sports">Outdoor sports</option>
-						<option value="Baking">Baking</option>
-						<option value="Indoor Sports">Indoor sports</option>
+						<option value="Physical">Physical</option>
+						<option value="Mental">Mental</option>
+						<option value="Social">Social</option>
+						<option value="Leisure">Leisure</option>
+						<option value="Occupational">Occupational</option>
 					</select>
 				</div>
 
@@ -239,9 +275,13 @@ export default function ActivityCreate() {
 				</div>
 
 				<div>
+					<input
+						id="cancel-button"
+						type="button"
+						onClick={() => reset()}
+						value="Cancel"
+					/>
 					<button type="submit">Submit</button>
-					{/*Need to convert it to input tag */}
-					<button>Cancel</button>
 				</div>
 			</form>
 		</div>

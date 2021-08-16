@@ -1,0 +1,19 @@
+div #profile {
+	display: flex;
+	flex-wrap: nowrap;
+	align-content: center;
+	justify-content: flex-start;
+	width: fit-content;
+	padding: 100px 0;
+	background-color: linen;
+	height: 100rem;
+}
+
+.profile-sidebar {
+	display: flex;
+	flex-direction: column;
+}
+
+.profile-buttons {
+	/* margin-left: 30px; */
+}

@@ -1,29 +1,31 @@
 import { createContext, useContext, useEffect } from "react";
 import { stateContext } from "./StateProvider";
 import axios from "axios";
-import { w3cwebsocket as W3CWebSocket } from "websocket";
-const client = new W3CWebSocket("ws://127.0.0.1:8004/");
 
+// //Socket IO
+// import socketClient from "socket.io-client";
+// const SERVER = "localhost:8003";
+// let socket;
 export default function DatabaseProvider(props) {
-	const { user, state, setState, setUser } = useContext(stateContext);
+	const { user, state, setState, setUser, promotions } =
+		useContext(stateContext);
 
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
-		client.onOpen = (event) => {
-			console.log("WebSocket Client Connected");
-		};
+		// socket = socketClient(SERVER);
+		// socket.on("connection", () => {
+		// 	console.log(`I'm connected with the back-end`);
+		// });
 
 		const p1 = axios.get("/api/users");
 		const p2 = axios.get("/api/activities");
 		const p3 = axios.get("/api/business/users");
 		const p4 = axios.get("/api/userActivities");
+		const p5 = axios.get("/api/promotions");
 
-		Promise.all([p1, p2, p3, p4]).then((all) => {
-			const [first, second, third, fourth] = all;
-			console.log("Users:", first.data.users);
-			console.log("Activities:", second.data.activities);
-			console.log("Business users:", third.data.businessUsers);
-			console.log("userActivities:", fourth.data.userActivities);
+		Promise.all([p1, p2, p3, p4, p5]).then((all) => {
+			const [first, second, third, fourth, fifth] = all;
+
 			//For purpose of immutability copying the prev state first
 			setState((prev) => ({
 				...prev,
@@ -31,44 +33,40 @@ export default function DatabaseProvider(props) {
 				activities: second.data.activities,
 				businessUsers: third.data.businessUsers,
 				userActivities: fourth.data.userActivities,
+				promotions: fifth.data.promotions,
 			}));
 		});
+
+		//setup localstorage for logged-in user
 		setUser(JSON.parse(localStorage.getItem("userData")));
 
-		//Clean up function
-		// return () => {
-		// 	setState({});
-		// 	setActivity([]);
-		// 	setUser([]);
-		// };
 	}, []);
 
-	function validateUser(userEmail, userPassword) {
-		let userData = state.users.find(
-			(obj) => obj.email === userEmail && obj.password === userPassword
-		);
+	// Validate email and password befor loginig in for usual user
+	function validateUser(userEmail, userPassword, checked) {
+		if (!checked) {
+			let userData = state.users.find(
+				(obj) => obj.email === userEmail && obj.password === userPassword
+			);
+			if (userData) {
+				localStorage.setItem("userData", JSON.stringify(userData));
+				return userData;
+			} else {
+				return false;
+			}
+		} else {
 
-		if (userData) {
-			localStorage.setItem("userData", JSON.stringify(userData));
-			return userData;
+			let userData = state.businessUsers.find(
+				(obj) => obj.email === userEmail && obj.password === userPassword);
+			if (userData) {
+				localStorage.setItem("userData", JSON.stringify(userData));
+				return userData;
+			} else {
+				return false;
+			}
 		}
-		return false;
 	}
 
-	// Validate registration number and password before logining
-	function validateBusinessUser(registrationNumber, userPassword) {
-		let userData = state.businessUsers.find(
-			(obj) =>
-				obj.registration_number === registrationNumber &&
-				obj.password === userPassword
-		);
-
-		if (userData) {
-			localStorage.setItem("userData", JSON.stringify(userData));
-			return userData;
-		}
-		return false;
-	}
 	// Validate email before adding a new user
 	function validateEmail(userEmail) {
 		let userData;
@@ -95,50 +93,56 @@ export default function DatabaseProvider(props) {
 
 	// Add a new user to the database
 	function addUser(user) {
+		let newUser;
 		const apiUrl = "/api/users/signup";
 		const email = user.email;
 		if (validateEmail(email) === true) {
 			alert("email is already in use");
 		} else {
-			console.log("user", user);
-			return axios
+			axios
 				.post(apiUrl, user, { headers: { "Content-Type": "application/json" } })
 				.then((res) => {
-					const newUser = res.data;
+					newUser = res.data;
 					const newState = state;
 					newState.users.push(newUser);
-					console.log("This is newState.users", newState.users);
+					
 					setState({ ...newState });
 					alert("New user is successfully added!");
-					let userData = res.data;
-					if (userData) {
-						localStorage.setItem("userData", JSON.stringify(userData));
-					}
+					localStorage.setItem("userData", JSON.stringify(newUser));
+					setUser(newUser);
 				})
 				.catch((error) => console.log(error));
 		}
+		return newUser;
 	}
 
 	// Add a new business user to the database
 	function addBusinessUser(businessUser) {
+		let newBusinessUser;
+
 		const apiUrl = "/api/business/signup";
 		const regNum = businessUser.registrationNumber;
 		if (validateRegNum(regNum) === true) {
 			alert("Registration number is already in use");
 		} else {
-			console.log("Business user", businessUser);
+			
 			return axios
 				.post(apiUrl, businessUser, {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((res) => {
+					newBusinessUser = res.data;
 					const newState = state;
-					newState.businessUser = [...businessUser];
+					newState.businessUser.push(newBusinessUser);
+					
 					setState({ ...newState });
 					alert("New business user is successfully added!");
+					localStorage.setItem("userData", JSON.stringify(newBusinessUser));
+					setUser(newBusinessUser);
 				})
 				.catch((error) => console.log(error));
 		}
+		return newBusinessUser;
 	}
 
 	//Delete an activity for a user
@@ -179,7 +183,7 @@ export default function DatabaseProvider(props) {
 		validateUser,
 		addBusinessUser,
 		deleteActivity,
-		validateBusinessUser,
+		promotions,
 	};
 
 	// that needs our state

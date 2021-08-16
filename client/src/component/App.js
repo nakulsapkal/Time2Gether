@@ -1,4 +1,4 @@
-import "./App.css";
+import "./shared.css";
 import React from "react";
 import StateProvider from "providers/StateProvider";
 import Activity from "component/Activity";
@@ -11,6 +11,9 @@ import Footer from "./Footer";
 import MyActivities from "./MyActivities";
 import BusinessSignup from "./BusinessSignup";
 import BusinessLogin from "./BusinessLogin";
+import Promotions from "./Promotions/Promotions";
+import PromotionDetails from "./Promotions/PromotionDetails";
+import PromotionCreate from "./Promotions/PromotionCreate";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //client connects to server
 
@@ -32,6 +35,18 @@ function App() {
 							<Route path="/user/activities" component={MyActivities} />
 							<Route path="/business/signup" component={BusinessSignup} />
 							<Route path="/business/login" component={BusinessLogin} />
+							<Route path="/users/promotions" component={Promotions} />
+							<Route path="/promotions" exact component={Promotions} />
+							<Route
+								path="/promotions/details"
+								exact
+								component={PromotionDetails}
+							/>
+							<Route
+								path="/promotions/create"
+								exact
+								component={PromotionCreate}
+							/>
 						</Switch>
 					</section>
 					<section>

@@ -1,6 +1,4 @@
-INSERT INTO messages (text, username, created_at)
-VALUES('Hey How are you?', 'Nakul', now()),
-	('Hey How are you?', 'Pranav', now()),
-	('Hey How are you?', 'Akshaya', now()),
-	('Hey How are you?', 'Sheetal', now())
-returning *;
+INSERT INTO messages 
+(senderId, content, readStatus, conversationId, created_at)
+VALUES (1,'Hi, I really like your activity!', TRUE, 1, CURRENT_TIMESTAMP), (2,'Thanks! Are you coming?', TRUE, 1, CURRENT_TIMESTAMP),
+(1,'Absolutely! See you then.', TRUE, 1, CURRENT_TIMESTAMP)

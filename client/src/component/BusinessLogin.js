@@ -21,7 +21,7 @@ export default function BusinessLogin() {
 		if (businessUser) {
 			console.log("This is a business user", businessUser);
 			setUser(businessUser);
-			history.push("/");
+			history.push("/promotions");
 		} else {
 			setError("Password or Registration number is incorrect!");
 		}
@@ -34,7 +34,7 @@ export default function BusinessLogin() {
 	}
 
 	return (
-		<main>
+		<main className="text-center">
 			<header>
 				<h1>Busines Login</h1>
 			</header>
@@ -62,7 +62,7 @@ export default function BusinessLogin() {
 					/>
 				</div>
 				<div>
-					<input type="button" onClick={() => reset()} value="Cancel" />
+					<input id="cancel-button" type="button" onClick={() => reset()} value="Cancel" />
 					<button type="submit">Login</button>
 				</div>
 				<div>{error}</div>

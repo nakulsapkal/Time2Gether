@@ -1,24 +1,25 @@
 import React, { useContext } from "react";
-import ActivityItem from "./ActivityItem";
+import PromotionItem from "../Promotions/PromotionItem";
 import { databaseContext } from "providers/DatabaseProvider";
 
-export default function Activity() {
+export default function Promotions() {
 	const { state } = useContext(databaseContext);
-	const { activities } = state;
+	console.log("State from promotions:", state);
+	const { promotions } = state;
+	console.log("Promotions from promotions:", promotions);
+
 	return (
 		<div className="activities">
-			{Object.entries(activities).map(([key, item]) => {
+			{Object.entries(promotions).map(([key, item]) => {
 				return (
-					<ActivityItem
+					<PromotionItem
 						key={item.id}
 						id={item.id}
 						title={item.title}
 						start_date={item.start_date}
-						end_date={item.end_date}
 						start_time={item.start_time}
-						end_time={item.end_time}
 						details={item.details}
-						img={item.img}
+						promo_code={item.promo_code}
 					/>
 				);
 			})}

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
 import { stateContext } from "providers/StateProvider";
@@ -18,17 +18,21 @@ export default function Login() {
 
 	const handleChange = () => {
 		setChecked(!checked);
-		const checkData = { checked: !checked };
-		console.log(" Checkdata from Login", checkData);
 	};
 
 	const history = useHistory();
 	const validate = (event) => {
 		event.preventDefault();
-		let user = validateUser(email, password);
-		if (user) {
+		let user = validateUser(email, password, checked);
+
+		if (user && !checked) {
 			setUser(user);
 			history.push("/");
+			reset();
+		} else if (user && checked) {
+			setUser(user);
+			history.push("/promotions");
+			reset();
 		} else {
 			setError("Username or Password is incorrect!");
 		}
@@ -41,7 +45,7 @@ export default function Login() {
 	}
 
 	return (
-		<main>
+		<main className="text-center">
 			<header>
 				<h1>Login</h1>
 			</header>
@@ -71,15 +75,14 @@ export default function Login() {
 					/>
 				</div>
 
-				<div>
-					<label>
-						<input type="checkbox" checked={checked} onChange={handleChange} />
-						Business user
-					</label>
+				<div style={{padding: '10px 0'}}>
+					<label style={{marginRight: '40px'}}>Business user</label>
+					<input type="checkbox" checked={checked} onChange={handleChange} />
+				
 				</div>
 
 				<div>
-					<input type="button" onClick={() => reset()} value="Cancel" />
+					<input id="cancel-button" type="button" onClick={() => reset()} value="Cancel" />
 					<button type="submit">Login</button>
 				</div>
 				<div>{error}</div>
