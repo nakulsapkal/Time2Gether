@@ -71,20 +71,15 @@ io.on("connection", (socket) => {
 		io.emit("getUsers", users);
 	});
 
-	socket.on(
-		"sendMessage",
-		(senderId, receiverId, content, conversationId, createdAt) => {
-			console.log("Users: ", users);
-			const user = getUser(receiverId);
-			console.log("user: ", user, user.socketId, content);
-			io.to(user.socketId).emit("getMessage", {
-				senderId,
-				content,
-				conversationId,
-				createdAt,
-			});
-		}
-	);
+	socket.on("sendMessage", (senderId, receiverId, content) => {
+		console.log("Users: ", users);
+		const user = getUser(receiverId);
+		console.log("user: ", user, user.socketId, content);
+		io.to(user.socketId).emit("getMessage", {
+			senderId,
+			content,
+		});
+	});
 
 	// close event when user disconnects from app
 	socket.on("disconnect", () => {

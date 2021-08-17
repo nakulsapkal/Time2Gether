@@ -21,12 +21,8 @@ export default function Message() {
 	const socket = useRef();
 	const { userActivities } = state;
 
-	let receiverId;
 	console.log("Activity:", activity, userActivities);
-	if (activity) {
-		receiverId = getHostIdByActivityId(activity[0].id, userActivities);
-		//receiverId = "2";
-	}
+
 	const scrollRef = useRef();
 	useEffect(() => {
 		socket.current = socketClient("ws://localhost:8003");
@@ -34,8 +30,7 @@ export default function Message() {
 			setArrivalMessage({
 				senderId: data.senderId.senderId,
 				content: data.senderId.content,
-				conversationId: data.senderId.conversationId,
-				createdAt: new Date().toLocaleTimeString("en-US").slice(0, 10),
+				createdAt: new Date(),
 			});
 		});
 	}, []);
@@ -62,23 +57,25 @@ export default function Message() {
 	useEffect(() => {
 		const getConversations = async () => {
 			try {
-				const res = await axios.get(
-					"/api/conversations/" + user.id + "-" + receiverId
-				);
-				let currentChatData = {
-					conv_id: res.data[0].conv_id,
-					members: [res.data[0].conv_user1id, res.data[0].conv_user2id],
-				};
-				setCurrentChat(currentChatData);
-				setConversation(res.data[0].conv_id);
+				//fetched all conversations for this user
+				const res = await axios.get("/api/conversations/" + user.id);
+				// let currentChatData = {
+				// 	conv_id: res.data[0].conv_id,
+				// 	members: [res.data[0].conv_user1id, res.data[0].conv_user2id],
+				// };
+				// setCurrentChat(currentChatData);
+				//setConversation(res.data[0].conv_id);
+				setConversation(res.data);
+				console.log("Here at 69 in Message.js file:", conversation, res.data);
 			} catch (err) {
 				console.log(err);
 			}
 		};
 		getConversations();
-	}, [user, receiverId]);
+	}, [user]);
 
 	useEffect(() => {
+		console.log("CurrrChat:", currentChat);
 		const getMessages = async () => {
 			try {
 				const res = await axios.get("/api/messages/" + currentChat.conv_id);
@@ -88,7 +85,7 @@ export default function Message() {
 			}
 		};
 		getMessages();
-	}, [currentChat, receiverId, user]);
+	}, [currentChat]);
 
 	let hide = {
 		display: "none",
@@ -100,27 +97,60 @@ export default function Message() {
 	const [chatopen, setChatopen] = useState(false);
 	const toggle = (e) => {
 		setChatopen(!chatopen);
+
+		const participant_id = getHostIdByActivityId(
+			activity[0].id,
+			userActivities
+		);
+		console.log("arrivalMessage: Line 105:", arrivalMessage);
+		let conversationData;
+		if (participant_id === user.id) {
+			conversationData = conversation.find(
+				(c) => c.user1id === user.id || c.user2id === user.id
+			);
+		} else {
+			conversationData = conversation.find(
+				(c) => c.user1id === user.id && c.user2id === participant_id
+			);
+		}
+
+		console.log(
+			"Here at 119 in Message.js file:",
+			conversation,
+			participant_id,
+			conversationData
+		);
+		let currentChatData = {
+			conv_id: conversationData.id,
+			members: [conversationData.user1id, conversationData.user2id],
+		};
+		setCurrentChat(currentChatData);
+		console.log("Here at 129 in Message.js file:", currentChat);
 	};
 
 	const chatTxt = React.createRef();
 
 	const sendChat = async (e) => {
 		e.preventDefault();
-
 		const messageToDB = {
-			receiverId,
 			senderId: user.id,
 			content: newMessage,
-			conversationId: conversation,
+			conversationId: currentChat.conv_id,
 			createdAt: new Date(),
 		};
+
+		const receiverId = currentChat.members.find((member) => member !== user.id);
+		console.log(
+			"Here at 145 in Message.js file:",
+			receiverId,
+			user.id,
+			currentChat
+		);
 
 		socket.current.emit("sendMessage", {
 			receiverId,
 			senderId: user.id,
 			content: newMessage,
-			conversationId: conversation,
-			createdAt: new Date(),
 		});
 
 		try {

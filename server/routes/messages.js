@@ -2,10 +2,17 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-
 	router.post("/messages/create", (req, res) => {
 		const { receiverId, senderId, content, conversationId, createdAt } =
 			req.body;
+		console.log(
+			"receiverId, senderId, content, conversationId, createdAt****************",
+			receiverId,
+			senderId,
+			content,
+			conversationId,
+			createdAt
+		);
 		// if conversation exist, insert the new msg
 		if (conversationId) {
 			db.query(
@@ -50,7 +57,7 @@ module.exports = (db) => {
 		)
 			.then((data) => {
 				if (data) {
-					console.log("data.rows", data.rows);
+					console.log("data.rows line 60:", data.rows);
 					res.json(data.rows);
 				} else {
 					res.status(404).json({});
