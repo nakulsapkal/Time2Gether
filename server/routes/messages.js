@@ -36,7 +36,7 @@ module.exports = (db) => {
 				db.query(
 					`INSERT INTO messages (senderId, content, conversationId, created_at)
 	      VALUES ($1, $2, $3, $4) RETURNING *`,
-					[senderId, content, conversationId, new Date()]
+					[senderId, content, conversationId, createdAt]
 				)
 					.then((data1) => {
 						res.json(data1.rows[0]);

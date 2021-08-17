@@ -49,5 +49,26 @@ module.exports = (db) => {
 			});
 	});
 
+	router.post("/conversations/create", (req, res) => {
+		const { user, participant_id } = req.body;
+		console.log("/conversations/create", user, participant_id, req.body);
+
+		db.query(
+			"INSERT INTO conversations(user1Id, user2Id)	VALUES ($1, $2) returning *",
+			[user.id, participant_id]
+		)
+			.then((data) => {
+				if (data) {
+					console.log("/conversations/create", data.rows);
+					res.json(data.rows);
+				} else {
+					res.status(500).json({});
+				}
+			})
+			.catch((err) => {
+				console.log("Error While Inserting New Conversation:", err);
+			});
+	});
+
 	return router;
 };

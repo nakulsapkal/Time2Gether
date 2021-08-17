@@ -48,13 +48,13 @@ app.use("/api", promotionsRouter(db));
 let users = [];
 
 const addUser = (receiverId, socketId) => {
-	console.log("users: Line 147 ", users);
 	!users.some((user) => user.receiverId === receiverId) &&
 		users.push({ receiverId, socketId });
+	console.log("users: Line 147 ", users);
 };
 
 const getUser = (userId) => {
-	return users.find((user) => user.userId === userId);
+	return users.find((user) => user.receiverId === userId);
 };
 
 const removeUser = (socketId) => {
@@ -71,10 +71,10 @@ io.on("connection", (socket) => {
 		io.emit("getUsers", users);
 	});
 
-	socket.on("sendMessage", (senderId, receiverId, content) => {
-		console.log("Users: ", users);
+	socket.on("sendMessage", ({ receiverId, senderId, content }) => {
+		console.log("Users: ", users, receiverId, senderId, content);
 		const user = getUser(receiverId);
-		console.log("user: ", user, user.socketId, content);
+		console.log("user: ", user, content);
 		io.to(user.socketId).emit("getMessage", {
 			senderId,
 			content,

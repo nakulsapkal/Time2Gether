@@ -21,25 +21,31 @@ export default function Message() {
 	const socket = useRef();
 	const { userActivities } = state;
 
-	console.log("Activity:", activity, userActivities);
+	//console.log("Activity:", activity, userActivities);
 
 	const scrollRef = useRef();
 	useEffect(() => {
 		socket.current = socketClient("ws://localhost:8003");
+		console.log("Its in useEffect [] For socket connection:", socket.current);
+
 		socket.current.on("getMessage", (data) => {
 			setArrivalMessage({
-				senderId: data.senderId.senderId,
-				content: data.senderId.content,
-				createdAt: new Date(),
+				senderId: data.senderId,
+				content: data.content,
+				created_at: new Date().toLocaleString(),
 			});
+			console.log("Its in useEffect [] LINE 37:", data.senderId, data.content);
 		});
 	}, []);
 
 	useEffect(() => {
+		console.log("Its in useEffect [] LINE 42:", arrivalMessage, currentChat);
+
 		arrivalMessage &&
 			currentChat?.members.includes(arrivalMessage.senderId) &&
 			setMessages((prev) => [...prev, arrivalMessage]);
 		//users.includes(arrivalMessage.sender) &&
+		console.log("Its in useEffect [] LINE 48:", messages);
 	}, [arrivalMessage, currentChat]);
 
 	useEffect(() => {
@@ -65,8 +71,43 @@ export default function Message() {
 				// };
 				// setCurrentChat(currentChatData);
 				//setConversation(res.data[0].conv_id);
-				setConversation(res.data);
-				console.log("Here at 69 in Message.js file:", conversation, res.data);
+				const participant_id = getHostIdByActivityId(
+					activity[0].id,
+					userActivities
+				);
+				console.log(
+					"Here at 74 in Message.js file:",
+					res.data.length,
+					res.data,
+					participant_id
+				);
+
+				const isConv = res.data.find(
+					(c) => c.user1id === participant_id || c.user2id === participant_id
+				);
+
+				if (isConv === undefined) {
+					const res = await axios.post("/api/conversations/create", {
+						user,
+						participant_id,
+					});
+
+					if (res.status !== 500) {
+						console.log("New Conversation started", res.data);
+						setConversation(res.data);
+					} else {
+						alert("Error From Back End");
+					}
+				} else {
+					console.log(
+						"Here at 102 in Message.js file:",
+						conversation,
+						res.data,
+						isConv
+					);
+					setConversation(res.data);
+				}
+				console.log("Here at 105 in Message.js file:", conversation, res.data);
 			} catch (err) {
 				console.log(err);
 			}
@@ -132,19 +173,21 @@ export default function Message() {
 
 	const sendChat = async (e) => {
 		e.preventDefault();
+		const receiverId = currentChat.members.find((member) => member !== user.id);
 		const messageToDB = {
+			receiverId: receiverId,
 			senderId: user.id,
 			content: newMessage,
 			conversationId: currentChat.conv_id,
-			createdAt: new Date(),
+			createdAt: new Date().toLocaleString(),
 		};
 
-		const receiverId = currentChat.members.find((member) => member !== user.id);
 		console.log(
 			"Here at 145 in Message.js file:",
 			receiverId,
 			user.id,
-			currentChat
+			currentChat,
+			newMessage
 		);
 
 		socket.current.emit("sendMessage", {
@@ -181,15 +224,21 @@ export default function Message() {
 				<div className="chat-header">Chat with me</div>
 				<div className="chat-container">
 					<div className="chat-list">
+						{console.log("Messages:", messages)}
 						{currentChat ? (
 							messages.map((msg) => {
+								{
+									console.log("msg:", msg);
+								}
 								const message = msg && (
 									<div
 										key={msg.created_at}
 										className={`chat-message ${msg.senderId}`}
 									>
 										<div className="message-text">{msg.content}</div>
-										<div className="timestamp">{msg && msg.created_at}</div>
+										{console.log("msg.created_at:", msg.created_at)}
+										{msg && msg.created_at}
+										{/* <div className="timestamp">{msg && msg.created_at}</div> */}
 									</div>
 								);
 								return <div>{message}</div>;
