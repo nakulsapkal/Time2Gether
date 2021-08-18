@@ -58,6 +58,7 @@ export default function Message() {
 		});
 
 		socket.current.on("roomData", ({ users }) => {
+			console.log("roomData:", users);
 			setLoggedInUsers(users);
 		});
 	}, []);
@@ -286,15 +287,17 @@ export default function Message() {
 			</div>
 			<div className="chat-box" style={chatopen ? show : hide}>
 				<div className="chat-header">
-					{loggedInUsers ? (
-						loggedInUsers.map((u) => {
-							return <div className="timestamp">{u && u.email}</div>;
-						})
-					) : (
-						<span className="noConversationText">No one online.</span>
-					)}
+					<div className="user-list">
+						{loggedInUsers ? (
+							loggedInUsers.map((u) => {
+								return <img className="avatar" src={u.avatar} alt="img" />;
+								//  <div className="avatar">{u && u.avatar}</div>;
+							})
+						) : (
+							<span className="noConversationText">No one online.</span>
+						)}
+					</div>
 				</div>
-				<div className="chat-header"></div>
 				<div className="chat-container">
 					<div className="chat-list">
 						{messages ? (

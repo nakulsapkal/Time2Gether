@@ -47,20 +47,21 @@ app.use("/api", promotionsRouter(db));
 
 let users = [];
 
-const addUser = (socketId, email, act_id) => {
+const addUser = (socketId, email, act_id, avatar) => {
 	let userExists = users.find((u) => u.email === email);
 	// console.log("userExists server.js:", userExists);
 	if (userExists !== undefined) {
 		users.map((u) => {
 			if (u.email === email) {
 				u.socketId = socketId;
+				u.act_id = act_id;
 			}
 		});
 		// console.log("users server.js 59:", users);
 
 		return users.find((u) => u.email === email);
 	} else {
-		const user = { socketId, email, act_id };
+		const user = { socketId, email, act_id, avatar };
 		users.push(user);
 		return user;
 	}
@@ -69,7 +70,7 @@ const addUser = (socketId, email, act_id) => {
 const getUsersInRoom = (room) => users.filter((user) => user.act_id === room);
 
 const removeUser = (id) => {
-	const index = users.findIndex((user) => user.id === id);
+	const index = users.findIndex((user) => user.socketId === id);
 
 	if (index !== -1) return users.splice(index, 1)[0];
 };
@@ -112,7 +113,7 @@ io.on("connection", (socket) => {
 
 	socket.on("join", ({ user, room }) => {
 		//console.log("User & Room Values:", user, room, socket.id);
-		const newUser = addUser(socket.id, user.email, room.id);
+		const newUser = addUser(socket.id, user.email, room.id, user.avatar);
 		console.log("Users:", users);
 
 		socket.join(newUser.act_id);
@@ -153,14 +154,16 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("disconnect", () => {
+		console.log("user disconnected", socket.id);
 		const user = removeUser(socket.id);
+		console.log("user disconnected", user);
 
 		if (user) {
 			io.to(user.act_id).emit("message", {
 				senderemail: "Admin",
 				content: `${user.email} has left.`,
 				created_at: new Date().toLocaleString(),
-				activity_id: newUser.act_id,
+				activity_id: user.act_id,
 				senderid: 0,
 			});
 			io.to(user.act_id).emit("roomData", {
