@@ -11,17 +11,13 @@ module.exports = (db) => {
 				res.json({ promotions: data.rows });
 			})
 			.catch((err) => {
-				console.log("Error from promotions route: ", err);
+				console.log("Error from get promotions route: ", err);
 			});
 	});
 
 	router.post("/promotions/create", (req, res) => {
 		const { title, start_date, end_date, details, promo_code, user_id } =
 			req.body.body;
-		console.log(
-			"body content from route Promotions.js at backend server. Line 30",
-			req.body.body
-		);
 
 		db.query(
 			`INSERT INTO promotions (title, start_date, end_date, details, promo_code, business_id)
@@ -32,7 +28,7 @@ module.exports = (db) => {
 				res.json({ promotions: data.rows });
 			})
 			.catch((err) => {
-				console.log("Error from promotions route: ", err);
+				console.log("Error from post promotions route: ", err);
 			});
 	});
 

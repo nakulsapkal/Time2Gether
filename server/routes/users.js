@@ -3,21 +3,18 @@ const router = express.Router();
 
 module.exports = (db) => {
 	router.get("/users", function (req, res, next) {
-		//console.log("Index Router File:", db);
 		db.query(`SELECT * from users;`)
 			.then((result) => {
-				// console.log("DB Users: ", result.rows);
 				res.json({ users: result.rows });
 			})
 			.catch((err) => {
-				console.log("Error:", err);
+				console.log("Error fetching users from table: ", err);
 				res.json({ users: err });
 			});
 	});
 
 	// Route to add a new user into the database
 	router.post("/users/signup", function (req, res) {
-		//console.log("This is customData from users.js", customData.first_name);
 		const { firstName, lastName, email, password } = req.body;
 		db.query(
 			`
@@ -26,10 +23,9 @@ module.exports = (db) => {
 			[firstName, lastName, email, password]
 		)
 			.then((data) => {
-				console.log("Users from backend====", data.rows);
 				res.json(data.rows[0]);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => console.log("Error in user signup: ", error));
 	});
 
 	// add a new "join" event to user-activity table
@@ -47,7 +43,9 @@ module.exports = (db) => {
 				res.json(data.rows);
 				console.log(data.rows[0]);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) =>
+				console.log("Error inserting joined data in user_activity: ", error)
+			);
 	});
 
 	// cancel a "join" event to user-activity table
@@ -65,9 +63,10 @@ module.exports = (db) => {
 			)
 				.then((data) => {
 					res.json(data.rows[0]);
-					// console.log(data.rows[0]);
 				})
-				.catch((error) => console.log(error));
+				.catch((error) =>
+					console.log("Error updating joined data in user_activity: ", error)
+				);
 			//if true, joined, user want to cancel, set this record to null
 		} else {
 			db.query(
@@ -82,7 +81,9 @@ module.exports = (db) => {
 					res.json(data.rows[0]);
 					console.log(data.rows[0]);
 				})
-				.catch((error) => console.log(error));
+				.catch((error) =>
+					console.log("Error updating joined data in user_activity: ", error)
+				);
 		}
 	});
 
@@ -99,13 +100,14 @@ module.exports = (db) => {
 			.then((data) => {
 				res.json(data.rows);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) =>
+				console.log("Error inserting record in user_activity: ", error)
+			);
 	});
 
 	// cancel a "Favourite" event to user-activity table
 	router.put("/users/faved", (req, res) => {
 		const { favStatus, user_id, activity_id } = req.body.body;
-		console.log("favStatus************** : ", favStatus);
 
 		db.query(
 			`UPDATE user_activity 
@@ -118,7 +120,9 @@ module.exports = (db) => {
 			.then((data) => {
 				res.json(data.rows[0]);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) =>
+				console.log("Error updating favourite data in user_activity: ", error)
+			);
 	});
 
 	//Delete an activity for user

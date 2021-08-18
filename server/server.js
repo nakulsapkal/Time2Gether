@@ -50,7 +50,6 @@ let users = [];
 const addUser = (receiverId, socketId) => {
 	!users.some((user) => user.receiverId === receiverId) &&
 		users.push({ receiverId, socketId });
-	console.log("users: Line 147 ", users);
 };
 
 const getUser = (userId) => {
@@ -67,14 +66,11 @@ io.on("connection", (socket) => {
 
 	socket.on("addUser", (userId) => {
 		addUser(userId, socket.id);
-		console.log("Users Array:", users);
 		io.emit("getUsers", users);
 	});
 
 	socket.on("sendMessage", ({ receiverId, senderId, content }) => {
-		console.log("Users: ", users, receiverId, senderId, content);
 		const user = getUser(receiverId);
-		console.log("user: ", user, content);
 		io.to(user.socketId).emit("getMessage", {
 			senderId,
 			content,

@@ -38,20 +38,22 @@ module.exports = (db) => {
 		)
 			.then((data) => {
 				if (data) {
-					console.log("data.rows", data.rows);
+					console.log(
+						"conversations For User and Data **************",
+						data.rows
+					);
 					res.json(data.rows);
 				} else {
 					res.status(404).json({});
 				}
 			})
 			.catch((err) => {
-				console.log("Error:", err);
+				console.log("Error While Fetching Conversation:", err);
 			});
 	});
 
 	router.post("/conversations/create", (req, res) => {
 		const { user, participant_id } = req.body;
-		console.log("/conversations/create", user, participant_id, req.body);
 
 		db.query(
 			"INSERT INTO conversations(user1Id, user2Id)	VALUES ($1, $2) returning *",
@@ -59,7 +61,10 @@ module.exports = (db) => {
 		)
 			.then((data) => {
 				if (data) {
-					console.log("/conversations/create", data.rows);
+					console.log(
+						"conversations Created For User **************",
+						data.rows
+					);
 					res.json(data.rows);
 				} else {
 					res.status(500).json({});

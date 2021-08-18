@@ -15,7 +15,7 @@ module.exports = (db) => {
 				res.json({ activities: data.rows });
 			})
 			.catch((err) => {
-				console.log("Error from activities route: ", err);
+				console.log("Error from get activities route: ", err);
 			});
 	});
 
@@ -31,7 +31,7 @@ module.exports = (db) => {
 				res.json({ userActivities: result.rows });
 			})
 			.catch((err) => {
-				console.log("Error from activities route: ", err);
+				console.log("Error from get userActivities route: ", err);
 			});
 	});
 
@@ -91,26 +91,37 @@ module.exports = (db) => {
 						end_time,
 						address_id,
 					]
-				).then((data1) => {
-					const activity_id = data1.rows[0].id;
-					db.query(
-						` INSERT INTO user_activity 
+				)
+					.then((data1) => {
+						const activity_id = data1.rows[0].id;
+						db.query(
+							` INSERT INTO user_activity 
               (user_id, activity_id, joined_at) 
     
               VALUES ($1, $2, $3) RETURNING *`,
-						[user_id, activity_id, null]
-					)
-						.then((data2) => {
-							res.json({
-								address: data.rows[0],
-								activity: data1.rows[0],
-								user_activity: data2.rows[0],
-							});
-						})
-						.catch((error) => console.log(error));
-				});
+							[user_id, activity_id, null]
+						)
+							.then((data2) => {
+								res.json({
+									address: data.rows[0],
+									activity: data1.rows[0],
+									user_activity: data2.rows[0],
+								});
+							})
+							.catch((error) =>
+								console.log(
+									"Error inserting record into user_activity table: ",
+									error
+								)
+							);
+					})
+					.catch((error) =>
+						console.log("Error inserting record into activities table: ", error)
+					);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) =>
+				console.log("Error inserting record into address table: ", error)
+			);
 	});
 
 	router.put("/activities/edit", (req, res) => {
@@ -131,7 +142,8 @@ module.exports = (db) => {
 			postal_code,
 		} = req.body.values;
 
-		const { activity_id, address_id, category_id, created_at } = req.body.activityObj;
+		const { activity_id, address_id, category_id, created_at } =
+			req.body.activityObj;
 
 		db.query(
 			`UPDATE address
@@ -178,9 +190,11 @@ module.exports = (db) => {
 							//Updated: true,
 						});
 					})
-					.catch((error) => console.log(error));
+					.catch((error) =>
+						console.log("Error updating activities record: ", error)
+					);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => console.log("Error updating address record: ", error));
 	});
 
 	return router;

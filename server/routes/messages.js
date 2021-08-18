@@ -5,14 +5,6 @@ module.exports = (db) => {
 	router.post("/messages/create", (req, res) => {
 		const { receiverId, senderId, content, conversationId, createdAt } =
 			req.body;
-		console.log(
-			"receiverId, senderId, content, conversationId, createdAt****************",
-			receiverId,
-			senderId,
-			content,
-			conversationId,
-			createdAt
-		);
 		// if conversation exist, insert the new msg
 		if (conversationId) {
 			db.query(
@@ -22,10 +14,15 @@ module.exports = (db) => {
 				[senderId, content, conversationId, createdAt]
 			)
 				.then((data) => {
-					console.log("data.rows****************", data.rows);
+					console.log("Message Created Data****************", data.rows);
 					res.json(data.rows);
 				})
-				.catch((error) => console.log(error));
+				.catch((error) =>
+					console.log(
+						"Error While inserting new messages for conversation:",
+						error
+					)
+				);
 		} else {
 			// if two users has no previous conversation(null), create one and then insert new msg
 			db.query(
@@ -41,15 +38,18 @@ module.exports = (db) => {
 					.then((data1) => {
 						res.json(data1.rows[0]);
 					})
-					.catch((error) => console.log(error));
+					.catch((error) =>
+						console.log(
+							"Error While inserting Conversation for new users:",
+							error
+						)
+					);
 			});
 		}
 	});
 
 	// get all conversations for 2 users, including 10 messages for preview
 	router.get("/messages/:id", (req, res, next) => {
-		console.log("user in messages**************", req.params);
-
 		db.query(
 			`SELECT * FROM messages
 			WHERE conversationId = $1`,
@@ -57,14 +57,18 @@ module.exports = (db) => {
 		)
 			.then((data) => {
 				if (data) {
-					console.log("data.rows line 60:", data.rows);
+					console.log(
+						"Messages For User and Data **************",
+						req.params,
+						data.rows
+					);
 					res.json(data.rows);
 				} else {
 					res.status(404).json({});
 				}
 			})
 			.catch((err) => {
-				console.log("Error:", err);
+				console.log("Error While Fetching Messages:", err);
 			});
 	});
 
