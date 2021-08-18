@@ -2,64 +2,111 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+	// router.post("/messages/create", (req, res) => {
+	// 	const { receiverId, senderId, content, conversationId, createdAt } =
+	// 		req.body;
+	// 	// if conversation exist, insert the new msg
+	// 	if (conversationId) {
+	// 		db.query(
+	// 			`INSERT INTO messages (senderId, content, conversationId,created_at)
+
+	//       VALUES ($1, $2, $3, $4) RETURNING *`,
+	// 			[senderId, content, conversationId, createdAt]
+	// 		)
+	// 			.then((data) => {
+	// 				console.log("Message Created Data****************", data.rows);
+	// 				res.json(data.rows);
+	// 			})
+	// 			.catch((error) =>
+	// 				console.log(
+	// 					"Error While inserting new messages for conversation:",
+	// 					error
+	// 				)
+	// 			);
+	// 	} else {
+	// 		// if two users has no previous conversation(null), create one and then insert new msg
+	// 		db.query(
+	// 			`INSERT INTO conversations(user1Id, user2Id)
+	//       VALUES ($1, $2) returning *`,
+	// 			[senderId, receiverId]
+	// 		).then((data) => {
+	// 			db.query(
+	// 				`INSERT INTO messages (senderId, content, conversationId, created_at)
+	//       VALUES ($1, $2, $3, $4) RETURNING *`,
+	// 				[senderId, content, conversationId, createdAt]
+	// 			)
+	// 				.then((data1) => {
+	// 					res.json(data1.rows[0]);
+	// 				})
+	// 				.catch((error) =>
+	// 					console.log(
+	// 						"Error While inserting Conversation for new users:",
+	// 						error
+	// 					)
+	// 				);
+	// 		});
+	// 	}
+	// });
+
 	router.post("/messages/create", (req, res) => {
-		const { receiverId, senderId, content, conversationId, createdAt } =
+		const { senderid, content, activity_id, created_at, senderemail } =
 			req.body;
-		// if conversation exist, insert the new msg
-		if (conversationId) {
-			db.query(
-				`INSERT INTO messages (senderId, content, conversationId,created_at)
-				
-	      VALUES ($1, $2, $3, $4) RETURNING *`,
-				[senderId, content, conversationId, createdAt]
-			)
-				.then((data) => {
-					console.log("Message Created Data****************", data.rows);
-					res.json(data.rows);
-				})
-				.catch((error) =>
-					console.log(
-						"Error While inserting new messages for conversation:",
-						error
-					)
+		db.query(
+			`INSERT INTO messages (senderId, content, activity_id, created_at, senderEmail)
+	      VALUES ($1, $2, $3, $4,$5) RETURNING *`,
+			[senderid, content, activity_id, created_at, senderemail]
+		)
+			.then((data) => {
+				console.log(
+					"New message record created for activity **************",
+					data.rows
 				);
-		} else {
-			// if two users has no previous conversation(null), create one and then insert new msg
-			db.query(
-				`INSERT INTO conversations(user1Id, user2Id)
-	      VALUES ($1, $2) returning *`,
-				[senderId, receiverId]
-			).then((data) => {
-				db.query(
-					`INSERT INTO messages (senderId, content, conversationId, created_at)
-	      VALUES ($1, $2, $3, $4) RETURNING *`,
-					[senderId, content, conversationId, createdAt]
+				res.json(data.rows[0]);
+			})
+			.catch((error) =>
+				console.log(
+					"Error While inserting Message from user for activity:",
+					error
 				)
-					.then((data1) => {
-						res.json(data1.rows[0]);
-					})
-					.catch((error) =>
-						console.log(
-							"Error While inserting Conversation for new users:",
-							error
-						)
-					);
-			});
-		}
+			);
 	});
+
+	// // get all conversations for 2 users, including 10 messages for preview
+	// router.get("/messages/:id", (req, res, next) => {
+	// 	db.query(
+	// 		`SELECT * FROM messages
+	// 		WHERE conversationId = $1`,
+	// 		[req.params.id]
+	// 	)
+	// 		.then((data) => {
+	// 			if (data) {
+	// 				console.log(
+	// 					"Messages For User and Data **************",
+	// 					req.params,
+	// 					data.rows
+	// 				);
+	// 				res.json(data.rows);
+	// 			} else {
+	// 				res.status(404).json({});
+	// 			}
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log("Error While Fetching Messages:", err);
+	// 		});
+	// });
 
 	// get all conversations for 2 users, including 10 messages for preview
 	router.get("/messages/:id", (req, res, next) => {
 		db.query(
 			`SELECT * FROM messages
-			WHERE conversationId = $1`,
+			WHERE activity_id = $1`,
 			[req.params.id]
 		)
 			.then((data) => {
 				if (data) {
 					console.log(
-						"Messages For User and Data **************",
-						req.params,
+						"Messages For activity **************",
+						req.params.id,
 						data.rows
 					);
 					res.json(data.rows);
@@ -68,7 +115,7 @@ module.exports = (db) => {
 				}
 			})
 			.catch((err) => {
-				console.log("Error While Fetching Messages:", err);
+				console.log("Error While Fetching Messages for activity:", err);
 			});
 	});
 

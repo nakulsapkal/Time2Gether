@@ -17,9 +17,8 @@
 	border-radius: 20px 20px 0 0;
 	color: #fff;
 	font-size: 20px;
-	height:40px;
+	height: 40px;
 	padding-top: 15px;
-
 }
 
 #chatCon .chat-box .msg-area {
@@ -135,6 +134,7 @@
 	padding: 5px;
 	border-radius: 5px;
 	justify-content: center;
+	font-size: x-large;
 }
 
 .chat-message.senderId .message-text {
@@ -147,9 +147,9 @@
 
 .chat-message .timestamp {
 	flex: 1;
-	font-size: x-small;
+	font-size: small;
 	margin: 0 5px;
-	color: grey;
+	color: black solid;
 }
 
 .chat-container {
@@ -174,6 +174,6 @@
 	justify-content: flex-end;
 }
 
-#chat-send-button{
-	margin:5px;
+#chat-send-button {
+	margin: 5px;
 }
