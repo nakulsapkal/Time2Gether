@@ -2,21 +2,12 @@ import { createContext, useContext, useEffect } from "react";
 import { stateContext } from "./StateProvider";
 import axios from "axios";
 
-// //Socket IO
-// import socketClient from "socket.io-client";
-// const SERVER = "localhost:8003";
-// let socket;
 export default function DatabaseProvider(props) {
 	const { user, state, setState, setUser, promotions } =
 		useContext(stateContext);
 
 	//This useEffect is ran only once at the initial app start to fetch the data (async) from API via axios
 	useEffect(() => {
-		// socket = socketClient(SERVER);
-		// socket.on("connection", () => {
-		// 	console.log(`I'm connected with the back-end`);
-		// });
-
 		const p1 = axios.get("/api/users");
 		const p2 = axios.get("/api/activities");
 		const p3 = axios.get("/api/business/users");
@@ -39,7 +30,6 @@ export default function DatabaseProvider(props) {
 
 		//setup localstorage for logged-in user
 		setUser(JSON.parse(localStorage.getItem("userData")));
-
 	}, []);
 
 	// Validate email and password befor loginig in for usual user
@@ -55,9 +45,9 @@ export default function DatabaseProvider(props) {
 				return false;
 			}
 		} else {
-
 			let userData = state.businessUsers.find(
-				(obj) => obj.email === userEmail && obj.password === userPassword);
+				(obj) => obj.email === userEmail && obj.password === userPassword
+			);
 			if (userData) {
 				localStorage.setItem("userData", JSON.stringify(userData));
 				return userData;
@@ -105,13 +95,15 @@ export default function DatabaseProvider(props) {
 					newUser = res.data;
 					const newState = state;
 					newState.users.push(newUser);
-					
+
 					setState({ ...newState });
 					alert("New user is successfully added!");
 					localStorage.setItem("userData", JSON.stringify(newUser));
 					setUser(newUser);
 				})
-				.catch((error) => console.log(error));
+				.catch((error) =>
+					console.log("New user not added successfully", error)
+				);
 		}
 		return newUser;
 	}
@@ -125,7 +117,6 @@ export default function DatabaseProvider(props) {
 		if (validateRegNum(regNum) === true) {
 			alert("Registration number is already in use");
 		} else {
-			
 			return axios
 				.post(apiUrl, businessUser, {
 					headers: { "Content-Type": "application/json" },
@@ -134,13 +125,15 @@ export default function DatabaseProvider(props) {
 					newBusinessUser = res.data;
 					const newState = state;
 					newState.businessUser.push(newBusinessUser);
-					
+
 					setState({ ...newState });
 					alert("New business user is successfully added!");
 					localStorage.setItem("userData", JSON.stringify(newBusinessUser));
 					setUser(newBusinessUser);
 				})
-				.catch((error) => console.log(error));
+				.catch((error) =>
+					console.log("New business user not added successfully", error)
+				);
 		}
 		return newBusinessUser;
 	}

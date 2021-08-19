@@ -1,14 +1,12 @@
 import React, { useState, useContext } from "react";
 import "./PromotionCreate.css";
 import axios from "axios";
-import { getLoggedUserId } from "../../helpers/selectors";
 import { useHistory } from "react-router-dom";
 import { databaseContext } from "providers/DatabaseProvider";
 
 export default function PromotionCreate() {
 	const { user, state, setState } = useContext(databaseContext);
 	let history = useHistory();
-	const loginUserId = getLoggedUserId();
 
 	const [values, setValues] = useState({
 		title: "",
@@ -28,7 +26,6 @@ export default function PromotionCreate() {
 
 	const saveFormData = async () => {
 		let newPromotion;
-		console.log("values from PromotionCreate.js. Line 32: ", values);
 		await axios
 			.post("/api/promotions/create", {
 				body: values,
@@ -37,7 +34,7 @@ export default function PromotionCreate() {
 				if (result.status !== 200) {
 					throw new Error(`Request failed: ${result.status}`);
 				}
-				console.log("Result", result);
+				console.log("Result for promotion create", result);
 				newPromotion = {
 					title: values.title,
 					start_date: values.start_date,
@@ -46,13 +43,12 @@ export default function PromotionCreate() {
 					promo_code: values.promo_code,
 					user_id: user.id,
 				};
-				console.log("This is new Promotion. Line 48", newPromotion);
 				const newState = state;
 				newState.promotions.push(newPromotion);
 				setState({ ...newState });
 			})
 			.catch((err) => {
-				console.error("Error while adding promotion: ", err);
+				console.error("Error while creating promotion: ", err);
 			});
 	};
 
@@ -114,7 +110,12 @@ export default function PromotionCreate() {
 				</div>
 
 				<div>
-					<input id="cancel-button" type="button" onClick={() => reset()} value="Cancel" />
+					<input
+						id="cancel-button"
+						type="button"
+						onClick={() => reset()}
+						value="Cancel"
+					/>
 					<button type="submit">Submit</button>
 				</div>
 			</form>

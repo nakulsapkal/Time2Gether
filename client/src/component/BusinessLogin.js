@@ -19,7 +19,6 @@ export default function BusinessLogin() {
 		event.preventDefault();
 		let businessUser = validateBusinessUser(registrationNumber, password);
 		if (businessUser) {
-			console.log("This is a business user", businessUser);
 			setUser(businessUser);
 			history.push("/promotions");
 		} else {
@@ -62,7 +61,12 @@ export default function BusinessLogin() {
 					/>
 				</div>
 				<div>
-					<input id="cancel-button" type="button" onClick={() => reset()} value="Cancel" />
+					<input
+						id="cancel-button"
+						type="button"
+						onClick={() => reset()}
+						value="Cancel"
+					/>
 					<button type="submit">Login</button>
 				</div>
 				<div>{error}</div>

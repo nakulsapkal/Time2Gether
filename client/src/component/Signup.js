@@ -4,9 +4,8 @@ import { databaseContext } from "providers/DatabaseProvider";
 import { stateContext } from "providers/StateProvider";
 
 function Signup() {
-	const { setUser, addUser } = useContext(databaseContext);
+	const { addUser } = useContext(databaseContext);
 	const {
-		user,
 		email,
 		password,
 		firstName,
@@ -46,7 +45,6 @@ function Signup() {
 			};
 			const result = addUser(customData);
 			if (result) {
-
 				history.push("/");
 			}
 		}

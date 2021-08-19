@@ -19,6 +19,7 @@ module.exports = (db) => {
 			});
 	});
 
+	//fetch all activities for user combined with user activity,address and categories tables
 	router.get("/userActivities", (req, res) => {
 		db.query(
 			`SELECT user_activity.id AS user_activity_id,joined_at,favourite,user_activity.user_id,title,activity_id,created_at,start_date,end_date,start_time,end_time,img,details,address_id,street_number,street_name,city,province,postal_code,category_id,categories.name as category from user_activity

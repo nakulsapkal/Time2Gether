@@ -39,7 +39,6 @@ function getHostIdByActivityId(id, activities) {
 	const activity = activities.filter(
 		(actObj) =>
 			actObj.activity_id === id &&
-			// actObj.created_at !== null &&
 			actObj.joined_at === null &&
 			actObj.favourite === false
 	);

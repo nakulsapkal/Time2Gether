@@ -4,9 +4,7 @@ import { databaseContext } from "providers/DatabaseProvider";
 
 export default function Promotions() {
 	const { state } = useContext(databaseContext);
-	console.log("State from promotions:", state);
 	const { promotions } = state;
-	console.log("Promotions from promotions:", promotions);
 
 	return (
 		<div className="activities">

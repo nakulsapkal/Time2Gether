@@ -9,7 +9,7 @@ export default function ActivityItem(props) {
 	const { state } = useContext(databaseContext);
 	const { setActivity } = useContext(stateContext);
 	const { activities, userActivities } = state;
-	const { id, details, img, myActivities, title } = props;
+	const { id, img, myActivities, title } = props;
 	const history = useHistory();
 
 	return (

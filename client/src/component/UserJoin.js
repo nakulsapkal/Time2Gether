@@ -25,7 +25,6 @@ export default function UserJoin(props) {
 				if (result.status !== 200) {
 					throw new Error(`Request failed: ${result.status}`);
 				} else {
-
 					const newUserActivity = {
 						activity_id: result.data.activity_id,
 						favourite: result.data.favourite,
@@ -58,14 +57,12 @@ export default function UserJoin(props) {
 	};
 
 	const changeJoined = async () => {
-
 		if (props.favStatus === 1) {
 			return await axios
 				.put("/api/users/joined", {
 					body: { ...values, joined_at: !props.joined_at },
 				})
 				.then((result) => {
-					console.log("result.data", result.data);
 					if (result.status !== 200) {
 						throw new Error(`Request failed: ${result.status}`);
 					} else {
@@ -128,7 +125,9 @@ export default function UserJoin(props) {
 
 	return (
 		<div className="join-button">
-			{activity[0].email === user.email ? ( "" ) : (
+			{activity[0].email === user.email ? (
+				""
+			) : (
 				<button onClick={handleJoin}>
 					{props.joined_at === 1 ? "Cancel" : "Join"}
 				</button>

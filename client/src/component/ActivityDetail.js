@@ -1,11 +1,6 @@
 import "./ActivityDetail.css";
 import React, { useContext, useState, useEffect } from "react";
-import {
-	getJoinedTime,
-	getFavStatus,
-	getActivityCreatedByUser,
-	getActivitiesFavouriteByUser,
-} from "../helpers/selectors";
+import { getJoinedTime, getFavStatus } from "../helpers/selectors";
 import UserJoin from "component/UserJoin";
 import UserFav from "component/UserFav";
 import { databaseContext } from "providers/DatabaseProvider";

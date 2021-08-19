@@ -10,19 +10,19 @@ export default function ActivityCreate() {
 	const activityObj = history.location.state;
 
 	const [values, setValues] = useState({
-		img: activityObj && (activityObj.img || ""),
-		details: activityObj && (activityObj.details || ""),
-		category: activityObj && (activityObj.category || ""),
-		start_date: activityObj && (activityObj.start_date.slice(0, 10) || ""),
-		end_date: activityObj && (activityObj.end_date.slice(0, 10) || ""),
-		start_time: activityObj && (activityObj.start_time || ""),
-		end_time: activityObj && (activityObj.end_time || ""),
-		street_number: activityObj && (activityObj.street_number || ""),
-		street_name: activityObj && (activityObj.street_name || ""),
-		city: activityObj && (activityObj.city || ""),
-		province: activityObj && (activityObj.province || ""),
-		postal_code: activityObj && (activityObj.postal_code || ""),
-		title: activityObj && (activityObj.title || ""),
+		img: activityObj ? activityObj.img : "",
+		details: activityObj ? activityObj.details : "",
+		category: activityObj ? activityObj.category : "",
+		start_date: activityObj ? activityObj.start_date.slice(0, 10) : "",
+		end_date: activityObj ? activityObj.end_date.slice(0, 10) : "",
+		start_time: activityObj ? activityObj.start_time : "",
+		end_time: activityObj ? activityObj.end_time : "",
+		street_number: activityObj ? activityObj.street_number : "",
+		street_name: activityObj ? activityObj.street_name : "",
+		city: activityObj ? activityObj.city : "",
+		province: activityObj ? activityObj.province : "",
+		postal_code: activityObj ? activityObj.postal_code : "",
+		title: activityObj ? activityObj.title : "",
 		user_id: user.id,
 	});
 
