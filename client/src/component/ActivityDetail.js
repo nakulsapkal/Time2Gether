@@ -14,7 +14,7 @@ import Message from "./Message";
 
 import MapContainer from './MapContainer';
 import Geocode from "react-geocode";
-Geocode.setApiKey("put your key here");
+Geocode.setApiKey("AIzaSyC64RWJ10L6UOSR3UDZN38NN7KQt2CeqfI");
 Geocode.setLanguage("en");
 Geocode.setRegion("ca");
 Geocode.setLocationType("ROOFTOP");
