@@ -11,7 +11,6 @@ const morgan = require("morgan");
 const cors = require("cors");
 
 const socketPort = 8003;
-const { emit } = require("process");
 const server = require("http").createServer(app);
 const io = require("socket.io")(server, {
 	cors: {
@@ -39,17 +38,14 @@ app.use("/api", activityRouter(db));
 const messageRouter = require("./routes/messages");
 app.use("/api", messageRouter(db));
 
-const conversationRouter = require("./routes/conversations");
-app.use("/api", conversationRouter(db));
-
 const promotionsRouter = require("./routes/promotions");
 app.use("/api", promotionsRouter(db));
 
 let users = [];
 
+//This function helps to store the users who are logged in app and also avoids multiple entries for any user as user can navigate to multiple activities
 const addUser = (socketId, email, act_id, avatar) => {
 	let userExists = users.find((u) => u.email === email);
-	// console.log("userExists server.js:", userExists);
 	if (userExists !== undefined) {
 		users.map((u) => {
 			if (u.email === email) {
@@ -57,7 +53,6 @@ const addUser = (socketId, email, act_id, avatar) => {
 				u.act_id = act_id;
 			}
 		});
-		// console.log("users server.js 59:", users);
 
 		return users.find((u) => u.email === email);
 	} else {
@@ -67,62 +62,32 @@ const addUser = (socketId, email, act_id, avatar) => {
 	}
 };
 
+//This function returns all the users in the same room
 const getUsersInRoom = (room) => users.filter((user) => user.act_id === room);
 
+//This function removes the user once logged out
 const removeUser = (id) => {
 	const index = users.findIndex((user) => user.socketId === id);
 
 	if (index !== -1) return users.splice(index, 1)[0];
 };
 
+//This function returns the user for specific socketid
 const getUser = (socketId) => users.find((user) => user.socketId === socketId);
-
-// const addUser = (receiverId, socketId) => {
-// 	!users.some((user) => user.receiverId === receiverId) &&
-// 		users.push({ receiverId, socketId });
-// };
-
-// const getUser = (userId) => {
-// 	return users.find((user) => user.receiverId === userId);
-// };
-
-// const removeUser = (socketId) => {
-// 	users = users.filter((user) => user.socketId !== socketId);
-// };
-
-// io.on("connection", (socket) => {
-// 	console.log("a user connected");
-// 	io.emit("welcome", "Hello message from server!");
-
-// 	socket.on("addUser", (userId) => {
-// 		addUser(userId, socket.id);
-// 		io.emit("getUsers", users);
-// 	});
-
-// 	socket.on("sendMessage", ({ receiverId, senderId, content }) => {
-// 		const user = getUser(receiverId);
-// 		io.to(user.socketId).emit("getMessage", {
-// 			senderId,
-// 			content,
-// 		});
-// 	});
 
 io.on("connection", (socket) => {
 	console.log("a user connected");
 	io.emit("welcome", "Hello message from server!");
 
+	//Join event listens for user to join the chat room of activity{ user(current user), room(activity.id and activity title) }
 	socket.on("join", ({ user, room }) => {
-		//console.log("User & Room Values:", user, room, socket.id);
 		const newUser = addUser(socket.id, user.email, room.id, user.avatar);
 		console.log("Users:", users);
 
+		//user joins this specific room
 		socket.join(newUser.act_id);
-		// 			activity_id: 2
-		// content: "hey"
-		// created_at: "18/08/2021, 13:43:47"
-		// id: 4
-		// senderid: 1
 
+		//admin user emits messagess to chat room
 		socket.emit("message", {
 			senderemail: "admin",
 			content: `${newUser.email}, welcome to room ${room.title}.`,
@@ -130,6 +95,7 @@ io.on("connection", (socket) => {
 			activity_id: newUser.act_id,
 			senderid: 0,
 		});
+
 		socket.broadcast.to(newUser.act_id).emit("message", {
 			senderemail: "admin",
 			content: `${newUser.email} has joined!`,
@@ -138,23 +104,22 @@ io.on("connection", (socket) => {
 			senderid: 0,
 		});
 
+		//all users currently logged are sent to all users
 		io.to(newUser.act_id).emit("roomData", {
 			room: newUser.act_id,
 			users: getUsersInRoom(newUser.act_id),
 		});
 	});
 
+	//sendMessage event for sending the messages from users to other users in chat room
 	socket.on("sendMessage", ({ newMessage }) => {
 		const user = getUser(socket.id);
 		console.log("Users:", users);
-		// console.log("Socket ID:", socket.id);
-		// console.log("newMessage*************:", newMessage);
-
 		io.to(user.act_id).emit("message", newMessage);
 	});
 
+	//disconnect event once user logout
 	socket.on("disconnect", () => {
-		console.log("user disconnected", socket.id);
 		const user = removeUser(socket.id);
 		console.log("user disconnected", user);
 
@@ -172,33 +137,13 @@ io.on("connection", (socket) => {
 			});
 		}
 	});
-
-	// socket.on("addUser", (userId) => {
-	// 	addUser(userId, socket.id);
-	// 	io.emit("getUsers", users);
-	// });
-
-	// socket.on("sendMessage", ({ receiverId, senderId, content }) => {
-	// 	const user = getUser(receiverId);
-	// 	io.to(user.socketId).emit("getMessage", {
-	// 		senderId,
-	// 		content,
-	// 	});
-	// });
-
-	// // close event when user disconnects from app
-	// socket.on("disconnect", () => {
-	// 	console.log("user disconnected");
-	// 	removeUser(socket.id);
-	// 	io.emit("guestUser", users);
-	// });
 });
 
 // Displays in terminal which port the socketPort is running on
 server.listen(socketPort, () => {
-	console.log(`listening on *:${socketPort}`);
+	console.log(`Time2Gether app socket listening on port:${socketPort}`);
 });
 
 app.listen(PORT, () => {
-	console.log("Example app listening on port " + PORT);
+	console.log("Time2Gether app listening on port " + PORT);
 });

@@ -141,10 +141,6 @@
 	background-color: greenyellow;
 }
 
-/* .chat-message.not-you .message-text {
-	background-color: lightgrey;
-} */
-
 .chat-message .timestamp {
 	flex: 1;
 	font-size: small;
