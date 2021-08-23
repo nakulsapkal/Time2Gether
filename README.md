@@ -1,7 +1,7 @@
 ## Final Product
 
-!["screenshot of App Main Page"]()
-!["screenshot of Activity Details"]()
+!["screenshot of App Main Page"](https://github.com/nakulsapkal/Time2Gether/blob/master/server/docs/Activity%20Detail%20Page.png?raw=true)
+!["screenshot of Activity Details"](https://github.com/nakulsapkal/Time2Gether/blob/master/server/docs/Home%20Page.png?raw=true)
 
 # Project Title: Time2Gether
 
